@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist/",
+    "noImplicitAny": true,
+    "module": "commonjs",
+    "target": "es5",
+    "jsx": "react",
+    "allowJs": true,
+    "baseUrl": "./",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "sourceMap": true,
+    "paths": {
+      "@common/*": ["src/common/*"],
+      "@features/*": ["src/features/*"],
+      "@layouts/*": ["src/layouts/*"],
+      "@layouts": ["src/layouts/index.ts"],
+      "@styles/*": ["src/common/styles/*"],
+      "@pages/*": ["src/pages/*"],
+      "@pages": ["src/pages/index.ts"],
+      "@store/*": ["src/store/*"],
+      "@store": ["src/store/index.ts"],
+      "@src/*": ["src/*"],
+      "@packageSrc": ["package.json"],
+      "@processes/*": ["src/processes/*"]
+    }
+  }
+}
