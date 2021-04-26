@@ -1,12 +1,13 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Container, LinearProgress } from '@material-ui/core';
 
 import { RegistrationForm, SignUpPayload } from '@features/auth';
 import { selectors as loadingSelectors, LOADERS } from '@features/loading';
 import { actions as authActions } from '@processes/auth';
 
 /**
- * Страница регистрации пользователя
+ * Страница "Регистрация"
  *
  * @returns react-элемент
  */
@@ -25,9 +26,14 @@ export const RegistrationPage: React.FC = () => {
     dispatch(authActions.signUp(signUpPayload));
 
   return (
-    <RegistrationForm
-      onSignUp={handleSignUp}
-      isSignUpLoading={isSignUpLoading}
-    />
+    <>
+      {isSignUpLoading && <LinearProgress />}
+      <Container component="div" maxWidth="xs">
+        <RegistrationForm
+          onSignUp={handleSignUp}
+          isSignUpLoading={isSignUpLoading}
+        />
+      </Container>
+    </>
   );
 };

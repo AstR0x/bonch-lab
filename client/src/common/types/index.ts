@@ -1,12 +1,9 @@
 import * as React from 'react';
 
-export enum TextFieldTypeEnum {
-  email = 'email',
-  password = 'password',
-}
-
-export interface FormStateValues {
-  [key: string]: string;
+export interface HandleWorkerPayload {
+  worker: (...args: any[]) => any;
+  payload?: any;
+  loader?: string;
 }
 
 export interface FormState {

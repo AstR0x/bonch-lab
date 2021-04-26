@@ -1,5 +1,5 @@
-export { createObjectWithSameValues } from './createObjectWithSameValues';
 export { callApi } from './callApi';
+export { getShortName } from './getShortName';
 export { createHttpClient } from './request';
 export { logger } from './logger';
 export { setStoreField } from './store';

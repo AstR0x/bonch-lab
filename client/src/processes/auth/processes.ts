@@ -1,11 +1,10 @@
 import { PayloadAction } from '@reduxjs/toolkit';
-import { all, call, put, takeEvery } from 'redux-saga/effects';
+import { all, call, takeEvery } from 'redux-saga/effects';
 import { SagaIterator } from 'redux-saga';
 
-import { URLS } from '@src/constants';
-import { history } from '@store';
+import { handleWorker } from '@common/sagas';
 import { sagas as notificationSagas } from '@features/notification';
-import { actions as loadingActions, LOADERS } from '@features/loading';
+import { LOADERS } from '@features/loading';
 import {
   sagas as authSagas,
   utils as authUtils,
@@ -16,6 +15,21 @@ import {
 import { actions as authActions } from './actions';
 
 /**
+ * Авторизация пользователя (без обработки)
+ *
+ * @param signInPayload - данные авторизации
+ */
+function* notHandledSignInWorker(signInPayload: SignInPayload): SagaIterator {
+  // Авторизуемся
+  yield call(authSagas.signIn, signInPayload);
+  // Показываем уведомление об успешной авторизации
+  yield call(
+    notificationSagas.showSuccessNotification,
+    'Авторизация успешно пройдена!',
+  );
+}
+
+/**
  * Авторизация пользователя
  *
  * @param payload - данные авторизации
@@ -23,25 +37,27 @@ import { actions as authActions } from './actions';
 function* signInWorker({
   payload: signInPayload,
 }: PayloadAction<SignInPayload>): SagaIterator {
-  try {
-    // Показываем лоадер
-    yield put(loadingActions.showLoader(LOADERS.SIGN_IN_LOADING));
-    // Авторизуемся
-    yield call(authSagas.signIn, signInPayload);
-    // Показываем уведомление об успешной авторизации
-    yield call(
-      notificationSagas.showSuccessNotification,
-      'Авторизация успешно пройдена!',
-    );
-  } catch (error) {
-    // Показываем уведомление с текстом ошибки
-    yield call(notificationSagas.showErrorNotification, error.message);
-  } finally {
-    // Скрываем лоадер
-    yield put(loadingActions.hideLoader(LOADERS.SIGN_IN_LOADING));
-  }
+  yield call(handleWorker, {
+    worker: notHandledSignInWorker,
+    payload: signInPayload,
+    loader: LOADERS.SIGN_IN_LOADING,
+  });
 }
 
+/**
+ * Регистрация пользователя (без обработки)
+ *
+ * @param signUpPayload - данные регистрации
+ */
+function* notHandledSignUpWorker(signUpPayload: SignUpPayload): SagaIterator {
+  // Регистрируемся
+  yield call(authSagas.signUp, signUpPayload);
+  // Показываем уведомление об успешной регистрации
+  yield call(
+    notificationSagas.showSuccessNotification,
+    'Регистрация успешно пройдена!',
+  );
+}
 /**
  * Регистрация пользователя
  *
@@ -50,42 +66,55 @@ function* signInWorker({
 function* signUpWorker({
   payload: signUpPayload,
 }: PayloadAction<SignUpPayload>): SagaIterator {
-  try {
-    // Показываем лоадер
-    yield put(loadingActions.showLoader(LOADERS.SIGN_UP_LOADING));
-    // Регистрируемся
-    yield call(authSagas.signUp, signUpPayload);
-    // Редирект на страницу авторизации
-    yield call(history.push, URLS.AUTHORIZATION_PAGE);
-    // Показываем уведомление об успешной регистрации
-    yield call(
-      notificationSagas.showSuccessNotification,
-      'Регистрация успешно пройдена!',
-    );
-  } catch (error) {
-    // Показываем уведомление с текстом ошибки
-    yield call(notificationSagas.showErrorNotification, error.message);
-  } finally {
-    // Скрываем лоадер
-    yield put(loadingActions.hideLoader(LOADERS.SIGN_UP_LOADING));
+  yield call(handleWorker, {
+    worker: notHandledSignUpWorker,
+    payload: signUpPayload,
+    loader: LOADERS.SIGN_UP_LOADING,
+  });
+}
+
+/**
+ * Выход из приложения (без обработки)
+ */
+function* notHandledSignOutWorker(): SagaIterator {
+  // Выходим из приложения
+  yield call(authSagas.signOut);
+  // Показываем уведомление об успешном выходе
+  yield call(
+    notificationSagas.showSuccessNotification,
+    'Выход успешно выполнен!',
+  );
+}
+
+/**
+ * Выход из приложения
+ */
+function* signOutWorker(): SagaIterator {
+  yield call(handleWorker, {
+    worker: notHandledSignOutWorker,
+    loader: LOADERS.SIGN_OUT_LOADING,
+  });
+}
+
+/**
+ * Автоматическая авторизация пользователя (без обработки)
+ */
+export function* notHandledAutoSignInWorker(): SagaIterator {
+  // Получаем токен из localStorage
+  const token = authUtils.getSessionToken();
+
+  if (token) {
+    yield call(authSagas.setTokenInStore, token);
   }
 }
 
 /**
  * Автоматическая авторизация пользователя
  */
-export function* autoSignInWorker(): SagaIterator {
-  try {
-    // Получаем токен из localStorage
-    const token = authUtils.getSessionToken();
-
-    if (token) {
-      yield call(authSagas.setTokenInStore, token);
-    }
-  } catch (error) {
-    // Показываем уведомление с текстом ошибки
-    yield call(notificationSagas.showErrorNotification, error.message);
-  }
+function* autoSignInWorker(): SagaIterator {
+  yield call(handleWorker, {
+    worker: notHandledAutoSignInWorker,
+  });
 }
 
 /**
@@ -94,5 +123,6 @@ export function* autoSignInWorker(): SagaIterator {
 export function* authWatcher(): SagaIterator {
   yield all([takeEvery(authActions.signIn, signInWorker)]);
   yield all([takeEvery(authActions.signUp, signUpWorker)]);
+  yield all([takeEvery(authActions.signOut, signOutWorker)]);
   yield all([takeEvery(authActions.autoSignIn, autoSignInWorker)]);
 }

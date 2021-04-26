@@ -5,7 +5,6 @@ import { LockOpenOutlined } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   Avatar,
-  Container,
   Typography,
   TextField,
   Button,
@@ -68,7 +67,7 @@ export const AuthorizationForm: React.FC<AuthorizationFormProps> = ({
     isSignInLoading;
 
   return (
-    <Container component="main" maxWidth="xs">
+    <>
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOpenOutlined />
@@ -101,7 +100,9 @@ export const AuthorizationForm: React.FC<AuthorizationFormProps> = ({
             onChange={onTextFieldChange}
             value={formState.values.password}
             error={formState.errors.password}
-            helperText={formState.errors.password && uiMessages.helperTexts.password}
+            helperText={
+              formState.errors.password && uiMessages.helperTexts.password
+            }
             required
           />
           <Button
@@ -137,6 +138,6 @@ export const AuthorizationForm: React.FC<AuthorizationFormProps> = ({
           </Grid>
         </form>
       </div>
-    </Container>
+    </>
   );
 };

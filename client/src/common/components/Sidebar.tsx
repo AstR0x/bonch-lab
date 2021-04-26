@@ -12,21 +12,24 @@ import {
   AccountBoxOutlined,
   InfoOutlined,
 } from '@material-ui/icons';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { createStyles, makeStyles } from '@material-ui/core/styles';
 
 import { URLS } from '@src/constants';
 import { history } from '@store';
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
   createStyles({
     drawer: {
       width: 250,
       flexShrink: 0,
     },
     drawerPaper: {
+      paddingTop: 128,
       width: 250,
     },
-    toolbar: theme.mixins.toolbar,
+    drawerContainer: {
+      overflow: 'auto',
+    },
   }),
 );
 
@@ -67,7 +70,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ pathname }) => {
       classes={{ paper: classes.drawerPaper }}
       anchor="left"
     >
-      <div className={classes.toolbar} />
       <Divider />
       <List>
         {menuItems.map((item) => (

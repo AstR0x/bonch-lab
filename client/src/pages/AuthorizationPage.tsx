@@ -1,13 +1,13 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { LinearProgress } from '@material-ui/core';
+import { Container, LinearProgress } from '@material-ui/core';
 
 import { AuthorizationForm, SignInPayload } from '@features/auth';
 import { selectors as loadingSelectors, LOADERS } from '@features/loading';
 import { actions as authActions } from '@processes/auth';
 
 /**
- * Страница авторизации пользователя
+ * Страница "Авторизация"
  *
  * @returns react-элемент
  */
@@ -28,10 +28,12 @@ export const AuthorizationPage: React.FC = () => {
   return (
     <>
       {isSignInLoading && <LinearProgress />}
-      <AuthorizationForm
-        isSignInLoading={isSignInLoading}
-        onSignIn={handleSignIn}
-      />
+      <Container component="div" maxWidth="xs">
+        <AuthorizationForm
+          isSignInLoading={isSignInLoading}
+          onSignIn={handleSignIn}
+        />
+      </Container>
     </>
   );
 };

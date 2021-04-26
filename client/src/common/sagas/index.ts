@@ -1,0 +1,1 @@
+export { handleWorker } from './handleWorker';

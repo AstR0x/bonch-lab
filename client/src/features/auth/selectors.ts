@@ -3,6 +3,7 @@ import { createSelector } from '@reduxjs/toolkit';
 
 import { RootState } from '@store';
 import { config } from '@common/config';
+import { getShortName } from '@common/utils';
 
 import { AuthorizationState } from './ducks';
 import { RoleEnum } from './types';
@@ -34,6 +35,16 @@ const tokenSelector = createSelector(authSelector, (auth): string =>
 const userDataSelector = createSelector(authSelector, (auth) =>
   pathOr(null, ['userData'], auth),
 );
+
+/**
+ * Возвращает информацию о пользователе
+ *
+ * @returns данные пользователя
+ */
+const userInfoSelector = createSelector(userDataSelector, (userData) => ({
+  shortName: getShortName(userData),
+  group: userData.group,
+}));
 
 /**
  * Возвращает роль пользователя
@@ -78,6 +89,7 @@ export const selectors = {
   authSelector,
   tokenSelector,
   userDataSelector,
+  userInfoSelector,
   userRoleSelector,
   isUserAuthorizedSelector,
   isStudentAuthorizedSelector,

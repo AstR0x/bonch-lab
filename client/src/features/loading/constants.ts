@@ -6,4 +6,6 @@ export const LOADERS = {
   SIGN_UP_LOADING: 'SIGN_UP_LOADING',
   // Лоадер при авторизации
   SIGN_IN_LOADING: 'SIGN_IN_LOADING',
+  // Лоадер при выходе
+  SIGN_OUT_LOADING: 'SIGN_OUT_LOADING',
 };

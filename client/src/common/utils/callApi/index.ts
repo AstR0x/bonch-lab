@@ -2,6 +2,8 @@ import { pathOr } from 'ramda';
 import { AxiosPromise } from 'axios';
 import { call } from 'redux-saga/effects';
 
+import { ServerError } from '@features/errors';
+
 /**
  * Обертка над функцией отправки API запроса
  *
@@ -15,13 +17,14 @@ export function* callApi(
   command: (...args: any[]) => AxiosPromise,
   params: any[] = [],
   pathData = ['data'],
-  pathError = ['response', 'data', 'message'],
+  pathError = ['response', 'data'],
 ) {
   try {
     const response = yield call(command, ...params);
     return pathOr(null, pathData, response);
   } catch (error) {
-    const errorMessage = pathOr(null, pathError, error);
-    throw new Error(errorMessage);
+    console.error(error);
+    const { message, statusCode } = pathOr(null, pathError, error);
+    throw new ServerError(message, statusCode);
   }
 }

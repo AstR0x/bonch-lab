@@ -13,8 +13,13 @@ const signIn = createAction<SignInPayload>('signIn');
 const signUp = createAction<SignUpPayload>('signUp');
 
 /**
+ * Экшен выхода из приложения
+ */
+const signOut = createAction('signOut');
+
+/**
  * Экшен автоматической авторизации
  */
 const autoSignIn = createAction('authSignIn');
 
-export const actions = { signIn, signUp, autoSignIn };
+export const actions = { signIn, signUp, signOut, autoSignIn };

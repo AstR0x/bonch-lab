@@ -1,9 +1,11 @@
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
+import { Request } from 'express';
 import {
   Get,
   Post,
   Patch,
+  Req,
   Body,
   Controller,
   ValidationPipe,
@@ -21,6 +23,7 @@ import { SignInDto } from './dto/signin.dto';
 import { ConfirmAccountDto } from './dto/confirm-account.dto';
 import { ForgotPasswordDto } from './dto/forgot-password.dto';
 import { ChangePasswordDto } from './dto/change-password.dto';
+import { JwtAuthGuard } from './guards/jwt-auth.guard';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -41,5 +44,13 @@ export class AuthController {
     @Body(new ValidationPipe()) signInDto: SignInDto,
   ): Promise<string> {
     return await this.authService.signIn(signInDto);
+  }
+
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Выход пользователя.' })
+  @UseGuards(JwtAuthGuard)
+  @Get('/sign-out')
+  async signOut(@Req() request: Request): Promise<boolean> {
+    return await this.authService.signOut(request);
   }
 }

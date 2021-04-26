@@ -11,7 +11,11 @@ export const URLS = {
   // Страница "Регистрация"
   REGISTRATION_PAGE: '/registration',
   // Страница "Восстановление пароля"
-  PASSWORD_RECOVERY_PAGE: './recovery',
+  PASSWORD_RECOVERY_PAGE: '/recovery',
+  // Страница "Группы"
+  GROUPS_PAGE: '/groups',
+  // Страница "Группа"
+  GROUP_PAGE: '/group/:id',
   // Страница "О сайте"
   ABOUT_PAGE: '/about',
 };

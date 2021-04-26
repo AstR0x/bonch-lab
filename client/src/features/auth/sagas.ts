@@ -22,11 +22,11 @@ function* setTokenInStore(token: string): SagaIterator {
   // Формируем данные пользователя, отбросив лишние поля
   const userData = R.omit(['iat', 'exp'], decodedToken);
 
-  // Записываем токен в стор
-  yield put(actions.setToken(token));
-
   // Записываем данные, полученные из токена доступа в стор
   yield put(actions.setUserData(userData));
+
+  // Записываем токен в стор
+  yield put(actions.setToken(token));
 }
 
 /**
@@ -37,13 +37,17 @@ function* setTokenInStore(token: string): SagaIterator {
 function* signIn(signInPayload: SignInPayload): SagaIterator {
   const { password } = signInPayload;
   // Шифруем пароль
+
   const encodedPassword = yield call(utils.encodePassword, password);
   // Выполняем запрос на авторизацию
+
   const token = yield call(callApi, api.signIn, [
     R.merge(signInPayload, { password: encodedPassword }),
   ]);
+
   // Записываем данные пользователя и токен в стор
   yield call(setTokenInStore, token);
+
   // Записываем данные пользователя и токен в localStorage
   yield call(utils.setSessionToken, token);
 }
@@ -55,12 +59,28 @@ function* signIn(signInPayload: SignInPayload): SagaIterator {
  */
 function* signUp(signUpPayload: SignUpPayload): SagaIterator {
   const { password } = signUpPayload;
+
   // Шифруем пароль
   const encodedPassword = yield call(utils.encodePassword, password);
+
   // Выполняем запрос на регистрацию
   yield call(callApi, api.signUp, [
     R.merge(signUpPayload, { password: encodedPassword }),
   ]);
 }
 
-export const sagas = { signIn, signUp, setTokenInStore };
+/**
+ * Выход из приложения
+ */
+function* signOut(): SagaIterator {
+  // Выполняем запрос на выход из приложения
+  yield call(callApi, api.signOut);
+
+  // Удаляем токен из localStorage
+  yield call(utils.deleteSessionToken);
+
+  // Удаляем токен и данные пользователя из стора
+  yield put(actions.resetAuthData());
+}
+
+export const sagas = { signIn, signUp, signOut, setTokenInStore };

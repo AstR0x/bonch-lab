@@ -22,4 +22,12 @@ const signUp = (data: SignUpPayload): AxiosPromise<boolean> =>
 const signIn = (data: SignInPayload): AxiosPromise<string> =>
   request.post({ url: 'auth/sign-in', data });
 
-export const api = { signUp, signIn };
+/**
+ * Выход из приложения
+ *
+ * @returns axios промис
+ */
+const signOut = (): AxiosPromise<boolean> =>
+  request.get({ url: 'auth/sign-out' });
+
+export const api = { signUp, signIn, signOut };
