@@ -4,7 +4,9 @@ import { Redirect } from 'react-router';
 
 import { URLS } from '@src/constants';
 
-import { RouteWrapper, RouteWrapperProps, RoleEnum, selectors } from '../';
+import { RouteWrapper, RouteWrapperProps } from './';
+import { RoleEnum } from '../types';
+import { selectors } from '../selectors';
 
 interface ProtectedRouteProps extends RouteWrapperProps {
   role: RoleEnum;
@@ -19,7 +21,10 @@ interface ProtectedRouteProps extends RouteWrapperProps {
  * @param props - свойства компонента
  * @returns react-компонент
  */
-export const ProtectedRoute = ({ role, ...props }: ProtectedRouteProps) => {
+export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
+  role,
+  ...props
+}) => {
   const isUserAuthorized = useSelector(selectors.isUserAuthorizedSelector);
 
   if (!isUserAuthorized) {

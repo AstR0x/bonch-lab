@@ -86,6 +86,7 @@ export class AuthService {
       const user = await this.usersService.findByEmail(email);
 
       if (user && (await bcrypt.compare(password, user.password))) {
+        
         // Генерируем токен
         const token = await this.generateToken(user);
 
@@ -125,6 +126,7 @@ export class AuthService {
         status: user.status,
         role: user.role,
         email: user.email,
+        group: user.group,
       };
       const token = await this.jwtService.sign(tokenPayload);
       const expireAt = moment().add(24, 'h').toISOString();

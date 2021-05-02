@@ -29,10 +29,17 @@ export const validatePassword = (value: string): boolean => {
   return true;
 };
 
+/**
+ * Валидирует строку на соответствие названию группы
+ *
+ * @param value - значение, которое нужно провалидировать
+ * @returns соответствует ли строка названию группы ?
+ */
+export const validateGroupName = (value: string): boolean => {
+  return /[А-Я]{1,5}-\d{1,3}[А-я]{0,3}/.test(value);
+};
+
 export const validators = {
-  name: validateName,
-  surname: validateName,
-  patronymic: validateName,
   email: validateEmail,
   password: validatePassword,
 };

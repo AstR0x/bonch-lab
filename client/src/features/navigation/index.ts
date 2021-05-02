@@ -1,1 +1,1 @@
-export { selectors } from './selectors';
+export { selectors as navSelectors } from './selectors';

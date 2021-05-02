@@ -1,3 +1,3 @@
 export { useForm } from './useForm';
-export { useOpenClose } from './useOpenClose';
+export { useModal } from './useModal';
 export { useTypedSelector } from './useTypedSelectors';

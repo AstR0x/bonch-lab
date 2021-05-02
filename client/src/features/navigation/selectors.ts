@@ -4,34 +4,37 @@ import { pathOr } from 'ramda';
 import { RootState } from '@store';
 import { config } from '@common/config';
 
-const navigationSelector = (state: RootState) => state[config.modules.router];
+const navigationModuleSelector = (state: RootState) =>
+  state[config.modules.router];
 
 /**
  * Получение URL страницы
  */
-const pathName = createSelector(navigationSelector, (navigation): string =>
-  pathOr('/', ['location', 'pathname'], navigation),
+const pathName = createSelector(
+  navigationModuleSelector,
+  (navigation): string => pathOr('/', ['location', 'pathname'], navigation),
 );
 
 /**
  * Получение якорной ссылки
  */
-const hash = createSelector(navigationSelector, (navigation): string =>
+const hash = createSelector(navigationModuleSelector, (navigation): string =>
   pathOr('', ['location', 'hash'], navigation),
 );
 
 /**
  * Получение query-params в виде объекта
  */
-const queryParams = createSelector(navigationSelector, (navigation) =>
+const queryParams = createSelector(navigationModuleSelector, (navigation) =>
   pathOr({}, ['location', 'query'], navigation),
 );
 
 /**
  * Получение query-params в виде строки
  */
-const searchString = createSelector(navigationSelector, (navigation): string =>
-  pathOr('', ['location', 'search'], navigation),
+const searchString = createSelector(
+  navigationModuleSelector,
+  (navigation): string => pathOr('', ['location', 'search'], navigation),
 );
 
 export const selectors = {

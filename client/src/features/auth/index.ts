@@ -1,8 +1,8 @@
-export { api } from './api';
-export { actions, authReducer } from './ducks';
-export { sagas } from './sagas';
-export { selectors } from './selectors';
-export { utils } from './utils';
+export { api as authApi } from './api';
+export { actions as authActions, authReducer } from './ducks';
+export { sagas as authSagas } from './sagas';
+export { selectors as authSelectors } from './selectors';
+export { utils as authUtils } from './utils';
 export { createRequestsInterceptor } from './interceptor';
 export {
   UserInfo,
@@ -13,4 +13,11 @@ export {
   ProtectedRoute,
   RouteWrapperProps,
 } from './components';
-export { RoleEnum, SignInPayload, SignUpPayload } from './types';
+export {
+  RoleEnum,
+  User,
+  Teacher,
+  Student,
+  SignInPayload,
+  SignUpPayload,
+} from './types';

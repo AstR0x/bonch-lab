@@ -34,17 +34,25 @@ export const useForm = <T extends FormState>(
   const resetFormState = () => setState(initialState);
 
   /**
-   * Обрабатывает изменения в компоненте TextField с валидацией
+   * Обрабатывает и валидирует изменения в компоненте TextField
    */
   const onTextFieldChange = ({
-    target: { name, value },
+    target: { name, value, required },
   }: React.ChangeEvent<HTMLInputElement>) => {
     setState((prevState) => {
+      let hasError = false;
+
       const validator =
         (prevState.validators && prevState.validators[name]) ||
         validators[name as keyof typeof validators];
 
-      const hasError = validator ? Boolean(value) && !validator(value) : false;
+      if (required) {
+        hasError = !Boolean(value);
+      }
+
+      if (validator) {
+        hasError = !validator(value);
+      }
 
       return {
         ...prevState,

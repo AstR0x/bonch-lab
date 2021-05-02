@@ -1,5 +1,7 @@
 import React from 'react';
 import {
+  createStyles,
+  makeStyles,
   Drawer,
   Divider,
   List,
@@ -7,12 +9,7 @@ import {
   ListItemIcon,
   ListItemText,
 } from '@material-ui/core';
-import {
-  LockOpenOutlined,
-  AccountBoxOutlined,
-  InfoOutlined,
-} from '@material-ui/icons';
-import { createStyles, makeStyles } from '@material-ui/core/styles';
+import { GroupOutlined } from '@material-ui/icons';
 
 import { URLS } from '@src/constants';
 import { history } from '@store';
@@ -47,19 +44,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ pathname }) => {
   const classes = useStyles();
   const menuItems = [
     {
-      title: 'Авторизация',
-      url: URLS.AUTHORIZATION_PAGE,
-      icon: <LockOpenOutlined />,
-    },
-    {
-      title: 'Регистрация',
-      url: URLS.REGISTRATION_PAGE,
-      icon: <AccountBoxOutlined />,
-    },
-    {
-      title: 'О сайте',
-      url: URLS.ABOUT_PAGE,
-      icon: <InfoOutlined />,
+      title: 'Группы',
+      url: URLS.GROUPS_PAGE,
+      icon: <GroupOutlined />,
     },
   ];
 

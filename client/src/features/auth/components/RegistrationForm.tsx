@@ -20,7 +20,10 @@ import {
 import { URLS } from '@src/constants';
 import { useForm } from '@common/hooks';
 import { uiMessages } from '@common/messages';
-import { SignUpPayload, RoleEnum, utils } from '@features/auth';
+import { validateName } from '@common/utils';
+
+import { SignUpPayload, RoleEnum } from '../types';
+import { utils } from '../utils';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -52,19 +55,16 @@ const useStyles = makeStyles((theme) => ({
 
 interface RegistrationFormProps {
   onSignUp: (signUpPayload: SignUpPayload) => void;
-  isSignUpLoading: boolean;
 }
 
 /**
  * Форма регистрации
  *
  * @param onSignUp - Диспатчит экшен авторизации
- * @param isSignUpLoading - Идёт загрузка при регистрации ?
  * @returns Форма регистрации
  */
 export const RegistrationForm: React.FC<RegistrationFormProps> = ({
   onSignUp,
-  isSignUpLoading,
 }) => {
   const classes = useStyles();
   const { formState, resetValue, onTextFieldChange, onSelectChange } = useForm({
@@ -78,6 +78,11 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({
       role: '' as RoleEnum,
       group: '',
     },
+    validators: {
+      name: validateName,
+      surname: validateName,
+      patronymic: validateName,
+    },
     errors: {} as Record<keyof Partial<SignUpPayload>, boolean>,
   });
 
@@ -90,10 +95,9 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({
   const optionalKeys = utils.isTeacher(formState.values.role) ? ['group'] : [];
   const requiredValues = R.omit(optionalKeys, formState.values);
   const requiredKeys = R.keys(requiredValues);
-  const isSignUpButtonDisabled =
-    requiredKeys.some(
-      (key) => !formState.values[key] || formState.errors[key],
-    ) || isSignUpLoading;
+  const isSignUpButtonDisabled = requiredKeys.some(
+    (key) => !formState.values[key] || formState.errors[key],
+  );
 
   return (
     <Container component="main" maxWidth="xs">
@@ -110,31 +114,30 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({
             label="Кодовое слово"
             variant="outlined"
             margin="normal"
-            required
             fullWidth
             autoFocus
             autoComplete="off"
             onChange={onTextFieldChange}
+            required
           />
           <TextField
             name="name"
             label="Имя"
             variant="outlined"
             margin="normal"
-            required
             fullWidth
             autoComplete="off"
             value={formState.values.name}
             error={formState.errors.name}
             helperText={formState.errors.name && uiMessages.helperTexts.name}
             onChange={onTextFieldChange}
+            required
           />
           <TextField
             name="surname"
             label="Фамилия"
             variant="outlined"
             margin="normal"
-            required
             fullWidth
             autoComplete="off"
             value={formState.values.surname}
@@ -143,13 +146,13 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({
               formState.errors.surname && uiMessages.helperTexts.surname
             }
             onChange={onTextFieldChange}
+            required
           />
           <TextField
             name="patronymic"
             label="Отчество"
             variant="outlined"
             margin="normal"
-            required
             fullWidth
             autoComplete="off"
             value={formState.values.patronymic}
@@ -158,6 +161,7 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({
               formState.errors.patronymic && uiMessages.helperTexts.patronymic
             }
             onChange={onTextFieldChange}
+            required
           />
           <TextField
             name="email"
@@ -165,13 +169,13 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({
             label="Электронная почта"
             variant="outlined"
             margin="normal"
-            required
             fullWidth
             autoComplete="off"
             value={formState.values.email}
             error={formState.errors.email}
             helperText={formState.errors.email && uiMessages.helperTexts.email}
             onChange={onTextFieldChange}
+            required
           />
           <TextField
             name="password"
@@ -211,7 +215,7 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({
                 value={formState.values.group}
                 onChange={onSelectChange}
               >
-                <MenuItem value="60819a7d892db727e8e3effa">ИКПИ-71</MenuItem>
+                <MenuItem value="60871172ab151000948a1a0f">ИКПИ-71</MenuItem>
               </Select>
             </FormControl>
           )}

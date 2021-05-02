@@ -29,7 +29,8 @@ export class UsersService {
   }
 
   async findByEmail(email: string): Promise<IUser> {
-    return await this.usersModel.findOne({ email }).exec();
+    return await this.usersModel.findOne({ email })
+      .populate('group', '-codeword -students').exec();
   }
 
   async update(id: string, payload: Partial<IUser>) {

@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { Typography } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 
-import { selectors } from '../';
+import { selectors } from '../selectors';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

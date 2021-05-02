@@ -2,24 +2,25 @@ import { PayloadAction } from '@reduxjs/toolkit';
 import { all, call, takeEvery } from 'redux-saga/effects';
 import { SagaIterator } from 'redux-saga';
 
-import { handleWorker } from '@common/sagas';
-import { sagas as notificationSagas } from '@features/notification';
-import { LOADERS } from '@features/loading';
+import { URLS } from '@src/constants';
+import { processHandler } from '@common/sagas';
+import { notificationSagas } from '@features/notification';
 import {
-  sagas as authSagas,
-  utils as authUtils,
+  authSagas,
+  authUtils,
   SignInPayload,
   SignUpPayload,
 } from '@features/auth';
+import { history } from '@store';
 
 import { actions as authActions } from './actions';
 
 /**
- * Авторизация пользователя (без обработки)
+ * Процесс авторизации пользователя (без обработки)
  *
  * @param signInPayload - данные авторизации
  */
-function* notHandledSignInWorker(signInPayload: SignInPayload): SagaIterator {
+function* notHandledSignInProcess(signInPayload: SignInPayload): SagaIterator {
   // Авторизуемся
   yield call(authSagas.signIn, signInPayload);
   // Показываем уведомление об успешной авторизации
@@ -30,28 +31,30 @@ function* notHandledSignInWorker(signInPayload: SignInPayload): SagaIterator {
 }
 
 /**
- * Авторизация пользователя
+ * Процесс авторизации пользователя
  *
  * @param payload - данные авторизации
  */
-function* signInWorker({
+function* signInProcess({
   payload: signInPayload,
 }: PayloadAction<SignInPayload>): SagaIterator {
-  yield call(handleWorker, {
-    worker: notHandledSignInWorker,
+  yield call(processHandler, {
+    process: notHandledSignInProcess,
     payload: signInPayload,
-    loader: LOADERS.SIGN_IN_LOADING,
+    loader: true,
   });
 }
 
 /**
- * Регистрация пользователя (без обработки)
+ * Процесс регистрации пользователя (без обработки)
  *
  * @param signUpPayload - данные регистрации
  */
-function* notHandledSignUpWorker(signUpPayload: SignUpPayload): SagaIterator {
+function* notHandledSignUpProcess(signUpPayload: SignUpPayload): SagaIterator {
   // Регистрируемся
   yield call(authSagas.signUp, signUpPayload);
+  // Переходим на страницу авторизации
+  yield call(history.push, URLS.AUTHORIZATION_PAGE);
   // Показываем уведомление об успешной регистрации
   yield call(
     notificationSagas.showSuccessNotification,
@@ -59,24 +62,24 @@ function* notHandledSignUpWorker(signUpPayload: SignUpPayload): SagaIterator {
   );
 }
 /**
- * Регистрация пользователя
+ * Процесс регистрации пользователя
  *
  * @param payload - данные регистрации
  */
-function* signUpWorker({
+function* signUpProcess({
   payload: signUpPayload,
 }: PayloadAction<SignUpPayload>): SagaIterator {
-  yield call(handleWorker, {
-    worker: notHandledSignUpWorker,
+  yield call(processHandler, {
+    process: notHandledSignUpProcess,
     payload: signUpPayload,
-    loader: LOADERS.SIGN_UP_LOADING,
+    loader: true,
   });
 }
 
 /**
- * Выход из приложения (без обработки)
+ * Процесс выхода из приложения (без обработки)
  */
-function* notHandledSignOutWorker(): SagaIterator {
+function* notHandledSignOutProcess(): SagaIterator {
   // Выходим из приложения
   yield call(authSagas.signOut);
   // Показываем уведомление об успешном выходе
@@ -87,19 +90,19 @@ function* notHandledSignOutWorker(): SagaIterator {
 }
 
 /**
- * Выход из приложения
+ * Процесс выхода из приложения
  */
-function* signOutWorker(): SagaIterator {
-  yield call(handleWorker, {
-    worker: notHandledSignOutWorker,
-    loader: LOADERS.SIGN_OUT_LOADING,
+function* signOutProcess(): SagaIterator {
+  yield call(processHandler, {
+    process: notHandledSignOutProcess,
+    loader: true,
   });
 }
 
 /**
- * Автоматическая авторизация пользователя (без обработки)
+ * Процесс автоматической авторизации пользователя (без обработки)
  */
-export function* notHandledAutoSignInWorker(): SagaIterator {
+export function* notHandledAutoSignInProcess(): SagaIterator {
   // Получаем токен из localStorage
   const token = authUtils.getSessionToken();
 
@@ -109,20 +112,21 @@ export function* notHandledAutoSignInWorker(): SagaIterator {
 }
 
 /**
- * Автоматическая авторизация пользователя
+ * Процесс автоматической авторизация пользователя
  */
-function* autoSignInWorker(): SagaIterator {
-  yield call(handleWorker, {
-    worker: notHandledAutoSignInWorker,
+function* autoSignInProcess(): SagaIterator {
+  yield call(processHandler, {
+    process: notHandledAutoSignInProcess,
+    loader: true,
   });
 }
 
 /**
  * Вотчер авторизации
  */
-export function* authWatcher(): SagaIterator {
-  yield all([takeEvery(authActions.signIn, signInWorker)]);
-  yield all([takeEvery(authActions.signUp, signUpWorker)]);
-  yield all([takeEvery(authActions.signOut, signOutWorker)]);
-  yield all([takeEvery(authActions.autoSignIn, autoSignInWorker)]);
+export function* authProcessWatcher(): SagaIterator {
+  yield all([takeEvery(authActions.signIn, signInProcess)]);
+  yield all([takeEvery(authActions.signUp, signUpProcess)]);
+  yield all([takeEvery(authActions.signOut, signOutProcess)]);
+  yield all([takeEvery(authActions.autoSignIn, autoSignInProcess)]);
 }

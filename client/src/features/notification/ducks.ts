@@ -4,9 +4,9 @@ import { Color } from '@material-ui/lab';
 import { config } from '@common/config';
 
 export interface INotificationState {
-  // Сообщение уведомления
+  /** Сообщение уведомления */
   message: string;
-  // Цвет уведомления
+  /** Цвет уведомления */
   severity: Color;
 }
 
@@ -28,8 +28,4 @@ const notificationSlice = createSlice({
   },
 });
 
-export const notificationReducer = notificationSlice.reducer;
-
-export const actions = {
-  ...notificationSlice.actions,
-};
+export const { reducer: notificationReducer, actions } = notificationSlice;

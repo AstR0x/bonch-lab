@@ -6,34 +6,34 @@ import { config } from '@common/config';
 
 import { ErrorsState } from './ducks';
 
-const errorsSelector = (state: RootState): ErrorsState =>
+const errorsModuleSelector = (state: RootState): ErrorsState =>
   state[config.modules.errors];
 
 /**
  * ## [Селектор] Есть ли глобальная ошибка
  */
-const isErrorExist = createSelector(errorsSelector, (errors): boolean =>
+const isErrorExist = createSelector(errorsModuleSelector, (errors): boolean =>
   not(isNil(errors)),
 );
 
 /**
  * ## [Селектор] Получить заголовок ошибки
  */
-const errorTitle = createSelector(errorsSelector, (error): string =>
+const errorTitle = createSelector(errorsModuleSelector, (error): string =>
   pathOr('', ['title'], error),
 );
 
 /**
  * ## [Селектор] Получить текст ошибки
  */
-const errorMessage = createSelector(errorsSelector, (error): string =>
+const errorMessage = createSelector(errorsModuleSelector, (error): string =>
   pathOr('', ['message'], error),
 );
 
 /**
  * ## [Селектор] Получить код ошибки
  */
-const errorCode = createSelector(errorsSelector, (error): string =>
+const errorCode = createSelector(errorsModuleSelector, (error): string =>
   pathOr('', ['code'], error),
 );
 

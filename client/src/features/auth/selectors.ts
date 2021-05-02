@@ -14,7 +14,7 @@ import { RoleEnum } from './types';
  * @param state - стор приложения
  * @returns данные модуля авторизации или null
  */
-const authSelector = (state: RootState): AuthorizationState =>
+const authModuleSelector = (state: RootState): AuthorizationState =>
   pathOr(null, [config.modules.auth], state);
 
 /**
@@ -23,7 +23,7 @@ const authSelector = (state: RootState): AuthorizationState =>
  * @param state - состояние хранилища
  * @returns access токен или null
  */
-const tokenSelector = createSelector(authSelector, (auth): string =>
+const tokenSelector = createSelector(authModuleSelector, (auth): string =>
   pathOr(null, ['token'], auth),
 );
 
@@ -32,7 +32,7 @@ const tokenSelector = createSelector(authSelector, (auth): string =>
  *
  * @returns данные, полученные после авторизации или null
  */
-const userDataSelector = createSelector(authSelector, (auth) =>
+const userDataSelector = createSelector(authModuleSelector, (auth) =>
   pathOr(null, ['userData'], auth),
 );
 
@@ -43,7 +43,7 @@ const userDataSelector = createSelector(authSelector, (auth) =>
  */
 const userInfoSelector = createSelector(userDataSelector, (userData) => ({
   shortName: getShortName(userData),
-  group: userData.group,
+  group: userData.group?.name,
 }));
 
 /**
@@ -86,7 +86,6 @@ const isTeacherAuthorizedSelector = createSelector(
 );
 
 export const selectors = {
-  authSelector,
   tokenSelector,
   userDataSelector,
   userInfoSelector,

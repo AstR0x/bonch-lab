@@ -1,3 +1,4 @@
 export { Notification } from './components/Notification';
-export { notificationReducer, actions } from './ducks';
-export { sagas } from './sagas';
+export { notificationReducer, actions as notificationActions } from './ducks';
+export { sagas as notificationSagas } from './sagas';
+export { selectors as notificationSelectors } from './selectors';

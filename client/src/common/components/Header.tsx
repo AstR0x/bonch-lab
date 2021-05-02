@@ -4,8 +4,8 @@ import { AppBar, Toolbar, Typography, IconButton } from '@material-ui/core';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { ExitToApp } from '@material-ui/icons';
 
-import { UserInfo, selectors } from '@features/auth';
-import { actions } from '@processes/auth';
+import { UserInfo, authSelectors } from '@features/auth';
+import { authProcessActions } from '@processes/auth';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -26,12 +26,12 @@ const useStyles = makeStyles((theme: Theme) =>
 export const Header: React.FC = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const isUserAuthorized = useSelector(selectors.isUserAuthorizedSelector);
+  const isUserAuthorized = useSelector(authSelectors.isUserAuthorizedSelector);
 
   /**
    * Диспатчит экшен выхода из приложения
    */
-  const handleSignUp = () => dispatch(actions.signOut());
+  const handleSignUp = () => dispatch(authProcessActions.signOut());
 
   return (
     <AppBar position="fixed" className={classes.appBar}>

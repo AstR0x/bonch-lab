@@ -1,54 +1,42 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 import { config } from '@common/config';
 
 export interface LoadingState {
-  [key: string]: boolean;
+  isLoading: boolean;
 }
 
-const initialState = {};
+const initialState = { isLoading: false };
 
 /**
  * Устанавливает лоадер видимым
  *
  * @param state - стор модуля
- * @param payload - название лоадера
  * @returns новое состояние стора
  */
-const toShowLoader = (
-  state: LoadingState,
-  { payload }: PayloadAction<string>,
-) => ({
+const showLoader = (state: LoadingState) => ({
   ...state,
-  [payload]: true,
+  isLoading: true,
 });
 
 /**
  * Устанавливает лоадер невидимым
  *
  * @param state - стор модуля
- * @param payload - название лоадера
  * @returns новое состояние стора
  */
-const toHideLoader = (
-  state: LoadingState,
-  { payload }: PayloadAction<string>,
-) => ({
+const hideLoader = (state: LoadingState) => ({
   ...state,
-  [payload]: false,
+  isLoading: false,
 });
 
 const loadingSlice = createSlice({
   name: config.modules.loading,
   initialState,
   reducers: {
-    showLoader: toShowLoader,
-    hideLoader: toHideLoader,
+    showLoader,
+    hideLoader,
   },
 });
 
-export const loadingReducer = loadingSlice.reducer;
-
-export const actions = {
-  ...loadingSlice.actions,
-};
+export const { reducer: loadingReducer, actions } = loadingSlice;

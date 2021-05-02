@@ -1,4 +1,4 @@
-export { errorsReducer, actions } from './ducks';
-export { selectors } from './selectors';
-export { ErrorLayout } from './components/ErrorLayout';
+export { errorsReducer, actions as errorsActions } from './ducks';
+export { selectors as errorsSelectors } from './selectors';
+export { ErrorLayout } from './components';
 export { ServerError } from './ServerError';

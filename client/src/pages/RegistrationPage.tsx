@@ -1,10 +1,9 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Container, LinearProgress } from '@material-ui/core';
+import { useDispatch } from 'react-redux';
+import { Container } from '@material-ui/core';
 
 import { RegistrationForm, SignUpPayload } from '@features/auth';
-import { selectors as loadingSelectors, LOADERS } from '@features/loading';
-import { actions as authActions } from '@processes/auth';
+import { authProcessActions } from '@processes/auth';
 
 /**
  * Страница "Регистрация"
@@ -13,9 +12,6 @@ import { actions as authActions } from '@processes/auth';
  */
 export const RegistrationPage: React.FC = () => {
   const dispatch = useDispatch();
-  const isSignUpLoading = useSelector(
-    loadingSelectors.isLoadingSelector(LOADERS.SIGN_UP_LOADING),
-  );
 
   /**
    * Диспатчит экшен регистрации
@@ -23,17 +19,11 @@ export const RegistrationPage: React.FC = () => {
    * @param signUpPayload - данные регистрации
    */
   const handleSignUp = (signUpPayload: SignUpPayload) =>
-    dispatch(authActions.signUp(signUpPayload));
+    dispatch(authProcessActions.signUp(signUpPayload));
 
   return (
-    <>
-      {isSignUpLoading && <LinearProgress />}
-      <Container component="div" maxWidth="xs">
-        <RegistrationForm
-          onSignUp={handleSignUp}
-          isSignUpLoading={isSignUpLoading}
-        />
-      </Container>
-    </>
+    <Container component="div" maxWidth="xs">
+      <RegistrationForm onSignUp={handleSignUp} />
+    </Container>
   );
 };

@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-// Получаем глобальные настройки приложения
 import { config } from '@common/config';
 
 export type ErrorsState = {
@@ -46,8 +45,4 @@ const errorsSlice = createSlice({
   },
 });
 
-export const errorsReducer = errorsSlice.reducer;
-
-export const actions = {
-  ...errorsSlice.actions,
-};
+export const { reducer: errorsReducer, actions } = errorsSlice;

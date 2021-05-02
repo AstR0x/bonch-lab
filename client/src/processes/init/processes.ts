@@ -3,7 +3,7 @@ import { put, all, takeEvery, call } from 'redux-saga/effects';
 
 import { request } from '@src/constants';
 import { createRequestsInterceptor } from '@features/auth';
-import { actions as authActions } from '@processes/auth';
+import { authProcessActions } from '@processes/auth';
 
 import { actions as initProcessActions } from './actions';
 
@@ -14,7 +14,7 @@ import { actions as initProcessActions } from './actions';
  */
 function* initProcess(): SagaIterator {
   // Запускаем автоматическую авторизацию пользователя
-  yield put(authActions.autoSignIn());
+  yield put(authProcessActions.autoSignIn());
 
   // Создаём перехватчик запросов
   yield call(createRequestsInterceptor, request.axiosInstance);

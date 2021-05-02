@@ -1,2 +1,2 @@
-export { actions } from './actions';
-export { authWatcher } from './processes';
+export { actions as authProcessActions } from './actions';
+export { authProcessWatcher } from './processes';

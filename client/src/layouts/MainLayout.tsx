@@ -1,26 +1,20 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import {
-  Container,
-  createStyles,
-  makeStyles,
-  Theme,
-} from '@material-ui/core';
+import { Container, createStyles, makeStyles } from '@material-ui/core';
 
 import { Header, Sidebar } from '@common/components';
-import { ErrorLayout, selectors as errorSelectors } from '@features/errors';
-import { selectors as navSelectors } from '@features/navigation';
+import { ErrorLayout, errorsSelectors } from '@features/errors';
+import { loadingSelectors, Loader } from '@features/loading';
+import { navSelectors } from '@features/navigation';
 import { Notification } from '@features/notification';
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
   createStyles({
     root: {
       display: 'flex',
     },
     content: {
       flexGrow: 1,
-      width: '100%',
-      padding: theme.spacing(3),
       paddingTop: 128,
     },
   }),
@@ -34,13 +28,15 @@ const useStyles = makeStyles((theme: Theme) =>
 export const MainLayout: React.FC = ({ children }) => {
   const classes = useStyles();
   const pathname = useSelector(navSelectors.pathName);
-  const errorExist = useSelector(errorSelectors.isErrorExist);
+  const errorExist = useSelector(errorsSelectors.isErrorExist);
+  const isLoading = useSelector(loadingSelectors.isLoadingSelector);
 
   return (
-    <Container className={classes.root}>
+    <Container className={classes.root} maxWidth="xl">
+      <Loader isLoading={isLoading} />
       <Header />
       <Sidebar pathname={pathname} />
-      <Container component="main" className={classes.content}>
+      <Container className={classes.content} component="main" maxWidth="xl">
         {errorExist ? <ErrorLayout /> : children}
       </Container>
       <Notification />

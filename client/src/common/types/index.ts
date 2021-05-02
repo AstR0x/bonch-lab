@@ -1,9 +1,9 @@
 import * as React from 'react';
 
-export interface HandleWorkerPayload {
-  worker: (...args: any[]) => any;
+export interface ProcessHandlerPayload {
+  process: (...args: any[]) => any;
   payload?: any;
-  loader?: string;
+  loader?: boolean;
 }
 
 export interface FormState {

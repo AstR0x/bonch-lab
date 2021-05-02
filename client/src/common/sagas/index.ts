@@ -1,1 +1,1 @@
-export { handleWorker } from './handleWorker';
+export { processHandler } from './processHandler';

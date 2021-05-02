@@ -6,4 +6,5 @@ export interface ITokenPayload {
   status: string;
   role: string;
   email: string;
+  group: string;
 }

@@ -2,7 +2,8 @@ import { SagaIterator } from 'redux-saga';
 import { call, all, fork } from 'redux-saga/effects';
 
 import { initProcessWatcher } from '@processes/init';
-import { authWatcher } from '@processes/auth';
+import { authProcessWatcher } from '@processes/auth';
+import { groupsProcessWatcher } from '@processes/groups';
 
 /**
  * Главная сага - точка входа
@@ -10,7 +11,9 @@ import { authWatcher } from '@processes/auth';
  * @returns итератор
  */
 export function* rootSaga(): SagaIterator {
-  yield call(console.log, 'Root Saga Runner...!');
+  yield call(console.log, 'Root Saga Runner!');
 
-  yield all([initProcessWatcher, authWatcher].map(fork));
+  yield all(
+    [initProcessWatcher, authProcessWatcher, groupsProcessWatcher].map(fork),
+  );
 }

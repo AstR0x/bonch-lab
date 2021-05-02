@@ -8,6 +8,7 @@ import { authReducer } from '@features/auth';
 import { errorsReducer } from '@features/errors';
 import { loadingReducer } from '@features/loading';
 import { notificationReducer } from '@features/notification';
+import { groupsReducer } from '@features/groups';
 
 export const history = createBrowserHistory();
 
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   [config.modules.errors]: errorsReducer,
   [config.modules.loading]: loadingReducer,
   [config.modules.notification]: notificationReducer,
+  [config.modules.groups]: groupsReducer,
   [config.modules.router]: connectRouter(history),
 });
 

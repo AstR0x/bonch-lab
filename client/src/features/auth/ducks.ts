@@ -3,11 +3,13 @@ import { createSlice } from '@reduxjs/toolkit';
 import { config } from '@common/config';
 import { setStoreField } from '@common/utils';
 
+import { Teacher, Student } from './types';
+
 export interface AuthorizationState {
-  // Access токен
+  /** Access токен */
   token: string;
-  // Данные пользователя
-  userData: any;
+  /** Данные пользователя */
+  userData: Teacher | Student;
 }
 
 const initialState: AuthorizationState = {
@@ -35,8 +37,4 @@ const authSlice = createSlice({
   },
 });
 
-export const authReducer = authSlice.reducer;
-
-export const actions = {
-  ...authSlice.actions,
-};
+export const { reducer: authReducer, actions } = authSlice;

@@ -4,12 +4,12 @@ import { Snackbar } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { isNil } from 'ramda';
 
-import { selectors as notificationSelectors } from '../selectors';
-import { actions as notificationActions } from '../ducks';
+import { actions } from '../ducks';
+import { selectors } from '../selectors';
 
 export const Notification: React.FC = () => {
   const dispatch = useDispatch();
-  const notification = useSelector(notificationSelectors.notificationSelector);
+  const notification = useSelector(selectors.notificationModuleSelector);
   const isOpened = !isNil(notification);
 
   /**
@@ -21,22 +21,18 @@ export const Notification: React.FC = () => {
   const closeNotification = (_: React.SyntheticEvent, reason?: string) => {
     // Не закрываем уведомление при клике по любому месту
     if (reason !== 'clickaway') {
-      dispatch(notificationActions.hideNotification());
+      dispatch(actions.hideNotification());
     }
   };
 
   return (
     <Snackbar
       open={isOpened}
-      autoHideDuration={5000}
+      autoHideDuration={3000}
       transitionDuration={0}
       onClose={closeNotification}
     >
-      <Alert
-        variant="filled"
-        severity={notification?.severity}
-        onClose={closeNotification}
-      >
+      <Alert severity={notification?.severity} onClose={closeNotification}>
         {notification?.message}
       </Alert>
     </Snackbar>

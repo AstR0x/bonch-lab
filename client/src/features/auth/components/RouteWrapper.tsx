@@ -13,11 +13,11 @@ export interface RouteWrapperProps extends RouteProps {
  * @param rest - остальные параметры
  * @returns react-компонент
  */
-export const RouteWrapper = ({
+export const RouteWrapper: React.FC<RouteWrapperProps> = ({
   component: Component,
   layout: Layout,
   ...rest
-}: RouteWrapperProps) => (
+}) => (
   <Route
     {...rest}
     render={(props) =>

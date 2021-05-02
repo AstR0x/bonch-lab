@@ -15,7 +15,7 @@ export class GroupsService {
   }
 
   async getGroupById(id: string): Promise<IGroup> {
-    return this.groupsModel.findById(id);
+    return this.groupsModel.findById(id).populate('students', '-password');
   }
 
   async createGroup(createGroupDto: CreateGroupDto): Promise<IGroup> {

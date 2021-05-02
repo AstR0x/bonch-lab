@@ -15,7 +15,8 @@ import {
 import { URLS } from '@src/constants';
 import { useForm } from '@common/hooks';
 import { uiMessages } from '@common/messages';
-import { SignInPayload } from '@features/auth';
+
+import { SignInPayload } from '../types';
 
 export const useStyles = makeStyles((theme) => ({
   paper: {
@@ -38,8 +39,6 @@ export const useStyles = makeStyles((theme) => ({
 }));
 
 interface AuthorizationFormProps {
-  // Идёт загрузка при авторизации
-  isSignInLoading: boolean;
   // Диспатчит экшен авторизации
   onSignIn: (signInPayload: SignInPayload) => void;
 }
@@ -48,11 +47,9 @@ interface AuthorizationFormProps {
  * Форма авторизации
  *
  * @param onSignIn - Диспатчит экшен авторизации
- * @param isSignInLoading - Идёт загрузка при авторизации ?
  * @returns Форма авторизации
  */
 export const AuthorizationForm: React.FC<AuthorizationFormProps> = ({
-  isSignInLoading,
   onSignIn,
 }) => {
   const classes = useStyles();
@@ -63,8 +60,7 @@ export const AuthorizationForm: React.FC<AuthorizationFormProps> = ({
 
   const isSignInButtonDisabled =
     R.values(formState.errors).some((error) => error) ||
-    R.values(formState.values).some((value) => !value) ||
-    isSignInLoading;
+    R.values(formState.values).some((value) => !value);
 
   return (
     <>

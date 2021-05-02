@@ -3,28 +3,57 @@ export enum RoleEnum {
   teacher = 'teacher',
 }
 
-export interface SignInPayload {
-  // Почта пользователя
+export interface User {
+  /** Идентификатор пользователя */
+  id: string;
+  /** Имя пользователя */
+  name: string;
+  /** Фамилия пользователя */
+  surname: string;
+  /** Отчество пользователя */
+  patronymic: string;
+  /** Статус пользователя */
+  status: string;
+  /** Роль пользователя */
+  role: RoleEnum;
+  /** Почта пользователя */
   email: string;
-  // Пароль пользователя
+}
+
+export interface Student extends User {
+  /** Академическая группа */
+  group: string;
+  /** Роль */
+  role: RoleEnum.student;
+}
+
+export interface Teacher extends User {
+  /** Роль */
+  role: RoleEnum.teacher;
+}
+
+export interface SignInPayload {
+  /** Почта пользователя */
+  email: string;
+  /** Пароль пользователя */
   password: string;
 }
 
 export interface SignUpPayload {
-  // Кодовое слово
+  /** Кодовое слово */
   codeword: string;
-  // Имя пользователя
+  /** Имя пользователя */
   name: string;
-  // Фамилия пользователя
+  /** Фамилия пользователя */
   surname: string;
-  // Отчество пользователя
+  /** Отчество пользователя */
   patronymic: string;
-  // Роль пользователя
+  /** Роль пользователя */
   role: RoleEnum;
-  // Академическая группа
+  /** Академическая группа */
   group?: string;
-  // Почта пользователя
+  /** Почта пользователя */
   email: string;
-  // Пароль пользователя
+  /** Пароль пользователя */
   password: string;
 }
