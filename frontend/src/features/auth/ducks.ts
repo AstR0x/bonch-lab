@@ -1,0 +1,40 @@
+import { createSlice } from '@reduxjs/toolkit';
+
+import { config } from '@common/config';
+import { setStoreField } from '@common/utils';
+
+import { Teacher, Student } from './types';
+
+export interface AuthorizationState {
+  /** Access токен */
+  token: string;
+  /** Данные пользователя */
+  userData: Teacher | Student;
+}
+
+const initialState: AuthorizationState = {
+  token: null,
+  userData: null,
+};
+
+/**
+ * Сброс данных авторизации
+ *
+ * @returns обновлённое состояние стора
+ */
+const toResetAuthData = (): AuthorizationState => ({
+  token: null,
+  userData: null,
+});
+
+const authSlice = createSlice({
+  name: config.modules.auth,
+  initialState,
+  reducers: {
+    setToken: setStoreField('token'),
+    setUserData: setStoreField('userData'),
+    resetAuthData: toResetAuthData,
+  },
+});
+
+export const { reducer: authReducer, actions } = authSlice;
