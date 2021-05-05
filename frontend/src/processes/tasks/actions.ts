@@ -12,9 +12,9 @@ import {
 const getTaskList = createAction<GetTaskListParams>('getTaskList');
 
 /**
- * Экшен получения списка задач по теме
+ * Экшен получения структуры тем/подтем/уровней
  */
-const getTaskListByTopic = createAction<number>('getTaskListByTopic');
+const getStructure = createAction('getStructure');
 
 /**
  * Экшен получения одной задачи
@@ -38,8 +38,8 @@ const deleteTask = createAction<string>('deleteTask');
 
 export const actions = {
   getTaskList,
-  getTaskListByTopic,
   getTask,
+  getStructure,
   createTask,
   updateTask,
   deleteTask,

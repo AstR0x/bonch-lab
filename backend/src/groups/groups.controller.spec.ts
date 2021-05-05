@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 
 import { GroupsController } from './groups.controller';
 
-describe('GroupController', () => {
+describe('Group Controller', () => {
   let controller: GroupsController;
 
   beforeEach(async () => {

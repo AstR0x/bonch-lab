@@ -6,7 +6,7 @@ import { TokensModule } from 'src/tokens/tokens.module';
 
 import { GroupsController } from './groups.controller';
 import { GroupsService } from './groups.service';
-import { GroupSchema } from './schemas/group.schema';
+import { GroupSchema } from './schemas';
 
 @Module({
   imports: [

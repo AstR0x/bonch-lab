@@ -11,13 +11,12 @@ import {
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 
-import { Role } from 'src/auth/decorators/role-auth.decorator';
-import { RoleGuard } from 'src/auth/guards/role.guard';
-import { RoleEnum } from 'src/users/enums/role.enum';
+import { Role } from 'src/auth/decorators';
+import { RoleGuard } from 'src/auth/guards';
+import { RoleEnum } from 'src/users/enums';
 
-import { IGroup } from './interfaces/group.interface';
-import { CreateGroupDto } from './dto/create-group.dto';
-import { UpdateGroupDto } from './dto/update-group.dto';
+import { IGroup } from './interfaces';
+import { CreateGroupDto, UpdateGroupDto } from './dto';
 import { GroupsService } from './groups.service';
 
 @ApiTags('groups')

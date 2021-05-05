@@ -31,9 +31,6 @@ const useStyles = makeStyles((theme: Theme) =>
     title: {
       flex: '1 1 100%',
     },
-    tableRow: {
-      cursor: 'pointer',
-    },
   }),
 );
 
@@ -64,16 +61,16 @@ export const GroupTable: React.FC<StudentsTableProps> = ({
         <Typography className={classes.title} component="div" variant="h6">
           {openedGroup.name}
         </Typography>
-        <IconButton onClick={onMoveToEditGroupPage}>
-          <Tooltip title="Редактировать группу">
+        <Tooltip title="Редактировать группу">
+          <IconButton onClick={onMoveToEditGroupPage}>
             <Edit />
-          </Tooltip>
-        </IconButton>
-        <IconButton onClick={() => onOpenDeleteGroupModal(openedGroup)}>
-          <Tooltip title="Удалить группу">
+          </IconButton>
+        </Tooltip>
+        <Tooltip title="Удалить группу">
+          <IconButton onClick={() => onOpenDeleteGroupModal(openedGroup)}>
             <Delete />
-          </Tooltip>
-        </IconButton>
+          </IconButton>
+        </Tooltip>
       </Toolbar>
       {openedGroup.students.length ? (
         <Table aria-label="simple table" size="small">
@@ -89,7 +86,7 @@ export const GroupTable: React.FC<StudentsTableProps> = ({
           </TableHead>
           <TableBody>
             {openedGroup.students.map((student, index) => (
-              <TableRow hover key={student.email} className={classes.tableRow}>
+              <TableRow hover key={student.email}>
                 <TableCell component="th" scope="row" align="left">
                   {index + 1}
                 </TableCell>
@@ -98,11 +95,13 @@ export const GroupTable: React.FC<StudentsTableProps> = ({
                 </TableCell>
                 <TableCell align="left">{student.status}</TableCell>
                 <TableCell align="left">{student.email}</TableCell>
-                <TableCell align="left">{student.registrationDate}</TableCell>
+                <TableCell align="left">{student.regDate}</TableCell>
                 <TableCell align="right">
-                  <IconButton onClick={() => ({})}>
-                    <Delete fontSize="small" />
-                  </IconButton>
+                  <Tooltip title="Удалить студента">
+                    <IconButton onClick={() => ({})}>
+                      <Delete fontSize="small" />
+                    </IconButton>
+                  </Tooltip>
                 </TableCell>
               </TableRow>
             ))}

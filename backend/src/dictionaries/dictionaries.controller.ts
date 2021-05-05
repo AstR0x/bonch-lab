@@ -1,7 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
+import { ApiTags, ApiOperation } from '@nestjs/swagger';
 
-import { IDictionary } from './interfaces/dictionary.interface';
+import { IDictionary } from './interfaces';
 import { DictionariesService } from './dictionaries.service';
 
 @ApiTags('dictionaries')
@@ -19,17 +19,5 @@ export class DictionariesController {
   @Get('/topics')
   async getTopics(): Promise<IDictionary[]> {
     return this.dictionariesService.getTopicList();
-  }
-
-  @ApiOperation({ summary: 'Получение списка подтем.' })
-  @Get('/subtopics')
-  async getSubtopics(): Promise<IDictionary[]> {
-    return this.dictionariesService.getSubtopicList();
-  }
-
-  @ApiOperation({ summary: 'Получение списка уровней.' })
-  @Get('/levels')
-  async getLevels(): Promise<IDictionary[]> {
-    return this.dictionariesService.getLevelList();
   }
 }

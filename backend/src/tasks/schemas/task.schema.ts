@@ -1,23 +1,19 @@
 import * as mongoose from 'mongoose';
-
-import { TaskTopicEnum, TaskSubtopicEnum, TaskLevelEnum } from '../enum';
+import * as _ from 'lodash';
 
 export const TaskSchema = new mongoose.Schema({
   topic: {
-    type: String,
-    enum: Object.values(TaskTopicEnum),
+    type: Number,
     required: true,
     default: null,
   },
   subtopic: {
-    type: String,
-    enum: Object.values(TaskSubtopicEnum),
+    type: Number,
     required: true,
     default: null,
   },
   level: {
-    type: String,
-    enum: Object.values(TaskLevelEnum),
+    type: Number,
     required: true,
     default: null,
   },
@@ -25,5 +21,13 @@ export const TaskSchema = new mongoose.Schema({
     type: String,
     required: true,
     default: null,
+  },
+});
+
+TaskSchema.set('toJSON', {
+  transform: (doc, obj) => {
+    obj.id = obj._id;
+
+    return _.omit(obj, ['_id', '__v']);
   },
 });

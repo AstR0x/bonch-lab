@@ -20,8 +20,12 @@ export const PATHS = {
   CREATE_GROUP_PAGE: '/group/create',
   // Страница "Редактирование группы"
   EDIT_GROUP_PAGE: '/group/edit/:id',
-  // Страница "Тема"
-  TOPIC_PAGE: '/topics/:id',
+  // Страница "Задачи по теме"
+  TASKS_PAGE: '/tasks/topic/:id',
+  // Страница "Создание задачи"
+  CREATE_TASK_PAGE: '/task/create',
+  // Страница "Редактирование задачи"
+  EDIT_TASK_PAGE: '/task/edit/:id',
   // Страница "О сайте"
   ABOUT_PAGE: '/about',
 };

@@ -10,9 +10,11 @@ import {
   RegistrationPage,
   CreateGroupPage,
   EditGroupPage,
+  CreateTaskPage,
+  EditTaskPage,
   GroupPage,
   HomePage,
-  TopicPage,
+  TasksPage,
 } from '@pages';
 import { MainLayout, SimpleLayout } from '@layouts';
 
@@ -22,7 +24,7 @@ interface AppRoutesProps<S = LocationState> {
 
 /**
  * @param props - пропсы компонента
- * @returns Компонент с роутами приложения
+ * @returns компонент с роутами приложения
  */
 export function AppRoutes<S = LocationState>({
   history,
@@ -72,9 +74,23 @@ export function AppRoutes<S = LocationState>({
         />
         <ProtectedRoute
           exact
-          path={PATHS.TOPIC_PAGE}
+          path={PATHS.TASKS_PAGE}
           roles={[RoleEnum.Teacher]}
-          component={TopicPage}
+          component={TasksPage}
+          layout={MainLayout}
+        />
+        <ProtectedRoute
+          exact
+          path={PATHS.CREATE_TASK_PAGE}
+          roles={[RoleEnum.Teacher]}
+          component={CreateTaskPage}
+          layout={MainLayout}
+        />
+        <ProtectedRoute
+          exact
+          path={PATHS.EDIT_TASK_PAGE}
+          roles={[RoleEnum.Teacher]}
+          component={EditTaskPage}
           layout={MainLayout}
         />
         <Route path="*" render={() => <Redirect to={PATHS.HOME_PAGE} />} />

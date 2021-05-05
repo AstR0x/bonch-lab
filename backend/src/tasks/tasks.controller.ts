@@ -12,13 +12,13 @@ import {
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 
-import { Role } from 'src/auth/decorators/role-auth.decorator';
-import { RoleGuard } from 'src/auth/guards/role.guard';
-import { RoleEnum } from 'src/users/enums/role.enum';
+import { Role } from 'src/auth/decorators';
+import { RoleGuard } from 'src/auth/guards';
+import { RoleEnum } from 'src/users/enums';
 
-import { ITask } from './interfaces/task.interface';
-import { CreateTaskDto } from './dto/create-task.dto';
-import { UpdateTaskDto } from './dto/update-task.dto';
+import { ITask } from './interfaces';
+import { TasksStructure } from './types';
+import { CreateTaskDto, UpdateTaskDto } from './dto';
 import { TasksService } from './tasks.service';
 
 @ApiTags('tasks')
@@ -31,10 +31,17 @@ export class TasksController {
   @Role(RoleEnum.Teacher)
   @UseGuards(RoleGuard)
   @Get()
-  async getTaskList(
-    @Query() query?: Partial<Omit<ITask, 'id' | 'formulation'>>,
-  ): Promise<ITask[]> {
+  async getTaskList(@Query() query): Promise<ITask[]> {
     return this.tasksService.getTaskList(query);
+  }
+
+  @ApiOperation({ summary: 'Получение структуры тем/подтем/уровней.' })
+  @ApiBearerAuth()
+  @Role(RoleEnum.Teacher)
+  @UseGuards(RoleGuard)
+  @Get('/structure')
+  async getStructure(): Promise<TasksStructure> {
+    return this.tasksService.getStructure();
   }
 
   @ApiOperation({ summary: 'Получение одной задачи.' })

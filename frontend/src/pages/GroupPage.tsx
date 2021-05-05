@@ -4,11 +4,8 @@ import { useParams } from 'react-router-dom';
 
 import { PATHS } from '@src/constants';
 import { useModal } from '@common/hooks';
-import {
-  GroupTable,
-  DeleteGroupModal,
-  groupsSelectors,
-} from '@features/groups';
+import { DeleteModal } from '@common/components';
+import { GroupTable, groupsSelectors } from '@features/groups';
 import { groupsProcessActions } from '@processes/groups';
 import { history } from '@store';
 
@@ -18,8 +15,8 @@ import { history } from '@store';
  * @returns react-элемент
  */
 export const GroupPage: React.FC = () => {
-  const dispatch = useDispatch();
   const { id } = useParams();
+  const dispatch = useDispatch();
   const openedGroup = useSelector(
     groupsSelectors.openedGroup4TableViewSelector,
   );
@@ -60,10 +57,12 @@ export const GroupPage: React.FC = () => {
           onOpenDeleteGroupModal={openDeleteGroupModal}
         />
       )}
-      <DeleteGroupModal
+      <DeleteModal
         isOpened={isDeleteGroupModalOpened}
-        deletableGroup={deletableGroup}
-        onDeleteGroup={handleDeleteGroup}
+        modalTitle="Удаление группы"
+        modalContent={`Вы действительно хотите удалить группу
+         «${deletableGroup?.name}»?`}
+        onDeleteItem={handleDeleteGroup}
         onClose={closeDeleteGroupModal}
       />
     </>

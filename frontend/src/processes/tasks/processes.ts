@@ -2,6 +2,7 @@ import { SagaIterator } from 'redux-saga';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { all, takeEvery, call } from 'redux-saga/effects';
 
+import { PATHS } from '@src/constants';
 import { processHandler } from '@common/sagas';
 import {
   GetTaskListParams,
@@ -10,6 +11,7 @@ import {
   tasksSagas,
 } from '@features/tasks';
 import { notificationSagas } from '@features/notification';
+import { history } from '@store';
 
 import { actions } from './actions';
 
@@ -24,6 +26,18 @@ function* getTaskListProcess({
   yield call(processHandler, {
     process: tasksSagas.getTaskList,
     payload: getTaskListParams,
+    loader: true,
+  });
+}
+
+/**
+ * Процесс получения структуры тем/подтем/уровней
+ *
+ * @returns итератор
+ */
+function* getStructureProcess(): SagaIterator {
+  yield call(processHandler, {
+    process: tasksSagas.getStructure,
     loader: true,
   });
 }
@@ -52,8 +66,8 @@ function* notHandledCreateTaskProcess(
 ): SagaIterator {
   // Создаём задачу
   yield call(tasksSagas.createTask, creteTaskPayload);
-  // Получаем новый список задач
-  yield call(tasksSagas.getTaskList);
+  // Переходим на предыдущую страницу
+  yield call(history.goBack);
   // Показываем уведомление об успешном создании задачи
   yield call(
     notificationSagas.showSuccessNotification,
@@ -86,8 +100,8 @@ function* notHandledUpdateTaskProcess(
 ): SagaIterator {
   // Обновляем задачу
   yield call(tasksSagas.updateTask, updateTaskPayload);
-  // Получаем новый список задач
-  yield call(tasksSagas.getTaskList);
+  // Переходим на предыдущую страницу
+  yield call(history.goBack);
   // Показываем уведомление об успешном редактировании задачи
   yield call(
     notificationSagas.showSuccessNotification,
@@ -118,8 +132,6 @@ function* updateTaskProcess({
 function* notHandledDeleteTaskProcess(id: string): SagaIterator {
   // Удаляем задачу
   yield call(tasksSagas.deleteTask, id);
-  // Получаем новый список задач
-  yield call(tasksSagas.getTaskList);
   // Показываем уведомление об успешном удалении задачи
   yield call(
     notificationSagas.showSuccessNotification,
@@ -149,6 +161,7 @@ function* deleteTaskProcess({
 export function* tasksProcessWatcher(): SagaIterator {
   yield all([
     takeEvery(actions.getTaskList, getTaskListProcess),
+    takeEvery(actions.getStructure, getStructureProcess),
     takeEvery(actions.getTask, getTaskProcess),
     takeEvery(actions.createTask, createTaskProcess),
     takeEvery(actions.updateTask, updateTaskProcess),

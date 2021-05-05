@@ -16,9 +16,9 @@ export const GroupSchema = new mongoose.Schema({
 GroupSchema.index({ codeword: 1, name: 1 }, { unique: true });
 
 GroupSchema.set('toJSON', {
-  transform: (doc, ret) => {
-    ret.id = ret._id;
+  transform: (doc, obj) => {
+    obj.id = obj._id;
 
-    return _.omit(ret, ['_id', '__v']);
+    return _.omit(obj, ['_id', '__v']);
   },
 });

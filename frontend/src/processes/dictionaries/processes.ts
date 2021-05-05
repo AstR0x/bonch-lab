@@ -11,9 +11,9 @@ import { actions } from './actions';
  *
  * @returns итератор
  */
-function* getGroupListDictProcess(): SagaIterator {
+function* getGroupsDictProcess(): SagaIterator {
   yield call(processHandler, {
-    process: dictionariesSagas.getGroupListDict,
+    process: dictionariesSagas.getGroupsDict,
     loader: true,
   });
 }
@@ -23,9 +23,9 @@ function* getGroupListDictProcess(): SagaIterator {
  *
  * @returns итератор
  */
-function* getTopicListDictProcess(): SagaIterator {
+function* getTopicsDictProcess(): SagaIterator {
   yield call(processHandler, {
-    process: dictionariesSagas.getTopicListDict,
+    process: dictionariesSagas.getTopicsDict,
     loader: true,
   });
 }
@@ -35,7 +35,7 @@ function* getTopicListDictProcess(): SagaIterator {
  */
 export function* dictionariesProcessWatcher(): SagaIterator {
   yield all([
-    takeEvery(actions.getGroupListDict, getGroupListDictProcess),
-    takeEvery(actions.getTopicListDict, getTopicListDictProcess),
+    takeEvery(actions.getGroupsDict, getGroupsDictProcess),
+    takeEvery(actions.getTopicsDict, getTopicsDictProcess),
   ]);
 }

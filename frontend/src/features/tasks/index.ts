@@ -4,7 +4,10 @@ export { sagas as tasksSagas } from './sagas';
 export { selectors as tasksSelectors } from './selectors';
 export {
   Task,
+  Structure,
+  TaskParams,
   GetTaskListParams,
   CreateTaskPayload,
   UpdateTaskPayload,
 } from './types';
+export { TaskForm, TasksTable } from './components';

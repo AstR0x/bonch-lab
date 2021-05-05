@@ -2,10 +2,9 @@ import * as _ from 'lodash';
 import { Injectable } from '@nestjs/common';
 
 import { GroupsService } from 'src/groups/groups.service';
-import { TaskTopicEnum } from 'src/tasks/enum';
-import { TASK_TOPICS, TASK_SUBTOPICS, TASK_LEVELS } from 'src/tasks/constants';
+import { TASKS_STRUCTURE } from 'src/tasks/constants';
 
-import { IDictionary } from './interfaces/dictionary.interface';
+import { IDictionary } from './interfaces';
 
 @Injectable()
 export class DictionariesService {
@@ -18,14 +17,9 @@ export class DictionariesService {
   }
 
   async getTopicList(): Promise<IDictionary[]> {
-    return _.values(TASK_TOPICS);
-  }
-
-  async getSubtopicList(): Promise<IDictionary[]> {
-    return _.values(TASK_SUBTOPICS);
-  }
-
-  async getLevelList(): Promise<IDictionary[]> {
-    return _.values(TASK_LEVELS);
+    return _.entries(TASKS_STRUCTURE).map(([id, { title }]) => ({
+      id,
+      title,
+    }));
   }
 }

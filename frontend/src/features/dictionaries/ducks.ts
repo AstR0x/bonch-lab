@@ -4,55 +4,61 @@ import * as R from 'ramda';
 import { config } from '@common/config';
 import { setStoreField } from '@common/utils';
 
-import { Dictionary } from './types';
+import { DictionaryItem } from './types';
 
 export interface DictionariesState {
-  /** Справочник списка групп */
-  groupList: Dictionary[];
-  /** Справочник списка тем */
-  topicList: Dictionary[];
+  /** Справочник групп */
+  groups: DictionaryItem[];
+  /** Справочник тем */
+  topics: DictionaryItem[];
+  /** Справочник подтем */
+  subtopics: DictionaryItem[];
+  /** Справочник уровней */
+  levels: DictionaryItem[];
 }
 
 const initialState: DictionariesState = {
-  groupList: [],
-  topicList: [],
+  groups: [],
+  topics: [],
+  subtopics: [],
+  levels: [],
 };
 
 /**
- * Добавление группы в справочник списка групп
+ * Добавление группы в справочник групп
  *
  * @param state - состояние стора модуля
  * @param createdGroup - созданная группа
  */
 const addGroup = (
   state: DictionariesState,
-  { payload: createdGroup }: PayloadAction<Dictionary>,
+  { payload: createdGroup }: PayloadAction<DictionaryItem>,
 ) => {
   const sortByTitle = R.sortBy(R.prop('title'));
-  state.groupList.push(createdGroup);
-  state.groupList = sortByTitle(state.groupList);
+  state.groups.push(createdGroup);
+  state.groups = sortByTitle(state.groups);
 };
 
 /**
- * Обновление группы в справочнике списка групп
+ * Обновление группы в справочнике групп
  *
  * @param state - состояние стора модуля
  * @param updatedGroup - обновленная группа
  */
 const updateGroup = (
   state: DictionariesState,
-  { payload: updatedGroup }: PayloadAction<Dictionary>,
+  { payload: updatedGroup }: PayloadAction<DictionaryItem>,
 ) => {
   const sortByTitle = R.sortBy(R.prop('title'));
-  state.groupList = sortByTitle(
-    state.groupList.map((group) =>
+  state.groups = sortByTitle(
+    state.groups.map((group) =>
       group.id === updatedGroup.id ? updatedGroup : group,
     ),
   );
 };
 
 /**
- * Удаление группы из справочника списка групп
+ * Удаление группы из справочника групп
  *
  * @param state - состояние стора модуля
  * @param id - идентификатор удаленной группы
@@ -61,15 +67,17 @@ const deleteGroup = (
   state: DictionariesState,
   { payload: id }: PayloadAction<string>,
 ) => {
-  state.groupList = state.groupList.filter((group) => group.id !== id);
+  state.groups = state.groups.filter((group) => group.id !== id);
 };
 
 const dictionariesSlice = createSlice({
   name: config.modules.dictionaries,
   initialState,
   reducers: {
-    setGroupListDict: setStoreField('groupList'),
-    setTopicListDict: setStoreField('topicList'),
+    setGroupsDict: setStoreField('groups'),
+    setTopicsDict: setStoreField('topics'),
+    setSubtopicsDict: setStoreField('subtopics'),
+    setLevelsDict: setStoreField('levels'),
     addGroup,
     updateGroup,
     deleteGroup,

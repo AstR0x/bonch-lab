@@ -6,6 +6,6 @@ export interface IReadableUser {
   readonly group: string;
   readonly role: string;
   readonly email: string;
-  readonly registrationDate: string;
+  readonly regDate: string;
   token: string;
 }

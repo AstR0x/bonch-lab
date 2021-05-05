@@ -9,5 +9,5 @@ export interface IUser extends Document {
   readonly role: string;
   readonly email: string;
   readonly password: string;
-  readonly registrationDate: string;
+  readonly regDate: string;
 }

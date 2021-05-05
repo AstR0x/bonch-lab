@@ -1,16 +1,16 @@
 import { createAction } from '@reduxjs/toolkit';
 
 /**
- * Экшен получения справочника со списком групп
+ * Экшен получения справочника групп
  */
-const getGroupListDict = createAction('getGroupListDict');
+const getGroupsDict = createAction('getGroupsDict');
 
 /**
- * Экшен получения справочника со списком тем
+ * Экшен получения справочника тем
  */
-const getTopicListDict = createAction('getTopicListDict');
+const getTopicsDict = createAction('getTopicsDict');
 
 export const actions = {
-  getGroupListDict,
-  getTopicListDict,
+  getGroupsDict,
+  getTopicsDict,
 };

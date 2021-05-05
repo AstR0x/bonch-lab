@@ -19,7 +19,7 @@ export interface User {
   /** Почта пользователя */
   email: string;
   /** Дата регистрации */
-  registrationDate: string;
+  regDate: string;
 }
 
 export interface Student extends User {

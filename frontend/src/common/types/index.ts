@@ -8,7 +8,7 @@ export interface ProcessHandlerPayload {
 
 export interface FormState {
   values: {
-    [key: string]: string;
+    [key: string]: string | number;
   };
   errors?: {
     [key: string]: boolean;
@@ -26,6 +26,8 @@ export interface UseFormResult<T> {
   formState: T;
   // Устанавливает состояние формы
   setFormState: (state: T) => void;
+  // Устанавливает значение поля
+  setValue: (name: string, value: string | number | boolean) => void;
   // Сбрасывает значение поля в объекте values
   resetValue: (key: string) => void;
   // Сбрасывает данные формы

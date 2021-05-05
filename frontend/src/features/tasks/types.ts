@@ -2,16 +2,35 @@ export interface Task {
   /** Идентификатор задачи */
   id: string;
   /** Идентификатор темы задачи */
-  topic: string;
+  topic: number;
   /** Идентификатор подтемы задачи */
-  subtopic: string;
+  subtopic: number;
   /** Идентификатор сложности задачи */
-  level: string;
+  level: number;
   /** Формулировка задачи */
   formulation: string;
 }
 
-export type GetTaskListParams = Partial<Omit<Task, 'id' | 'formulation'>>;
+/** Структура тем/подтем/уровней */
+export interface Structure {
+  [key: number]: {
+    title: string;
+    subtopics: {
+      [key: number]: {
+        title: string;
+        levels: {
+          [key: number]: {
+            title: string;
+          };
+        };
+      };
+    };
+  };
+}
+
+export type TaskParams = Omit<Task, 'id' | 'formulation'>;
+
+export type GetTaskListParams = Partial<TaskParams>;
 
 export type CreateTaskPayload = Omit<Task, 'id'>;
 

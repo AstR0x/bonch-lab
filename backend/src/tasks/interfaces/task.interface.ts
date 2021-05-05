@@ -1,10 +1,8 @@
 import { Document } from 'mongoose';
 
-import { TaskTopicEnum, TaskSubtopicEnum, TaskLevelEnum } from '../enum';
-
 export interface ITask extends Document {
-  readonly topic: TaskTopicEnum;
-  readonly subtopic: TaskSubtopicEnum;
-  readonly level: TaskLevelEnum;
+  readonly topic: number;
+  readonly subtopic: number;
+  readonly level: number;
   readonly formulation: string;
 }

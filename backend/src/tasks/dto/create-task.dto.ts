@@ -1,26 +1,24 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsNumber, IsNotEmpty } from 'class-validator';
-
-import { TaskTopicEnum, TaskSubtopicEnum, TaskLevelEnum } from '../enum';
+import { IsString, IsNotEmpty, IsNumber } from 'class-validator';
 
 export class CreateTaskDto {
-  @ApiProperty({ description: 'Тема задачи' })
+  @ApiProperty({ description: 'Идентификатор темы задачи' })
   @ApiProperty()
   @IsNumber()
   @IsNotEmpty()
-  readonly topic: TaskTopicEnum;
+  readonly topic: number;
 
-  @ApiProperty({ description: 'Подтема задачи' })
+  @ApiProperty({ description: 'Идентификатор подтемы задачи' })
   @ApiProperty()
   @IsNumber()
   @IsNotEmpty()
-  readonly subtopic: TaskSubtopicEnum;
+  readonly subtopic: number;
 
-  @ApiProperty({ description: 'Уровень сложности задачи' })
+  @ApiProperty({ description: 'Идентификатор уровня сложности задачи' })
   @ApiProperty()
   @IsNumber()
   @IsNotEmpty()
-  readonly level: TaskLevelEnum;
+  readonly level: number;
 
   @ApiProperty({ description: 'Формулировка задачи' })
   @ApiProperty()

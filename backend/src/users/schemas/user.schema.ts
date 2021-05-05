@@ -1,8 +1,7 @@
 import * as mongoose from 'mongoose';
 import * as _ from 'lodash';
 
-import { StatusEnum } from '../enums/status.enum';
-import { RoleEnum } from '../enums/role.enum';
+import { StatusEnum, RoleEnum } from '../enums';
 
 export const UserSchema = new mongoose.Schema({
   name: { type: String, required: true },
@@ -22,15 +21,15 @@ export const UserSchema = new mongoose.Schema({
     default: RoleEnum.Student,
   },
   group: { type: mongoose.Types.ObjectId, ref: 'Groups' },
-  registrationDate: { type: Date, default: Date.now },
+  regDate: { type: Date, default: Date.now },
 });
 
 UserSchema.index({ email: 1 }, { unique: true });
 
-UserSchema.set('toObject', {
-  transform: (doc, ret) => {
-    ret.id = ret._id;
+UserSchema.set('toJSON', {
+  transform: (doc, obj) => {
+    obj.id = obj._id;
 
-    return _.omit(ret, ['_id', '_v']);
+    return _.omit(obj, ['_id', '__v']);
   },
 });

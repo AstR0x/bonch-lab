@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 
 import { DictionariesService } from './dictionaries.service';
 
-describe('UsersService', () => {
+describe('Dictionaries Service', () => {
   let service: DictionariesService;
 
   beforeEach(async () => {

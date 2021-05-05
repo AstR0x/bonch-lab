@@ -69,7 +69,7 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({
   onSignUp,
 }) => {
   const classes = useStyles();
-  const groupList = useSelector(dictionariesSelectors.groupListDictSelector);
+  const groups = useSelector(dictionariesSelectors.groupsDictSelector);
   const { formState, resetValue, onTextFieldChange, onSelectChange } = useForm({
     values: {
       codeword: '',
@@ -218,7 +218,7 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({
                 value={formState.values.group}
                 onChange={onSelectChange}
               >
-                {groupList.map((group) => (
+                {groups.map((group) => (
                   <MenuItem value={group.id}>{group.title}</MenuItem>
                 ))}
               </Select>

@@ -25,7 +25,7 @@ const groupsModuleSelector = (state: RootState): GroupsState =>
  */
 const groupListSelector = createSelector(
   groupsModuleSelector,
-  (groupsModule): Group[] => pathOr(null, ['groupList'], groupsModule),
+  (groupsModule): Group[] => pathOr([], ['groupList'], groupsModule),
 );
 
 /**
@@ -56,7 +56,7 @@ const openedGroup4TableViewSelector = createSelector(
       ...openedGroup,
       students: openedGroup.students.map((student) => ({
         ...student,
-        registrationDate: getFormattedDate(student.registrationDate),
+        regDate: getFormattedDate(student.regDate),
       })),
     };
   },

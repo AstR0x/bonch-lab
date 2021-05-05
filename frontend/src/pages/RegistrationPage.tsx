@@ -15,7 +15,7 @@ export const RegistrationPage: React.FC = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(dictionariesProcessActions.getGroupListDict());
+    dispatch(dictionariesProcessActions.getGroupsDict());
   }, []);
 
   /**

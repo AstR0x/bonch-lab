@@ -4,6 +4,7 @@ import { put, all, takeEvery, call } from 'redux-saga/effects';
 import { request } from '@src/constants';
 import { processHandler } from '@common/sagas';
 import { createRequestsInterceptor } from '@features/auth';
+import { dictionariesSagas } from '@features/dictionaries';
 import { authProcessActions } from '@processes/auth';
 
 import { actions as initProcessActions } from './actions';
@@ -14,6 +15,12 @@ import { actions as initProcessActions } from './actions';
  * @returns итератор
  */
 function* notHandledInitProcess(): SagaIterator {
+  // Загружаем справочники
+  yield all([
+    call(dictionariesSagas.getGroupsDict),
+    call(dictionariesSagas.getTopicsDict),
+  ]);
+
   // Запускаем автоматическую авторизацию пользователя
   yield put(authProcessActions.autoSignIn());
 

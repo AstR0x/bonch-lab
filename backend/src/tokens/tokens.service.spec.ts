@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 
 import { TokensService } from './tokens.service';
 
-describe('TokensService', () => {
+describe('Tokens Service', () => {
   let service: TokensService;
 
   beforeEach(async () => {

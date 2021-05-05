@@ -4,6 +4,7 @@ import { request } from '@src/constants';
 
 import {
   Task,
+  Structure,
   GetTaskListParams,
   CreateTaskPayload,
   UpdateTaskPayload,
@@ -17,6 +18,14 @@ import {
  */
 const getTaskList = (params?: GetTaskListParams): AxiosPromise<Task[]> =>
   request.get({ url: 'tasks', config: { params } });
+
+/**
+ * Получение структуры тем/подтем/уровней
+ *
+ * @returns axios промис
+ */
+const getStructure = (): AxiosPromise<Structure> =>
+  request.get({ url: 'tasks/structure' });
 
 /**
  * Получение задачи
@@ -61,6 +70,7 @@ const deleteTask = (id: string): AxiosPromise<Task> =>
 export const api = {
   getTaskList,
   getTask,
+  getStructure,
   createTask,
   updateTask,
   deleteTask,

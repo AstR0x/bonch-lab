@@ -4,9 +4,9 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from 'src/auth/auth.module';
 import { TokensModule } from 'src/tokens/tokens.module';
 
-import { TasksService } from './tasks.service';
 import { TasksController } from './tasks.controller';
-import { TaskSchema } from './schemas/task.schema';
+import { TasksService } from './tasks.service';
+import { TaskSchema } from './schemas';
 
 @Module({
   imports: [

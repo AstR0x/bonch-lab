@@ -32,7 +32,7 @@ export const useStyles = makeStyles((theme) => ({
 interface GroupFormProps {
   formTitle: string;
   confirmButtonText: string;
-  values?: { codeword: string; name: string };
+  initValues?: { codeword: string; name: string };
   onConfirm: (crateGroupPayload: CreateGroupPayload) => void;
 }
 
@@ -41,20 +41,20 @@ interface GroupFormProps {
  *
  * @param formTitle - заглавие формы
  * @param confirmButtonText - текст кнопки подтверждения
- * @param values - начальные значения формы
+ * @param initValues - начальные значения формы
  * @param onConfirm - обработчик кнопки подтверждения
  * @returns react-элемент
  */
 export const GroupForm: React.FC<GroupFormProps> = ({
   formTitle,
   confirmButtonText,
-  values,
+  initValues,
   onConfirm,
 }) => {
   const classes = useStyles();
   const history = useHistory();
   const { formState, onTextFieldChange } = useForm({
-    values: values || { codeword: '', name: '' },
+    values: initValues || { codeword: '', name: '' },
     validators: { name: validateGroupName },
     errors: {} as Record<keyof Partial<CreateGroupPayload>, boolean>,
   });

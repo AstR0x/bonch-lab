@@ -7,16 +7,16 @@ import { api } from './api';
 import { actions } from './ducks';
 
 /**
- * Получение справочника со списком групп
+ * Получение справочника групп
  *
  * @returns итератор
  */
-function* getGroupListDict(): SagaIterator {
-  // Получение списка групп
-  const groupListDict = yield call(callApi, api.getGroupListDict);
+function* getGroupsDict(): SagaIterator {
+  // Получение групп
+  const groupsDict = yield call(callApi, api.getGroupsDict);
 
-  // Записываем список групп в стор
-  yield put(actions.setGroupListDict(groupListDict));
+  // Записываем группы в стор
+  yield put(actions.setGroupsDict(groupsDict));
 }
 
 /**
@@ -24,15 +24,43 @@ function* getGroupListDict(): SagaIterator {
  *
  * @returns итератор
  */
-function* getTopicListDict(): SagaIterator {
-  // Получение списка тем
-  const topicListDict = yield call(callApi, api.getTopicListDict);
+function* getTopicsDict(): SagaIterator {
+  // Получение тем
+  const topicsDict = yield call(callApi, api.getTopicsDict);
 
-  // Записываем список групп в стор
-  yield put(actions.setTopicListDict(topicListDict));
+  // Записываем темы в стор
+  yield put(actions.setTopicsDict(topicsDict));
+}
+
+/**
+ * Получение справочника со списком подтем
+ *
+ * @returns итератор
+ */
+function* getSubtopicsDict(): SagaIterator {
+  // Получение подтем
+  const subtopicsDict = yield call(callApi, api.getSubtopicsDict);
+
+  // Записываем подтемы в стор
+  yield put(actions.setSubtopicsDict(subtopicsDict));
+}
+
+/**
+ * Получение справочника с уровнями сложности
+ *
+ * @returns итератор
+ */
+function* getLevelsDict(): SagaIterator {
+  // Получение уровней сложности
+  const levelsDict = yield call(callApi, api.getLevelsDict);
+
+  // Записываем уровни сложности
+  yield put(actions.setLevelsDict(levelsDict));
 }
 
 export const sagas = {
-  getGroupListDict,
-  getTopicListDict,
+  getGroupsDict,
+  getTopicsDict,
+  getSubtopicsDict,
+  getLevelsDict,
 };

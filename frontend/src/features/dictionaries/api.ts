@@ -2,25 +2,43 @@ import { AxiosPromise } from 'axios';
 
 import { request } from '@src/constants';
 
-import { Dictionary } from './types';
+import { DictionaryItem } from './types';
 
 /**
- * Получение справочника со списком групп
+ * Получение справочника групп
  *
  * @returns промис
  */
-const getGroupListDict = (): AxiosPromise<Dictionary[]> =>
+const getGroupsDict = (): AxiosPromise<DictionaryItem[]> =>
   request.get({ url: 'dictionaries/groups' });
 
 /**
- * Получение справочника со списком тем
+ * Получение справочника тем
  *
  * @returns промис
  */
-const getTopicListDict = (): AxiosPromise<Dictionary[]> =>
+const getTopicsDict = (): AxiosPromise<DictionaryItem[]> =>
   request.get({ url: 'dictionaries/topics' });
 
+/**
+ * Получение справочника подтем
+ *
+ * @returns промис
+ */
+const getSubtopicsDict = (): AxiosPromise<DictionaryItem[]> =>
+  request.get({ url: 'dictionaries/subtopics' });
+
+/**
+ * Получение справочника уровней сложности
+ *
+ * @returns промис
+ */
+const getLevelsDict = (): AxiosPromise<DictionaryItem[]> =>
+  request.get({ url: 'dictionaries/levels' });
+
 export const api = {
-  getGroupListDict,
-  getTopicListDict,
+  getGroupsDict,
+  getTopicsDict,
+  getSubtopicsDict,
+  getLevelsDict,
 };

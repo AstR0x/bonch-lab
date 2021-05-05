@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import { Container } from '@material-ui/core';
+import * as R from 'ramda';
 
 import {
   groupsSelectors,
@@ -8,7 +10,6 @@ import {
   CreateGroupPayload,
 } from '@features/groups';
 import { groupsProcessActions } from '@processes/groups';
-import { useParams } from 'react-router-dom';
 
 /**
  * Страница "Редактирование группы"
@@ -35,19 +36,18 @@ export const EditGroupPage: React.FC = () => {
     dispatch(groupsProcessActions.updateGroup({ id, ...createGroupPayload }));
   };
 
+  if (!openedGroup) {
+    return null;
+  }
+
   return (
     <Container maxWidth="xs">
-      {openedGroup && (
-        <GroupForm
-          formTitle="Редактирование группы"
-          confirmButtonText="Сохранить"
-          onConfirm={handleEditGroup}
-          values={{
-            name: openedGroup.name,
-            codeword: openedGroup.codeword,
-          }}
-        />
-      )}
+      <GroupForm
+        formTitle="Редактирование группы"
+        confirmButtonText="Сохранить"
+        onConfirm={handleEditGroup}
+        initValues={R.pick(['name', 'codeword'], openedGroup)}
+      />
     </Container>
   );
 };

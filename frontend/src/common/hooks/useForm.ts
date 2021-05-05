@@ -15,6 +15,21 @@ export const useForm = <T extends FormState>(
   const [state, setState] = useState(initialState);
 
   /**
+   * Устанавливает значение поля
+   *
+   * @param name - название поля
+   * @param value - значение поля
+   */
+  const setValue = (name: string, value: string | number | boolean) =>
+    setState((prevState) => ({
+      ...prevState,
+      values: {
+        ...prevState.values,
+        [name]: value,
+      },
+    }));
+
+  /**
    * Сбрасывает значение поля в объекте values
    *
    * @param name - название поля
@@ -101,6 +116,7 @@ export const useForm = <T extends FormState>(
   return {
     formState: state,
     setFormState: setState,
+    setValue,
     resetValue,
     resetFormState,
     onTextFieldChange,

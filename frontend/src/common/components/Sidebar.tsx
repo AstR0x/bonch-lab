@@ -53,8 +53,7 @@ interface SidebarProps {
  */
 export const Sidebar: React.FC<SidebarProps> = ({ isTeacherAuthorized }) => {
   const classes = useStyles();
-  const groupList = useSelector(dictionariesSelectors.groupListDictSelector);
-  const topicList = useSelector(dictionariesSelectors.topicListDictSelector);
+  const { groups, topics } = useSelector(dictionariesSelectors.dictsSelector);
 
   /**
    * Обработчик кнопки перехода на страницу "Группа"
@@ -65,12 +64,12 @@ export const Sidebar: React.FC<SidebarProps> = ({ isTeacherAuthorized }) => {
     history.push(`${PATHS.GROUP_PAGE}`.replace(':id', id));
 
   /**
-   * Обработчик кнопки перехода на страницу "Тема"
+   * Обработчик кнопки перехода на страницу "Задачи по теме"
    *
    * @param id - идентификатор темы
    */
-  const moveToTopicPage = (id: string) =>
-    history.push(`${PATHS.TOPIC_PAGE}`.replace(':id', id));
+  const moveToTasksPage = (id: string) =>
+    history.push(`${PATHS.TASKS_PAGE}`.replace(':id', id));
 
   /**
    * Обработчик кнопки перехода на страницу "Создание группы"
@@ -103,7 +102,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isTeacherAuthorized }) => {
           </Tooltip>
         </ListItem>
         <List component="div" disablePadding>
-          {groupList.map((group) => (
+          {groups.map((group) => (
             <ListItem
               button
               key={group.id}
@@ -123,12 +122,12 @@ export const Sidebar: React.FC<SidebarProps> = ({ isTeacherAuthorized }) => {
           <ListItemText>Темы</ListItemText>
         </ListItem>
         <List component="div" disablePadding>
-          {topicList.map((topic) => (
+          {topics.map((topic) => (
             <ListItem
               button
               key={topic.id}
               className={classes.nested}
-              onClick={() => moveToTopicPage(topic.id as string)}
+              onClick={() => moveToTasksPage(topic.id as string)}
             >
               <ListItemText classes={{ primary: classes.listItemText }}>
                 {topic.id}. {topic.title}
