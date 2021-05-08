@@ -15,6 +15,7 @@ import {
   GroupPage,
   HomePage,
   TasksPage,
+  LabsPage,
 } from '@pages';
 import { MainLayout, SimpleLayout } from '@layouts';
 
@@ -91,6 +92,13 @@ export function AppRoutes<S = LocationState>({
           path={PATHS.EDIT_TASK_PAGE}
           roles={[RoleEnum.Teacher]}
           component={EditTaskPage}
+          layout={MainLayout}
+        />
+        <ProtectedRoute
+          exact
+          path={PATHS.LABS_PAGE}
+          roles={[RoleEnum.Student]}
+          component={LabsPage}
           layout={MainLayout}
         />
         <Route path="*" render={() => <Redirect to={PATHS.HOME_PAGE} />} />

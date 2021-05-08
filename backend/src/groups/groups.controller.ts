@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 
-import { Role } from 'src/auth/decorators';
+import { Roles } from 'src/auth/decorators';
 import { RoleGuard } from 'src/auth/guards';
 import { RoleEnum } from 'src/users/enums';
 
@@ -26,7 +26,7 @@ export class GroupsController {
 
   @ApiOperation({ summary: 'Получение списка групп.' })
   @ApiBearerAuth()
-  @Role(RoleEnum.Teacher)
+  @Roles([RoleEnum.Teacher])
   @UseGuards(RoleGuard)
   @Get()
   async getGroupList(): Promise<IGroup[]> {
@@ -35,7 +35,7 @@ export class GroupsController {
 
   @ApiOperation({ summary: 'Получение одной группы.' })
   @ApiBearerAuth()
-  @Role(RoleEnum.Teacher)
+  @Roles([RoleEnum.Teacher])
   @UseGuards(RoleGuard)
   @Get('/:id')
   async getGroup(@Param('id') id: string): Promise<IGroup> {
@@ -44,7 +44,7 @@ export class GroupsController {
 
   @ApiOperation({ summary: 'Создание группы.' })
   @ApiBearerAuth()
-  @Role(RoleEnum.Teacher)
+  @Roles([RoleEnum.Teacher])
   @UseGuards(RoleGuard)
   @Post('/create')
   async createGroup(
@@ -55,7 +55,7 @@ export class GroupsController {
 
   @ApiOperation({ summary: 'Обновление группы.' })
   @ApiBearerAuth()
-  @Role(RoleEnum.Teacher)
+  @Roles([RoleEnum.Teacher])
   @UseGuards(RoleGuard)
   @Patch('/update/:id')
   async updateGroup(
@@ -67,7 +67,7 @@ export class GroupsController {
 
   @ApiOperation({ summary: 'Удаление группы.' })
   @ApiBearerAuth()
-  @Role(RoleEnum.Teacher)
+  @Roles([RoleEnum.Teacher])
   @UseGuards(RoleGuard)
   @Delete('/delete/:id')
   async deleteGroup(@Param('id') id: string): Promise<IGroup> {

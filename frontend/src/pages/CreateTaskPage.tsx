@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Container } from '@material-ui/core';
 
@@ -12,28 +12,15 @@ import { tasksProcessActions } from '@processes/tasks';
  */
 export const CreateTaskPage: React.FC = () => {
   const dispatch = useDispatch();
-  const structure = useSelector(tasksSelectors.structureSelector);
   const taskParams = useSelector(tasksSelectors.taskParamsSelector);
-
-  useEffect(() => {
-    if (!structure) {
-      dispatch(tasksProcessActions.getStructure());
-    }
-  }, []);
 
   /**
    * Обработчик кнопки создания задачи
    *
    * @param createTaskPayload - данные задачи
    */
-  const handleCreateGroup = (createTaskPayload: CreateTaskPayload) => {
-    // Диспатчим экшен создания задачи
+  const handleCreateGroup = (createTaskPayload: CreateTaskPayload) =>
     dispatch(tasksProcessActions.createTask(createTaskPayload));
-  };
-
-  if (!structure) {
-    return null;
-  }
 
   return (
     <Container maxWidth="xs">

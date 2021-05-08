@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useParams } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { Typography } from '@material-ui/core';
@@ -33,12 +33,6 @@ export const TasksPage: React.FC = () => {
     closeModal: closeDeleteTaskModal,
     content: deletableTaskId,
   } = useModal();
-
-  useEffect(() => {
-    if (!structure) {
-      dispatch(tasksProcessActions.getStructure());
-    }
-  }, []);
 
   /**
    * Получение списка задач
@@ -82,10 +76,6 @@ export const TasksPage: React.FC = () => {
     // Закрываем модальное окно
     closeDeleteTaskModal();
   };
-
-  if (!structure) {
-    return null;
-  }
 
   return (
     <>

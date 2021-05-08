@@ -15,15 +15,9 @@ import { tasksProcessActions } from '@processes/tasks';
 export const EditTaskPage: React.FC = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const structure = useSelector(tasksSelectors.structureSelector);
   const openedTask = useSelector(tasksSelectors.openedTaskSelector);
 
   useEffect(() => {
-    if (!structure) {
-      // Диспатчим экшен получения структуры
-      dispatch(tasksProcessActions.getStructure());
-    }
-
     if (!openedTask) {
       // Диспатчим экшен получения задачи
       dispatch(tasksProcessActions.getTask(id));
@@ -35,12 +29,10 @@ export const EditTaskPage: React.FC = () => {
    *
    * @param updateTaskPayload - данные задачи
    */
-  const handleUpdateTask = (updateTaskPayload: UpdateTaskPayload) => {
-    // Диспатчим экшен редактирования задачи
+  const handleUpdateTask = (updateTaskPayload: UpdateTaskPayload) =>
     dispatch(tasksProcessActions.updateTask({ id, ...updateTaskPayload }));
-  };
 
-  if (!structure || !openedTask) {
+  if (!openedTask) {
     return null;
   }
 

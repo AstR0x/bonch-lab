@@ -22,7 +22,7 @@ const initialState: AuthorizationState = {
  *
  * @returns обновлённое состояние стора
  */
-const toResetAuthData = (): AuthorizationState => ({
+const resetAuthData = (): AuthorizationState => ({
   token: null,
   userData: null,
 });
@@ -33,7 +33,7 @@ const authSlice = createSlice({
   reducers: {
     setToken: setStoreField('token'),
     setUserData: setStoreField('userData'),
-    resetAuthData: toResetAuthData,
+    resetAuthData,
   },
 });
 

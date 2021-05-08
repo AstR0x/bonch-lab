@@ -1,26 +1,5 @@
 export const TASKS_STRUCTURE = {
   1: {
-    title: 'Линейные алгоритмы',
-    subtopics: {
-      1: {
-        title: 'Арифметические выражения',
-        levels: {
-          1: { title: 'Базовый' },
-          2: { title: 'Средний' },
-          3: { title: 'Высокий' },
-        },
-      },
-      2: {
-        title: 'Программирование линейных алгоритмов',
-        levels: {
-          1: { title: 'Базовый' },
-          2: { title: 'Средний' },
-          3: { title: 'Высокий' },
-        },
-      },
-    },
-  },
-  2: {
     title: 'Разветвляющиеся алгоритмы',
     subtopics: {
       1: {
@@ -28,7 +7,6 @@ export const TASKS_STRUCTURE = {
         levels: {
           1: { title: 'Базовый' },
           2: { title: 'Средний' },
-          3: { title: 'Высокий' },
         },
       },
       2: {
@@ -43,20 +21,17 @@ export const TASKS_STRUCTURE = {
         title: 'Оператор выбора вариантов',
         levels: {
           1: { title: 'Базовый' },
-          2: { title: 'Средний' },
-          3: { title: 'Высокий' },
         },
       },
     },
   },
-  3: {
+  2: {
     title: 'Циклические алгоритмы',
     subtopics: {
       1: {
         title: 'Оператор цикла с параметром',
         levels: {
           1: { title: 'Базовый' },
-          2: { title: 'Средний' },
         },
       },
       2: {
@@ -67,23 +42,9 @@ export const TASKS_STRUCTURE = {
           3: { title: 'Высокий' },
         },
       },
-      3: {
-        title: 'Вычисление бесконечных сумм',
-        levels: {
-          1: { title: 'Базовый' },
-        },
-      },
-      4: {
-        title: 'Табулирование функций',
-        levels: {
-          1: { title: 'Базовый' },
-          2: { title: 'Средний' },
-          3: { title: 'Высокий' },
-        },
-      },
     },
   },
-  4: {
+  3: {
     title: 'Массивы',
     subtopics: {
       1: {
@@ -104,7 +65,7 @@ export const TASKS_STRUCTURE = {
       },
     },
   },
-  5: {
+  4: {
     title: 'Особые типы данных',
     subtopics: {
       1: {
@@ -125,7 +86,7 @@ export const TASKS_STRUCTURE = {
       },
     },
   },
-  6: {
+  5: {
     title: 'Файлы',
     subtopics: {
       1: {
@@ -138,33 +99,6 @@ export const TASKS_STRUCTURE = {
       },
       2: {
         title: 'Бинарные файлы',
-        levels: {
-          1: { title: 'Базовый' },
-          2: { title: 'Средний' },
-          3: { title: 'Высокий' },
-        },
-      },
-    },
-  },
-  7: {
-    title: 'Элементы ООП',
-    subtopics: {
-      1: {
-        title: 'Создание данных типа "класс"',
-        levels: {
-          1: { title: 'Базовый' },
-          2: { title: 'Средний' },
-        },
-      },
-      2: {
-        title: 'Наследование классов',
-        levels: {
-          1: { title: 'Базовый' },
-          2: { title: 'Средний' },
-        },
-      },
-      3: {
-        title: 'Полиморфизмы методов класса',
         levels: {
           1: { title: 'Базовый' },
           2: { title: 'Средний' },

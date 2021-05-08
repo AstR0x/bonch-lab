@@ -32,9 +32,8 @@ export const EditGroupPage: React.FC = () => {
    *
    * @param createGroupPayload - данные группы
    */
-  const handleEditGroup = (createGroupPayload: CreateGroupPayload) => {
+  const handleEditGroup = (createGroupPayload: CreateGroupPayload) =>
     dispatch(groupsProcessActions.updateGroup({ id, ...createGroupPayload }));
-  };
 
   if (!openedGroup) {
     return null;

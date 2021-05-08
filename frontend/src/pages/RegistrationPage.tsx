@@ -19,7 +19,7 @@ export const RegistrationPage: React.FC = () => {
   }, []);
 
   /**
-   * Диспатчит экшен регистрации
+   * Обработчик кнопки регистрации
    *
    * @param signUpPayload - данные регистрации
    */

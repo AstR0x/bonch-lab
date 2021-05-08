@@ -10,6 +10,7 @@ import { loadingReducer } from '@features/loading';
 import { notificationReducer } from '@features/notification';
 import { groupsReducer } from '@features/groups';
 import { tasksReducer } from '@features/tasks';
+import { labsReducer } from '@features/labs';
 import { dictionariesReducer } from '@features/dictionaries';
 
 export const history = createBrowserHistory();
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   [config.modules.notification]: notificationReducer,
   [config.modules.groups]: groupsReducer,
   [config.modules.tasks]: tasksReducer,
+  [config.modules.labs]: labsReducer,
   [config.modules.dictionaries]: dictionariesReducer,
   [config.modules.router]: connectRouter(history),
 });

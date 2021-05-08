@@ -8,6 +8,7 @@ const createConfig = () => ({
     auth: 'auth' as const,
     groups: 'groups' as const,
     tasks: 'tasks' as const,
+    labs: 'labs' as const,
     dictionaries: 'dictionaries' as const,
   },
   environment: process.env.NODE_ENV,

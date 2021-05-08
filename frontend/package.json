@@ -1,17 +1,9 @@
 {
   "name": "bonch-lab-frontend",
   "version": "0.1.0",
-  "description": "Площадка для выполнения лабораторных работ",
-  "scripts": {
-    "test": "npx jest",
-    "start": "npm run develop",
-    "build": "npm run lint && npm run production",
-    "develop": "webpack-dev-server --config ./webpack/app/develop",
-    "production": "webpack --config ./webpack/app/production",
-    "lint:ts": "npx tsc",
-    "lint:js": "eslint src --color --ext .tsx,.ts --fix",
-    "lint": "npm run lint:ts && npm run lint:js"
-  },
+  "description": "Фронтенд часть Bonch Lab",
+  "author": "Vladislav Gumerov",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/AstR0x/virtual-lab"
@@ -22,8 +14,16 @@
     "redux-saga",
     "typescript"
   ],
-  "author": "Vladislav Gumerov",
-  "license": "MIT",
+  "scripts": {
+    "test": "npx jest",
+    "start": "npm run develop",
+    "build": "npm run lint && npm run production",
+    "develop": "webpack-dev-server --config ./webpack/app/develop",
+    "production": "webpack --config ./webpack/app/production",
+    "lint:ts": "npx tsc",
+    "lint:js": "eslint src --color --ext .tsx,.ts --fix",
+    "lint": "npm run lint:ts && npm run lint:js"
+  },
   "dependencies": {
     "@material-ui/core": "^4.11.1",
     "@material-ui/icons": "^4.11.2",

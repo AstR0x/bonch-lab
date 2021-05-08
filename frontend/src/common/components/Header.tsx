@@ -1,13 +1,15 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
+  Theme,
+  createStyles,
+  makeStyles,
   AppBar,
   Toolbar,
   Typography,
   IconButton,
   Tooltip,
 } from '@material-ui/core';
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { ExitToApp } from '@material-ui/icons';
 
 import { UserInfo, authSelectors } from '@features/auth';
@@ -19,7 +21,7 @@ const useStyles = makeStyles((theme: Theme) =>
       zIndex: theme.zIndex.drawer + 1,
     },
     logo: {
-      letterSpacing: '.7rem',
+      letterSpacing: '.3rem',
       flexGrow: 1,
     },
   }),

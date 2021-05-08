@@ -5,9 +5,3 @@ export interface DictionaryItem {
   /** Текст */
   title: string;
 }
-
-/** Справочник, преобразованный в объект */
-export type DictionaryObj = Record<
-  DictionaryItem['id'],
-  DictionaryItem['title']
->;

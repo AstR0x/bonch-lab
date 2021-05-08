@@ -1,7 +1,7 @@
 {
   "name": "bonch-lab-backend",
-  "version": "0.0.1",
-  "description": "",
+  "version": "0.1.0",
+  "description": "Бэкенд часть Bonch Lab",
   "author": "Vladislav Gumerov",
   "license": "MIT",
   "scripts": {

@@ -3,9 +3,7 @@ import { pathOr } from 'ramda';
 import { RootState } from '@store';
 
 /**
- * Селектор лоадера
- *
- * @returns функция, которая возвращает состояние лоадера
+ * Селектор состояния лоадера
  */
 const isLoadingSelector = (state: RootState): boolean =>
   pathOr(false, ['loading', 'isLoading'], state);

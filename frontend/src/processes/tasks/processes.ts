@@ -2,15 +2,14 @@ import { SagaIterator } from 'redux-saga';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { all, takeEvery, call } from 'redux-saga/effects';
 
-import { PATHS } from '@src/constants';
 import { processHandler } from '@common/sagas';
+import { notificationSagas } from '@features/notification';
 import {
+  tasksSagas,
   GetTaskListParams,
   CreateTaskPayload,
   UpdateTaskPayload,
-  tasksSagas,
 } from '@features/tasks';
-import { notificationSagas } from '@features/notification';
 import { history } from '@store';
 
 import { actions } from './actions';
@@ -66,8 +65,10 @@ function* notHandledCreateTaskProcess(
 ): SagaIterator {
   // Создаём задачу
   yield call(tasksSagas.createTask, creteTaskPayload);
+
   // Переходим на предыдущую страницу
   yield call(history.goBack);
+
   // Показываем уведомление об успешном создании задачи
   yield call(
     notificationSagas.showSuccessNotification,
@@ -100,8 +101,10 @@ function* notHandledUpdateTaskProcess(
 ): SagaIterator {
   // Обновляем задачу
   yield call(tasksSagas.updateTask, updateTaskPayload);
+
   // Переходим на предыдущую страницу
   yield call(history.goBack);
+
   // Показываем уведомление об успешном редактировании задачи
   yield call(
     notificationSagas.showSuccessNotification,
@@ -132,6 +135,7 @@ function* updateTaskProcess({
 function* notHandledDeleteTaskProcess(id: string): SagaIterator {
   // Удаляем задачу
   yield call(tasksSagas.deleteTask, id);
+
   // Показываем уведомление об успешном удалении задачи
   yield call(
     notificationSagas.showSuccessNotification,

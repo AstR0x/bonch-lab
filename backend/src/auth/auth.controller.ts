@@ -11,10 +11,12 @@ import {
 } from '@nestjs/common';
 
 import { CreateUserDto } from 'src/users/dto';
+import { RoleEnum } from 'src/users/enums';
 
-import { JwtAuthGuard } from './guards';
+import { RoleGuard } from './guards';
 import { SignInDto } from './dto';
 import { AuthService } from './auth.service';
+import { Roles } from './decorators';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -39,7 +41,8 @@ export class AuthController {
 
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Выход пользователя.' })
-  @UseGuards(JwtAuthGuard)
+  @Roles([RoleEnum.Teacher, RoleEnum.Student])
+  @UseGuards(RoleGuard)
   @Get('/sign-out')
   async signOut(@Req() request: Request): Promise<boolean> {
     return this.authService.signOut(request);

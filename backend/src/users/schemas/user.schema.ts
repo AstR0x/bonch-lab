@@ -21,6 +21,7 @@ export const UserSchema = new mongoose.Schema({
     default: RoleEnum.Student,
   },
   group: { type: mongoose.Types.ObjectId, ref: 'Groups' },
+  labs: [{ type: mongoose.Types.ObjectId, ref: 'Labs' }],
   regDate: { type: Date, default: Date.now },
 });
 

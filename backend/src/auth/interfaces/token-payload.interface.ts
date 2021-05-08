@@ -1,5 +1,5 @@
 export interface ITokenPayload {
-  _id: string;
+  id: string;
   name: string;
   surname: string;
   patronymic: string;
@@ -7,4 +7,5 @@ export interface ITokenPayload {
   role: string;
   email: string;
   group: string;
+  labs: string[];
 }

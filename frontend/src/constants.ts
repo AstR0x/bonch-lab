@@ -26,6 +26,8 @@ export const PATHS = {
   CREATE_TASK_PAGE: '/task/create',
   // Страница "Редактирование задачи"
   EDIT_TASK_PAGE: '/task/edit/:id',
+  // Страница "Лабораторные по теме"
+  LABS_PAGE: '/labs/topic/:id',
   // Страница "О сайте"
   ABOUT_PAGE: '/about',
 };

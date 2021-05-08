@@ -1,11 +1,12 @@
 import { Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import * as _ from 'lodash';
 
-import { CreateTaskDto, UpdateTaskDto } from './dto';
-import { TasksStructure } from './types';
 import { ITask } from './interfaces';
+import { TasksStructure } from './types';
 import { TASKS_STRUCTURE } from './constants';
+import { CreateTaskDto, UpdateTaskDto } from './dto';
 
 @Injectable()
 export class TasksService {
@@ -19,6 +20,33 @@ export class TasksService {
 
   async getStructure(): Promise<TasksStructure> {
     return TASKS_STRUCTURE;
+  }
+
+  async getRandomTaskIds() {
+    const promises = [];
+
+    _.toPairs(TASKS_STRUCTURE).map(([topic, { subtopics }]) =>
+      _.toPairs(subtopics).map(([subtopic, { levels }]) =>
+        _.keys(levels).map(async (level) =>
+          promises.push(
+            new Promise((resolve) => {
+              this.TasksModel.find({
+                topic: Number(topic),
+                subtopic: Number(subtopic),
+                level: Number(level),
+              }).then((taskList) => {
+                const random = Math.floor(Math.random() * taskList.length);
+                const { id } = taskList[random];
+
+                return resolve(id);
+              });
+            }),
+          ),
+        ),
+      ),
+    );
+
+    return await Promise.all(promises);
   }
 
   async getTaskById(id: string): Promise<ITask> {

@@ -1,9 +1,11 @@
 import * as R from 'ramda';
-import { call, put } from 'redux-saga/effects';
+import { all, call, put } from 'redux-saga/effects';
 import { SagaIterator } from 'redux-saga';
 import jwtDecode from 'jwt-decode';
 
 import { callApi } from '@common/utils';
+import { tasksSagas } from '@features/tasks';
+import { dictionariesSagas } from '@features/dictionaries';
 
 import { api } from './api';
 import { actions } from './ducks';
@@ -83,4 +85,21 @@ function* signOut(): SagaIterator {
   yield put(actions.resetAuthData());
 }
 
-export const sagas = { signIn, signUp, signOut, setTokenInStore };
+/**
+ * Получение данных после авторизации
+ */
+function* getDataAfterSignIn(): SagaIterator {
+  // Получаем структуру тем/подтем/уровней и список тем
+  yield all([
+    call(tasksSagas.getStructure),
+    call(dictionariesSagas.getTopicsDict),
+  ]);
+}
+
+export const sagas = {
+  signIn,
+  signUp,
+  signOut,
+  setTokenInStore,
+  getDataAfterSignIn,
+};

@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import * as R from 'ramda';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { config } from '@common/config';
 import { setStoreField } from '@common/utils';

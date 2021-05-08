@@ -1,18 +1,7 @@
-import {
-  Controller,
-  ValidationPipe,
-  UseGuards,
-  Query,
-  Param,
-  Body,
-  Get,
-  Post,
-  Patch,
-  Delete,
-} from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UseGuards, ValidationPipe } from '@nestjs/common';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 
-import { Role } from 'src/auth/decorators';
+import { Roles } from 'src/auth/decorators';
 import { RoleGuard } from 'src/auth/guards';
 import { RoleEnum } from 'src/users/enums';
 
@@ -28,7 +17,7 @@ export class TasksController {
 
   @ApiOperation({ summary: 'Получение списка задач.' })
   @ApiBearerAuth()
-  @Role(RoleEnum.Teacher)
+  @Roles([RoleEnum.Teacher])
   @UseGuards(RoleGuard)
   @Get()
   async getTaskList(@Query() query): Promise<ITask[]> {
@@ -37,7 +26,7 @@ export class TasksController {
 
   @ApiOperation({ summary: 'Получение структуры тем/подтем/уровней.' })
   @ApiBearerAuth()
-  @Role(RoleEnum.Teacher)
+  @Roles([RoleEnum.Teacher, RoleEnum.Student])
   @UseGuards(RoleGuard)
   @Get('/structure')
   async getStructure(): Promise<TasksStructure> {
@@ -46,7 +35,7 @@ export class TasksController {
 
   @ApiOperation({ summary: 'Получение одной задачи.' })
   @ApiBearerAuth()
-  @Role(RoleEnum.Teacher)
+  @Roles([RoleEnum.Teacher])
   @UseGuards(RoleGuard)
   @Get('/:id')
   async getTask(@Param('id') id: string): Promise<ITask> {
@@ -55,7 +44,7 @@ export class TasksController {
 
   @ApiOperation({ summary: 'Создание задачи.' })
   @ApiBearerAuth()
-  @Role(RoleEnum.Teacher)
+  @Roles([RoleEnum.Teacher])
   @UseGuards(RoleGuard)
   @Post('/create')
   async createGroup(
@@ -66,7 +55,7 @@ export class TasksController {
 
   @ApiOperation({ summary: 'Обновление задачи.' })
   @ApiBearerAuth()
-  @Role(RoleEnum.Teacher)
+  @Roles([RoleEnum.Teacher])
   @UseGuards(RoleGuard)
   @Patch('/update/:id')
   async updateGroup(
@@ -78,7 +67,7 @@ export class TasksController {
 
   @ApiOperation({ summary: 'Удаление задачи.' })
   @ApiBearerAuth()
-  @Role(RoleEnum.Teacher)
+  @Roles([RoleEnum.Teacher])
   @UseGuards(RoleGuard)
   @Delete('/delete/:id')
   async deleteTask(@Param('id') id: string): Promise<ITask> {

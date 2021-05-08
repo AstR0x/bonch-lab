@@ -5,6 +5,7 @@ import { PassportModule } from '@nestjs/passport';
 import { UsersModule } from 'src/users/users.module';
 import { GroupsModule } from 'src/groups/groups.module';
 import { TasksModule } from 'src/tasks/tasks.module';
+import { LabsModule } from 'src/labs/labs.module';
 import { TokensModule } from 'src/tokens/tokens.module';
 import { configModule } from 'src/configure.root';
 
@@ -17,6 +18,7 @@ import { JwtStrategy } from './jwt.strategy';
     UsersModule,
     forwardRef(() => GroupsModule),
     forwardRef(() => TasksModule),
+    forwardRef(() => LabsModule),
     TokensModule,
     configModule,
     PassportModule.register({ defaultStrategy: 'jwt' }),

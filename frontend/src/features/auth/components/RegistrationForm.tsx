@@ -219,7 +219,9 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({
                 onChange={onSelectChange}
               >
                 {groups.map((group) => (
-                  <MenuItem value={group.id}>{group.title}</MenuItem>
+                  <MenuItem key={group.id} value={group.id}>
+                    {group.title}
+                  </MenuItem>
                 ))}
               </Select>
             </FormControl>

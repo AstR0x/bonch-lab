@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import * as R from 'ramda';
@@ -90,6 +90,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({
           variant="outlined"
           margin="normal"
           fullWidth
+          multiline
           autoComplete="off"
           value={values.formulation}
           error={errors.formulation}

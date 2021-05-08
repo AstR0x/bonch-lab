@@ -1,9 +1,9 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-
-import { groupsProcessActions } from '@processes/groups';
-import { GroupForm, CreateGroupPayload } from '@features/groups';
 import { Container } from '@material-ui/core';
+
+import { GroupForm, CreateGroupPayload } from '@features/groups';
+import { groupsProcessActions } from '@processes/groups';
 
 /**
  * Страница "Создание группы"
@@ -18,10 +18,8 @@ export const CreateGroupPage: React.FC = () => {
    *
    * @param createGroupPayload - данные группы
    */
-  const handleCreateGroup = (createGroupPayload: CreateGroupPayload) => {
-    // Диспатчим экшен создания группы
+  const handleCreateGroup = (createGroupPayload: CreateGroupPayload) =>
     dispatch(groupsProcessActions.createGroup(createGroupPayload));
-  };
 
   return (
     <Container maxWidth="xs">

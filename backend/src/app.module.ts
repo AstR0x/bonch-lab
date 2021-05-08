@@ -5,6 +5,7 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { TokensModule } from './tokens/tokens.module';
 import { TasksModule } from './tasks/tasks.module';
+import { LabsModule } from './labs/labs.module';
 import { GroupsModule } from './groups/groups.module';
 import { DictionariesModule } from './dictionaries/dictionaries.module';
 import { configModule } from './configure.root';
@@ -15,6 +16,7 @@ import { configModule } from './configure.root';
     AuthModule,
     TokensModule,
     TasksModule,
+    LabsModule,
     GroupsModule,
     DictionariesModule,
     configModule,

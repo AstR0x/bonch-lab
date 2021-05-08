@@ -26,9 +26,14 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   ...props
 }) => {
   const isUserAuthorized = useSelector(selectors.isUserAuthorizedSelector);
+  const userRole = useSelector(selectors.userRoleSelector);
 
   if (!isUserAuthorized) {
     return <Redirect to={PATHS.AUTHORIZATION_PAGE} />;
+  }
+
+  if (!roles.includes(userRole)) {
+    return <Redirect to={PATHS.HOME_PAGE} />;
   }
 
   return <RouteWrapper {...props} />;

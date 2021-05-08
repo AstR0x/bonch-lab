@@ -4,12 +4,12 @@ import { all, takeEvery, call } from 'redux-saga/effects';
 
 import { PATHS } from '@src/constants';
 import { processHandler } from '@common/sagas';
+import { notificationSagas } from '@features/notification';
 import {
+  groupsSagas,
   CreateGroupPayload,
   UpdateGroupPayload,
-  groupsSagas,
 } from '@features/groups';
-import { notificationSagas } from '@features/notification';
 import { history } from '@store';
 
 import { actions } from './actions';
@@ -52,8 +52,10 @@ function* notHandledCreateGroupProcess(
 ): SagaIterator {
   // Создаём группу и получаем её идентификатор
   const { id } = yield call(groupsSagas.createGroup, creteGroupPayload);
+
   // Переходим на страницу созданной группы
   yield call(history.push, PATHS.GROUP_PAGE.replace(':id', id));
+
   // Показываем уведомление об успешном создании группы
   yield call(
     notificationSagas.showSuccessNotification,
@@ -86,8 +88,10 @@ function* notHandledUpdateGroupProcess(
 ): SagaIterator {
   // Обновляем группу и получаем её идентификатор
   const { id } = yield call(groupsSagas.updateGroup, updateGroupPayload);
+
   // Переходим на страницу обновленный группы
   yield call(history.push, PATHS.GROUP_PAGE.replace(':id', id));
+
   // Показываем уведомление об успешном редактировании группы
   yield call(
     notificationSagas.showSuccessNotification,
@@ -118,8 +122,10 @@ function* updateGroupProcess({
 function* notHandledDeleteGroupProcess(id: string): SagaIterator {
   // Удаляем группу
   yield call(groupsSagas.deleteGroup, id);
+
   // Переходим на главную страницу
   yield call(history.push, PATHS.HOME_PAGE);
+
   // Показываем уведомление об успешном удалении группы
   yield call(
     notificationSagas.showSuccessNotification,

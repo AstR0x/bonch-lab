@@ -9,19 +9,13 @@ import { GroupsState } from './ducks';
 import { Group, OpenedGroup } from './types';
 
 /**
- * Возвращает стор модуля групп
- *
- * @param state - стор приложения
- * @returns данные модуля групп
+ * Селектор модуля групп
  */
 const groupsModuleSelector = (state: RootState): GroupsState =>
   pathOr(null, [config.modules.groups], state);
 
 /**
- * Возвращает список групп
- *
- * @param state - состояние хранилища
- * @returns список групп
+ * Селектор списка групп
  */
 const groupListSelector = createSelector(
   groupsModuleSelector,
@@ -29,10 +23,7 @@ const groupListSelector = createSelector(
 );
 
 /**
- * Возвращает открытую группу
- *
- * @param state - состояние хранилища
- * @returns группа
+ * Селектор открытой группы
  */
 const openedGroupSelector = createSelector(
   groupsModuleSelector,
@@ -40,10 +31,7 @@ const openedGroupSelector = createSelector(
 );
 
 /**
- * Возвращает открытую группу для отображения в таблице
- *
- * @param state - состояние хранилища
- * @returns группа
+ * Селектор группы для отображения в таблице
  */
 const openedGroup4TableViewSelector = createSelector(
   openedGroupSelector,

@@ -6,6 +6,7 @@ import { authProcessWatcher } from '@processes/auth';
 import { groupsProcessWatcher } from '@processes/groups';
 import { tasksProcessWatcher } from '@processes/tasks';
 import { dictionariesProcessWatcher } from '@processes/dictionaries';
+import { labsProcessWatcher } from '@processes/labs';
 
 /**
  * Главная сага - точка входа
@@ -21,6 +22,7 @@ export function* rootSaga(): SagaIterator {
       authProcessWatcher,
       groupsProcessWatcher,
       tasksProcessWatcher,
+      labsProcessWatcher,
       dictionariesProcessWatcher,
     ].map(fork),
   );

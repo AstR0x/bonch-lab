@@ -15,11 +15,8 @@ import { actions as initProcessActions } from './actions';
  * @returns итератор
  */
 function* notHandledInitProcess(): SagaIterator {
-  // Загружаем справочники
-  yield all([
-    call(dictionariesSagas.getGroupsDict),
-    call(dictionariesSagas.getTopicsDict),
-  ]);
+  // Загружаем список групп
+  yield call(dictionariesSagas.getGroupsDict);
 
   // Запускаем автоматическую авторизацию пользователя
   yield put(authProcessActions.autoSignIn());

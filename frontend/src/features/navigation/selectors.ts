@@ -8,29 +8,29 @@ const navigationModuleSelector = (state: RootState) =>
   state[config.modules.router];
 
 /**
- * Получение URL страницы
+ * Селектор URL страницы
  */
-const pathName = createSelector(
+const pathname = createSelector(
   navigationModuleSelector,
   (navigation): string => pathOr('/', ['location', 'pathname'], navigation),
 );
 
 /**
- * Получение якорной ссылки
+ * Селектор якорной ссылки
  */
 const hash = createSelector(navigationModuleSelector, (navigation): string =>
   pathOr('', ['location', 'hash'], navigation),
 );
 
 /**
- * Получение query-params в виде объекта
+ * Селектор query-params в виде объекта
  */
 const queryParams = createSelector(navigationModuleSelector, (navigation) =>
   pathOr({}, ['location', 'query'], navigation),
 );
 
 /**
- * Получение query-params в виде строки
+ * Селектор query-params в виде строки
  */
 const searchString = createSelector(
   navigationModuleSelector,
@@ -38,7 +38,7 @@ const searchString = createSelector(
 );
 
 export const selectors = {
-  pathName,
+  pathname,
   hash,
   queryParams,
   searchString,

@@ -14,7 +14,7 @@ export const AuthorizationPage: React.FC = () => {
   const dispatch = useDispatch();
 
   /**
-   * Диспатчит экшен авторизации
+   * Обработчик кнопки авторизации
    *
    * @param signInPayload - данные авторизации
    */
@@ -22,7 +22,7 @@ export const AuthorizationPage: React.FC = () => {
     dispatch(authProcessActions.signIn(signInPayload));
 
   return (
-    <Container component="div" maxWidth="xs">
+    <Container maxWidth="xs">
       <AuthorizationForm onSignIn={handleSignIn} />
     </Container>
   );

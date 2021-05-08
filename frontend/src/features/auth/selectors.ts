@@ -9,37 +9,27 @@ import { AuthorizationState } from './ducks';
 import { RoleEnum } from './types';
 
 /**
- * Возвращает стор модуля авторизации
- *
- * @param state - стор приложения
- * @returns данные модуля авторизации или null
+ * Селектор модуля авторизации
  */
 const authModuleSelector = (state: RootState): AuthorizationState =>
   pathOr(null, [config.modules.auth], state);
 
 /**
- * Возвращает токен доступа
- *
- * @param state - состояние хранилища
- * @returns access токен или null
+ * Селектор токена доступа
  */
 const tokenSelector = createSelector(authModuleSelector, (auth): string =>
   pathOr(null, ['token'], auth),
 );
 
 /**
- * Возвращает данные пользователя, полученные после авторизации
- *
- * @returns данные, полученные после авторизации или null
+ * Селектор данных пользователя, полученных после авторизации
  */
 const userDataSelector = createSelector(authModuleSelector, (auth) =>
   pathOr(null, ['userData'], auth),
 );
 
 /**
- * Возвращает роль пользователя
- *
- * @returns данные, полученные после авторизации или null
+ * Селектор роли пользователя
  */
 const userRoleSelector = createSelector(
   userDataSelector,
@@ -47,9 +37,7 @@ const userRoleSelector = createSelector(
 );
 
 /**
- * Возвращает флаг "Пользователь авторизован?"
- *
- * @returns пользователь авторизован ?
+ * Селектор авторизованности пользователя
  */
 const isUserAuthorizedSelector = createSelector(
   tokenSelector,
@@ -57,9 +45,7 @@ const isUserAuthorizedSelector = createSelector(
 );
 
 /**
- * Возвращает флаг "Студент авторизован?"
- *
- * @returns студент авторизован ?
+ * Селектор авторизованности студента
  */
 const isStudentAuthorizedSelector = createSelector(
   userRoleSelector,
@@ -67,9 +53,7 @@ const isStudentAuthorizedSelector = createSelector(
 );
 
 /**
- * Возвращает флаг "Преподаватель авторизован?"
- *
- * @returns преподаватель авторизован ?
+ * Селектор авторизованности преподавателя
  */
 const isTeacherAuthorizedSelector = createSelector(
   userRoleSelector,
@@ -77,9 +61,7 @@ const isTeacherAuthorizedSelector = createSelector(
 );
 
 /**
- * Возвращает информацию о пользователе
- *
- * @returns данные пользователя
+ * Селектор информации пользователя
  */
 const userInfoSelector = createSelector(
   userDataSelector,

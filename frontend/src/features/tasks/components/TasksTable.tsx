@@ -66,7 +66,7 @@ interface TasksTableProps {
  *
  * @param topic - тема
  * @param taskList - список задач
- * @param structure - структура тем/под/уровней
+ * @param structure - структура тем/подтем/уровней
  * @param onGetTaskList - выполняет получение списка задач
  * @param onMoveToCreateTaskPage - выполняет переход на страницу создания задачи
  * @param onMoveToEditTaskPage - выполняет переход на страницу редактирования задачи
@@ -83,10 +83,14 @@ export const TasksTable: React.FC<TasksTableProps> = ({
   onOpenDeleteTaskModal,
 }) => {
   const classes = useStyles();
-  const { formState, onSelectChange } = useForm({
+  const { formState, onSelectChange, resetFormState } = useForm({
     values: { subtopic: 1, level: 1 },
   });
   const { values } = formState;
+
+  useEffect(() => {
+    resetFormState();
+  }, [topic]);
 
   useEffect(() => {
     onGetTaskList({ topic, ...values });
@@ -116,7 +120,7 @@ export const TasksTable: React.FC<TasksTableProps> = ({
             value={formState.values.level}
             onChange={onSelectChange}
           >
-            {R.toPairs(structure[topic].subtopics[values.subtopic].levels).map(
+            {R.toPairs(structure[topic].subtopics[values.subtopic]?.levels).map(
               ([level, { title }]) => (
                 <MenuItem key={level} value={Number(level)}>
                   {level}. {title}
@@ -135,7 +139,7 @@ export const TasksTable: React.FC<TasksTableProps> = ({
         </Tooltip>
       </Toolbar>
       {taskList.length ? (
-        <Table aria-label="simple table" size="small">
+        <Table aria-label="simple table">
           <TableHead>
             <TableRow>
               <TableCell align="left">№</TableCell>

@@ -23,6 +23,10 @@ import { actions as authActions } from './actions';
 function* notHandledSignInProcess(signInPayload: SignInPayload): SagaIterator {
   // Авторизуемся
   yield call(authSagas.signIn, signInPayload);
+
+  // Получаем дополнительные данные
+  yield call(authSagas.getDataAfterSignIn);
+
   // Показываем уведомление об успешной авторизации
   yield call(
     notificationSagas.showSuccessNotification,
@@ -53,8 +57,10 @@ function* signInProcess({
 function* notHandledSignUpProcess(signUpPayload: SignUpPayload): SagaIterator {
   // Регистрируемся
   yield call(authSagas.signUp, signUpPayload);
+
   // Переходим на страницу авторизации
   yield call(history.push, PATHS.AUTHORIZATION_PAGE);
+
   // Показываем уведомление об успешной регистрации
   yield call(
     notificationSagas.showSuccessNotification,
@@ -82,6 +88,7 @@ function* signUpProcess({
 function* notHandledSignOutProcess(): SagaIterator {
   // Выходим из приложения
   yield call(authSagas.signOut);
+
   // Показываем уведомление об успешном выходе
   yield call(
     notificationSagas.showSuccessNotification,
@@ -103,11 +110,12 @@ function* signOutProcess(): SagaIterator {
  * Процесс автоматической авторизации пользователя (без обработки)
  */
 export function* notHandledAutoSignInProcess(): SagaIterator {
-  // Получаем токен из localStorage
   const token = authUtils.getSessionToken();
 
   if (token) {
     yield call(authSagas.setTokenInStore, token);
+
+    yield call(authSagas.getDataAfterSignIn);
   }
 }
 

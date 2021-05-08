@@ -1,9 +1,9 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Container, createStyles, makeStyles } from '@material-ui/core';
+import { createStyles, makeStyles, Container } from '@material-ui/core';
 
 import { Header, Sidebar } from '@common/components';
-import { ErrorLayout, errorsSelectors } from '@features/errors';
+import { errorsSelectors, ErrorLayout } from '@features/errors';
 import { loadingSelectors, Loader } from '@features/loading';
 import { Notification } from '@features/notification';
 import { authSelectors } from '@features/auth';

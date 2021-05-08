@@ -11,7 +11,7 @@ import { JwtService } from '@nestjs/jwt';
 import { TokensService } from 'src/tokens/tokens.service';
 import { ITokenPayload } from 'src/auth/interfaces/token-payload.interface';
 
-import { ROLE_KEY } from '../decorators';
+import { ROLES_KEY } from '../decorators';
 import { isExpiredToken } from '../utils';
 
 @Injectable()
@@ -24,12 +24,12 @@ export class RoleGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const req = context.switchToHttp().getRequest();
-    const requiredRole = this.reflector.getAllAndOverride(ROLE_KEY, [
+    const requiredRoles = this.reflector.getAllAndOverride(ROLES_KEY, [
       context.getHandler(),
       context.getClass(),
     ]);
 
-    if (!requiredRole) {
+    if (!requiredRoles) {
       return false;
     }
 
@@ -56,7 +56,7 @@ export class RoleGuard implements CanActivate {
 
     req.user = user;
 
-    if (user.role !== requiredRole) {
+    if (!requiredRoles.includes(user.role)) {
       throw new ForbiddenException('Нет доступа');
     }
 

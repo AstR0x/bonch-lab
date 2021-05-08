@@ -6,4 +6,5 @@ export { CreateTaskPage } from './CreateTaskPage';
 export { EditTaskPage } from './EditTaskPage';
 export { GroupPage } from './GroupPage';
 export { TasksPage } from './TasksPage';
+export { LabsPage } from './LabsPage';
 export { HomePage } from './HomePage';

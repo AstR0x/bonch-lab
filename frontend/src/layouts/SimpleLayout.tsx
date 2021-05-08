@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Container, createStyles, makeStyles } from '@material-ui/core';
+import { createStyles, makeStyles, Container, } from '@material-ui/core';
 
 import { Header } from '@common/components';
 import { Notification } from '@features/notification';
