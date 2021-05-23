@@ -1,5 +1,5 @@
-import { pathOr, isNil } from 'ramda';
 import { createSelector } from '@reduxjs/toolkit';
+import * as R from 'ramda';
 
 import { RootState } from '@store';
 import { config } from '@common/config';
@@ -12,20 +12,20 @@ import { RoleEnum } from './types';
  * Селектор модуля авторизации
  */
 const authModuleSelector = (state: RootState): AuthorizationState =>
-  pathOr(null, [config.modules.auth], state);
+  R.pathOr(null, [config.modules.auth], state);
 
 /**
  * Селектор токена доступа
  */
 const tokenSelector = createSelector(authModuleSelector, (auth): string =>
-  pathOr(null, ['token'], auth),
+  R.pathOr(null, ['token'], auth),
 );
 
 /**
  * Селектор данных пользователя, полученных после авторизации
  */
 const userDataSelector = createSelector(authModuleSelector, (auth) =>
-  pathOr(null, ['userData'], auth),
+  R.pathOr(null, ['userData'], auth),
 );
 
 /**
@@ -33,7 +33,7 @@ const userDataSelector = createSelector(authModuleSelector, (auth) =>
  */
 const userRoleSelector = createSelector(
   userDataSelector,
-  (userData): RoleEnum => pathOr(null, ['role'], userData),
+  (userData): RoleEnum => R.pathOr(null, ['role'], userData),
 );
 
 /**
@@ -41,7 +41,7 @@ const userRoleSelector = createSelector(
  */
 const isUserAuthorizedSelector = createSelector(
   tokenSelector,
-  (token): boolean => !isNil(token),
+  (token): boolean => !R.isNil(token),
 );
 
 /**

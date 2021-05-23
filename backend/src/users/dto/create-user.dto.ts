@@ -1,12 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsString, IsNotEmpty, Matches } from 'class-validator';
+import { IsEmail, IsString, IsNotEmpty } from 'class-validator';
 
 import { RoleEnum } from '../enums';
 
 export class CreateUserDto {
-  @ApiProperty({
-    description: 'Кодовое слово, выдаваемое администратором или преподавателем',
-  })
+  @ApiProperty({ description: 'Кодовое слово' })
   @IsString()
   @IsNotEmpty()
   readonly codeword: string;
@@ -47,10 +45,6 @@ export class CreateUserDto {
   @ApiProperty({ description: 'Пароль' })
   @IsString()
   @IsNotEmpty()
-  @Matches(
-    /^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})/,
-    { message: 'Слабый пароль' },
-  )
   @ApiProperty()
   readonly password: string;
 }

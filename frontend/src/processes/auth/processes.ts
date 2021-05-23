@@ -37,7 +37,7 @@ function* notHandledSignInProcess(signInPayload: SignInPayload): SagaIterator {
 /**
  * Процесс авторизации пользователя
  *
- * @param payload - данные авторизации
+ * @param signInPayload - данные авторизации
  */
 function* signInProcess({
   payload: signInPayload,
@@ -45,7 +45,6 @@ function* signInProcess({
   yield call(processHandler, {
     process: notHandledSignInProcess,
     payload: signInPayload,
-    loader: true,
   });
 }
 
@@ -70,7 +69,7 @@ function* notHandledSignUpProcess(signUpPayload: SignUpPayload): SagaIterator {
 /**
  * Процесс регистрации пользователя
  *
- * @param payload - данные регистрации
+ * @param signUpPayload - данные регистрации
  */
 function* signUpProcess({
   payload: signUpPayload,
@@ -78,7 +77,6 @@ function* signUpProcess({
   yield call(processHandler, {
     process: notHandledSignUpProcess,
     payload: signUpPayload,
-    loader: true,
   });
 }
 
@@ -102,7 +100,6 @@ function* notHandledSignOutProcess(): SagaIterator {
 function* signOutProcess(): SagaIterator {
   yield call(processHandler, {
     process: notHandledSignOutProcess,
-    loader: true,
   });
 }
 
@@ -125,7 +122,6 @@ export function* notHandledAutoSignInProcess(): SagaIterator {
 function* autoSignInProcess(): SagaIterator {
   yield call(processHandler, {
     process: notHandledAutoSignInProcess,
-    loader: true,
   });
 }
 

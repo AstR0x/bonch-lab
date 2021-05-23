@@ -1,4 +1,4 @@
-export const TASKS_STRUCTURE = {
+export const TOPICS_STRUCTURE = {
   1: {
     title: 'Разветвляющиеся алгоритмы',
     subtopics: {

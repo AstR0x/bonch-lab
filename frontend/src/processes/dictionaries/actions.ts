@@ -10,7 +10,13 @@ const getGroupsDict = createAction('getGroupsDict');
  */
 const getTopicsDict = createAction('getTopicsDict');
 
+/**
+ * Экшен получения структуры тем/подтем/уровней
+ */
+const getStructure = createAction('getStructure');
+
 export const actions = {
   getGroupsDict,
   getTopicsDict,
+  getStructure,
 };

@@ -11,7 +11,7 @@ const config = merge(commomConfig, {
   devtool: 'inline-source-map',
   devServer: getConfig('devServer'),
   output: {
-    path: getConfig('appDist'),
+    path: getConfig('appBuild'),
     filename: '[name].bundle.js',
   },
   plugins: [

@@ -1,17 +1,17 @@
-import { pathOr } from 'ramda';
 import { createSelector } from '@reduxjs/toolkit';
+import * as R from 'ramda';
 
 import { config } from '@common/config';
 import { RootState } from '@store';
 
 import { DictionariesState } from './ducks';
-import { DictionaryItem } from './types';
+import { DictionaryItem, Structure } from './types';
 
 /**
  * Селектор модуля справочников
  */
 const dictionariesModuleSelector = (state: RootState): DictionariesState =>
-  pathOr(null, [config.modules.dictionaries], state);
+  R.pathOr(null, [config.modules.dictionaries], state);
 
 /**
  * Селектор справочника с группами
@@ -19,7 +19,7 @@ const dictionariesModuleSelector = (state: RootState): DictionariesState =>
 const groupsDictSelector = createSelector(
   dictionariesModuleSelector,
   (dictionariesModule): DictionaryItem[] =>
-    pathOr([], ['groups'], dictionariesModule),
+    R.pathOr([], ['groups'], dictionariesModule),
 );
 
 /**
@@ -28,7 +28,7 @@ const groupsDictSelector = createSelector(
 const topicsDictSelector = createSelector(
   dictionariesModuleSelector,
   (dictionariesModule): DictionaryItem[] =>
-    pathOr([], ['topics'], dictionariesModule),
+    R.pathOr([], ['topics'], dictionariesModule),
 );
 
 /**
@@ -40,9 +40,18 @@ const dictsSelector = createSelector(
   (groups, topics) => ({ groups, topics }),
 );
 
+/**
+ * Селектор структуры тем/подтем/уровней
+ */
+const structureSelector = createSelector(
+  dictionariesModuleSelector,
+  (tasksModule): Structure => R.pathOr(null, ['structure'], tasksModule),
+);
+
 export const selectors = {
   dictionariesModuleSelector,
   groupsDictSelector,
   topicsDictSelector,
   dictsSelector,
+  structureSelector,
 };

@@ -1,0 +1,17 @@
+{
+  "name": "bonch-lab",
+  "version": "1.0.0",
+  "description": "Сайт для выполнения лабораторных работ по дисциплине Java",
+  "author": "Vladislav Gumerov",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AstR0x/virtual-lab"
+  },
+  "keywords": [
+    "react",
+    "redux",
+    "redux-saga",
+    "typescript"
+  ]
+}

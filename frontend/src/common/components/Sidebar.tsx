@@ -1,9 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { GroupOutlined, FormatListNumbered, Add } from '@material-ui/icons';
 import {
-  Theme,
-  createStyles,
-  makeStyles,
   Drawer,
   Divider,
   List,
@@ -13,7 +12,6 @@ import {
   IconButton,
   Tooltip,
 } from '@material-ui/core';
-import { GroupOutlined, FormatListNumbered, Add } from '@material-ui/icons';
 
 import { PATHS } from '@src/constants';
 import { dictionariesSelectors } from '@features/dictionaries';

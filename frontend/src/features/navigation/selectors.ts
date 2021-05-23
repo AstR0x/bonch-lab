@@ -1,5 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { pathOr } from 'ramda';
+import * as R from 'ramda';
 
 import { RootState } from '@store';
 import { config } from '@common/config';
@@ -12,21 +12,21 @@ const navigationModuleSelector = (state: RootState) =>
  */
 const pathname = createSelector(
   navigationModuleSelector,
-  (navigation): string => pathOr('/', ['location', 'pathname'], navigation),
+  (navigation): string => R.pathOr('/', ['location', 'pathname'], navigation),
 );
 
 /**
  * Селектор якорной ссылки
  */
 const hash = createSelector(navigationModuleSelector, (navigation): string =>
-  pathOr('', ['location', 'hash'], navigation),
+  R.pathOr('', ['location', 'hash'], navigation),
 );
 
 /**
  * Селектор query-params в виде объекта
  */
 const queryParams = createSelector(navigationModuleSelector, (navigation) =>
-  pathOr({}, ['location', 'query'], navigation),
+  R.pathOr({}, ['location', 'query'], navigation),
 );
 
 /**
@@ -34,7 +34,7 @@ const queryParams = createSelector(navigationModuleSelector, (navigation) =>
  */
 const searchString = createSelector(
   navigationModuleSelector,
-  (navigation): string => pathOr('', ['location', 'search'], navigation),
+  (navigation): string => R.pathOr('', ['location', 'search'], navigation),
 );
 
 export const selectors = {

@@ -18,7 +18,7 @@ module.exports = merge(commomConfig, {
   mode: 'production',
   devtool: 'none',
   output: {
-    path: getConfig('appDist'),
+    path: getConfig('appBuild'),
     filename: 'bundle-[hash].js',
   },
   optimization: {
@@ -62,22 +62,6 @@ module.exports = merge(commomConfig, {
       template: getConfig('appHTMLTemplate'),
       title: getConfig('appName'),
       inject: true,
-    }),
-    new FaviconWebpackPlugin({
-      logo: getConfig('appFavicon'),
-      mode: 'webapp',
-      favicons: {
-        appName: getPackageConfig(['name']),
-        appDescription: getPackageConfig(['description']),
-        developerName: getPackageConfig(['author']),
-        developerURL: getPackageConfig(['repository'], ['url']),
-        background: '#ddd',
-        theme_color: '#333',
-        icons: {
-          coast: false,
-          yandex: false,
-        },
-      },
     }),
     new webpack.EnvironmentPlugin({
       NODE_ENV: 'production',

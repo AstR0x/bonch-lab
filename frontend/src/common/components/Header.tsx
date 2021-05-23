@@ -1,16 +1,14 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { ExitToApp } from '@material-ui/icons';
 import {
-  Theme,
-  createStyles,
-  makeStyles,
   AppBar,
   Toolbar,
   Typography,
   IconButton,
   Tooltip,
 } from '@material-ui/core';
-import { ExitToApp } from '@material-ui/icons';
 
 import { UserInfo, authSelectors } from '@features/auth';
 import { authProcessActions } from '@processes/auth';
@@ -38,7 +36,7 @@ export const Header: React.FC = () => {
   const isUserAuthorized = useSelector(authSelectors.isUserAuthorizedSelector);
 
   /**
-   * Диспатчит экшен выхода из приложения
+   * Обработчик кнопки выхода из приложения
    */
   const handleSignUp = () => dispatch(authProcessActions.signOut());
 

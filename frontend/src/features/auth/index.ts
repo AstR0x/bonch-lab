@@ -8,10 +8,8 @@ export {
   UserInfo,
   AuthorizationForm,
   RegistrationForm,
-  RouteWrapper,
   NotAuthRoute,
   ProtectedRoute,
-  RouteWrapperProps,
 } from './components';
 export {
   RoleEnum,

@@ -1,13 +1,12 @@
 import {
   Controller,
-  ValidationPipe,
-  UseGuards,
   Param,
   Body,
   Get,
   Post,
   Patch,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 
@@ -47,9 +46,7 @@ export class GroupsController {
   @Roles([RoleEnum.Teacher])
   @UseGuards(RoleGuard)
   @Post('/create')
-  async createGroup(
-    @Body(new ValidationPipe()) createGroupDto: CreateGroupDto,
-  ): Promise<IGroup> {
+  async createGroup(@Body() createGroupDto: CreateGroupDto): Promise<IGroup> {
     return this.groupsService.createGroup(createGroupDto);
   }
 
@@ -60,7 +57,7 @@ export class GroupsController {
   @Patch('/update/:id')
   async updateGroup(
     @Param('id') id: string,
-    @Body(new ValidationPipe()) updateGroupDto: UpdateGroupDto,
+    @Body() updateGroupDto: UpdateGroupDto,
   ): Promise<IGroup> {
     return this.groupsService.updateGroup(id, updateGroupDto);
   }

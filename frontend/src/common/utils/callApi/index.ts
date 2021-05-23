@@ -1,6 +1,6 @@
-import { pathOr } from 'ramda';
 import { AxiosPromise } from 'axios';
 import { call } from 'redux-saga/effects';
+import * as R from 'ramda';
 
 import { ServerError } from '@features/errors';
 
@@ -21,10 +21,10 @@ export function* callApi(
 ) {
   try {
     const response = yield call(command, ...params);
-    return pathOr(null, pathData, response);
+    return R.pathOr(null, pathData, response);
   } catch (error) {
     console.error(error);
-    const { message, statusCode } = pathOr(null, pathError, error);
+    const { message, statusCode } = R.pathOr(null, pathError, error);
     throw new ServerError(message, statusCode);
   }
 }

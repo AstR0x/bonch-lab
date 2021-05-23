@@ -8,7 +8,7 @@ import { authActions, authUtils } from '@features/auth';
 import { ProcessHandlerPayload } from '../types';
 
 /**
- * Обработчик процессов
+ * Обработка процессов
  *
  * @param process - обрабатываемый процесс
  * @param payload - входные данные процесса
@@ -18,7 +18,7 @@ import { ProcessHandlerPayload } from '../types';
 export function* processHandler({
   process,
   payload,
-  loader,
+  loader = true,
 }: ProcessHandlerPayload): SagaIterator {
   try {
     if (loader) {

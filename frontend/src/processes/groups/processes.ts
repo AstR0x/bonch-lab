@@ -22,7 +22,6 @@ import { actions } from './actions';
 function* getGroupListProcess(): SagaIterator {
   yield call(processHandler, {
     process: groupsSagas.getGroupList,
-    loader: true,
   });
 }
 
@@ -38,7 +37,6 @@ function* getGroupProcess({
   yield call(processHandler, {
     process: groupsSagas.getGroup,
     payload: id,
-    loader: true,
   });
 }
 
@@ -48,10 +46,10 @@ function* getGroupProcess({
  * @returns итератор
  */
 function* notHandledCreateGroupProcess(
-  creteGroupPayload: CreateGroupPayload,
+  createGroupPayload: CreateGroupPayload,
 ): SagaIterator {
   // Создаём группу и получаем её идентификатор
-  const { id } = yield call(groupsSagas.createGroup, creteGroupPayload);
+  const { id } = yield call(groupsSagas.createGroup, createGroupPayload);
 
   // Переходим на страницу созданной группы
   yield call(history.push, PATHS.GROUP_PAGE.replace(':id', id));
@@ -74,7 +72,6 @@ function* createGroupProcess({
   yield call(processHandler, {
     process: notHandledCreateGroupProcess,
     payload: groupPayload,
-    loader: true,
   });
 }
 
@@ -110,7 +107,6 @@ function* updateGroupProcess({
   yield call(processHandler, {
     process: notHandledUpdateGroupProcess,
     payload: updateGroupPayload,
-    loader: true,
   });
 }
 
@@ -145,7 +141,6 @@ function* deleteGroupProcess({
   yield call(processHandler, {
     process: notHandledDeleteGroupProcess,
     payload: id,
-    loader: true,
   });
 }
 

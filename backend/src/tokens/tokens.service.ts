@@ -2,16 +2,16 @@ import { Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 
-import { IUserToken } from './interfaces';
+import { IToken } from './interfaces';
 import { CreateUserTokenDto } from './dto';
 
 @Injectable()
 export class TokensService {
   constructor(
-    @InjectModel('Tokens') private readonly TokensModel: Model<IUserToken>,
+    @InjectModel('Tokens') private readonly TokensModel: Model<IToken>,
   ) {}
 
-  async create(createUserTokenDto: CreateUserTokenDto): Promise<IUserToken> {
+  async create(createUserTokenDto: CreateUserTokenDto): Promise<IToken> {
     const userToken = new this.TokensModel(createUserTokenDto);
     return userToken.save();
   }

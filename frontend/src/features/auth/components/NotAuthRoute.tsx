@@ -4,7 +4,7 @@ import { Redirect } from 'react-router';
 
 import { PATHS } from '@src/constants';
 
-import { RouteWrapper, RouteWrapperProps } from './';
+import { RouteWrapper, RouteWrapperProps } from './RouteWrapper';
 import { selectors } from '../selectors';
 
 /**

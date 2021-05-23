@@ -16,7 +16,7 @@ const appPaths = {
   // папка с контейнерами страниц приложения
   appPages: path.resolve(__dirname, '../../src/pages'),
   // папка с билдом приложения
-  appDist: path.resolve(__dirname, '../../dist'),
+  appBuild: path.resolve(__dirname, '../../build'),
   // папка с ресурсами приложения (картинками шрифтами и пр.)
   appAssets: path.resolve(__dirname, '../../public'),
   // папка со стилями
@@ -26,7 +26,7 @@ const appPaths = {
   // HTML шаблон приложения
   appHTMLTemplate: path.resolve(__dirname, '../../public/index.html'),
   // Favicon приложения
-  appFavicon: path.resolve(__dirname, '../../dist/logo.png'),
+  appFavicon: path.resolve(__dirname, '../../build/logo.png'),
   // путь к папке package.json
   appPackageJson: path.resolve(__dirname, '../../package.json'),
 };

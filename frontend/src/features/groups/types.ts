@@ -11,7 +11,7 @@ export interface Group {
   students: string[];
 }
 
-export interface OpenedGroup extends Omit<Group, 'students'> {
+export interface PopulatedGroup extends Omit<Group, 'students'> {
   /** Студенты группы */
   students: Student[];
 }

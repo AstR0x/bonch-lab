@@ -33,7 +33,6 @@ function* notHandledInitProcess(): SagaIterator {
 function* initProcess(): SagaIterator {
   yield call(processHandler, {
     process: notHandledInitProcess,
-    loader: true,
   });
 }
 

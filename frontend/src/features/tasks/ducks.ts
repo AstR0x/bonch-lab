@@ -3,24 +3,21 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { config } from '@common/config';
 import { setStoreField } from '@common/utils';
 
-import { Task, Structure, TaskParams } from './types';
+import { Task, TaskParams } from './types';
 
 export interface TasksState {
   /** Список задач */
   taskList: Task[];
-  /** Открытая задача */
-  openedTask: Task[];
+  /** Задача */
+  task: Task[];
   /** Параметры задачи */
   taskParams: TaskParams;
-  /** Структура тем/подтем/уровней  */
-  structure: Structure;
 }
 
 const initialState: TasksState = {
   taskList: null,
-  openedTask: null,
+  task: null,
   taskParams: null,
-  structure: null,
 };
 
 /**
@@ -41,9 +38,8 @@ const tasksSlice = createSlice({
   initialState,
   reducers: {
     setTaskList: setStoreField('taskList'),
-    setOpenedTask: setStoreField('openedTask'),
+    setTask: setStoreField('task'),
     setTaskParams: setStoreField('taskParams'),
-    setStructure: setStoreField('structure'),
     deleteTask,
   },
 });

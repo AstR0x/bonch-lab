@@ -1,4 +1,15 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UseGuards, ValidationPipe } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Patch,
+  Delete,
+  Param,
+  Query,
+  Body,
+  UseGuards,
+  ValidationPipe,
+} from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { Roles } from 'src/auth/decorators';
@@ -6,7 +17,6 @@ import { RoleGuard } from 'src/auth/guards';
 import { RoleEnum } from 'src/users/enums';
 
 import { ITask } from './interfaces';
-import { TasksStructure } from './types';
 import { CreateTaskDto, UpdateTaskDto } from './dto';
 import { TasksService } from './tasks.service';
 
@@ -22,15 +32,6 @@ export class TasksController {
   @Get()
   async getTaskList(@Query() query): Promise<ITask[]> {
     return this.tasksService.getTaskList(query);
-  }
-
-  @ApiOperation({ summary: 'Получение структуры тем/подтем/уровней.' })
-  @ApiBearerAuth()
-  @Roles([RoleEnum.Teacher, RoleEnum.Student])
-  @UseGuards(RoleGuard)
-  @Get('/structure')
-  async getStructure(): Promise<TasksStructure> {
-    return this.tasksService.getStructure();
   }
 
   @ApiOperation({ summary: 'Получение одной задачи.' })

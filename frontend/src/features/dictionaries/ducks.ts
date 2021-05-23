@@ -1,27 +1,24 @@
-import * as R from 'ramda';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import * as R from 'ramda';
 
 import { config } from '@common/config';
 import { setStoreField } from '@common/utils';
 
-import { DictionaryItem } from './types';
+import { DictionaryItem, Structure } from './types';
 
 export interface DictionariesState {
   /** Справочник групп */
   groups: DictionaryItem[];
   /** Справочник тем */
   topics: DictionaryItem[];
-  /** Справочник подтем */
-  subtopics: DictionaryItem[];
-  /** Справочник уровней */
-  levels: DictionaryItem[];
+  /** Структура тем/подтем/уровней  */
+  structure: Structure;
 }
 
 const initialState: DictionariesState = {
   groups: [],
   topics: [],
-  subtopics: [],
-  levels: [],
+  structure: null,
 };
 
 /**
@@ -76,8 +73,7 @@ const dictionariesSlice = createSlice({
   reducers: {
     setGroupsDict: setStoreField('groups'),
     setTopicsDict: setStoreField('topics'),
-    setSubtopicsDict: setStoreField('subtopics'),
-    setLevelsDict: setStoreField('levels'),
+    setStructure: setStoreField('structure'),
     addGroup,
     updateGroup,
     deleteGroup,

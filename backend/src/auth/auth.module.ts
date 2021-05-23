@@ -13,6 +13,9 @@ import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { JwtStrategy } from './jwt.strategy';
 
+/**
+ * Модуль авторизации
+ */
 @Module({
   imports: [
     UsersModule,

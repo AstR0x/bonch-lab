@@ -25,19 +25,6 @@ function* getTaskListProcess({
   yield call(processHandler, {
     process: tasksSagas.getTaskList,
     payload: getTaskListParams,
-    loader: true,
-  });
-}
-
-/**
- * Процесс получения структуры тем/подтем/уровней
- *
- * @returns итератор
- */
-function* getStructureProcess(): SagaIterator {
-  yield call(processHandler, {
-    process: tasksSagas.getStructure,
-    loader: true,
   });
 }
 
@@ -51,7 +38,6 @@ function* getTaskProcess({ payload: id }: PayloadAction<string>): SagaIterator {
   yield call(processHandler, {
     process: tasksSagas.getTask,
     payload: id,
-    loader: true,
   });
 }
 
@@ -87,7 +73,6 @@ function* createTaskProcess({
   yield call(processHandler, {
     process: notHandledCreateTaskProcess,
     payload: taskPayload,
-    loader: true,
   });
 }
 
@@ -123,7 +108,6 @@ function* updateTaskProcess({
   yield call(processHandler, {
     process: notHandledUpdateTaskProcess,
     payload: updateTaskPayload,
-    loader: true,
   });
 }
 
@@ -155,7 +139,6 @@ function* deleteTaskProcess({
   yield call(processHandler, {
     process: notHandledDeleteTaskProcess,
     payload: id,
-    loader: true,
   });
 }
 
@@ -165,7 +148,6 @@ function* deleteTaskProcess({
 export function* tasksProcessWatcher(): SagaIterator {
   yield all([
     takeEvery(actions.getTaskList, getTaskListProcess),
-    takeEvery(actions.getStructure, getStructureProcess),
     takeEvery(actions.getTask, getTaskProcess),
     takeEvery(actions.createTask, createTaskProcess),
     takeEvery(actions.updateTask, updateTaskProcess),

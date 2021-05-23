@@ -1,1 +1,1 @@
-export { IDictionary } from './dictionary.interface';
+export { IDictionaryItem } from './dictionary.interface';

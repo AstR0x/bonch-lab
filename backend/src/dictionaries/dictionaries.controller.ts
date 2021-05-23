@@ -1,7 +1,9 @@
 import { Controller, Get } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 
-import { IDictionary } from './interfaces';
+import { TopicsStructure } from 'src/tasks/types';
+
+import { IDictionaryItem } from './interfaces';
 import { DictionariesService } from './dictionaries.service';
 
 @ApiTags('dictionaries')
@@ -11,13 +13,19 @@ export class DictionariesController {
 
   @ApiOperation({ summary: 'Получение списка групп.' })
   @Get('/groups')
-  async getGroups(): Promise<IDictionary[]> {
+  async getGroups(): Promise<IDictionaryItem[]> {
     return this.dictionariesService.getGroupList();
   }
 
   @ApiOperation({ summary: 'Получение списка тем.' })
   @Get('/topics')
-  async getTopics(): Promise<IDictionary[]> {
+  async getTopics(): Promise<IDictionaryItem[]> {
     return this.dictionariesService.getTopicList();
+  }
+
+  @ApiOperation({ summary: 'Получение структуры тем/подтем/уровней.' })
+  @Get('/structure')
+  async getStructure(): Promise<TopicsStructure> {
+    return this.dictionariesService.getStructure();
   }
 }

@@ -1,11 +1,13 @@
 import React from 'react';
 import { useParams } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
+import { createStyles, makeStyles } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
 
 import { useModal } from '@common/hooks';
 import { DeleteModal } from '@common/components';
 import { tasksProcessActions } from '@processes/tasks';
+import { dictionariesSelectors } from '@features/dictionaries';
 import {
   tasksActions,
   tasksSelectors,
@@ -17,16 +19,25 @@ import { history } from '@store';
 
 import { PATHS } from '../constants';
 
+const useStyles = makeStyles(() =>
+  createStyles({
+    heading: {
+      fontWeight: 100,
+    },
+  }),
+);
+
 /**
  * Страница "Задачи по теме"
  *
  * @returns react-элемент
  */
 export const TasksPage: React.FC = () => {
+  const classes = useStyles();
   const { id: topic } = useParams();
   const dispatch = useDispatch();
   const taskList = useSelector(tasksSelectors.taskListSelector);
-  const structure = useSelector(tasksSelectors.structureSelector);
+  const structure = useSelector(dictionariesSelectors.structureSelector);
   const {
     isOpened: isDeleteTaskModalOpened,
     openModal: openDeleteTaskModal,
@@ -62,7 +73,7 @@ export const TasksPage: React.FC = () => {
   const handleMoveToEditTaskPage = (id: string) => {
     const foundTask = taskList.find((task) => task.id === id);
     // Записываем в стор задачу
-    dispatch(tasksActions.setOpenedTask(foundTask));
+    dispatch(tasksActions.setTask(foundTask));
     // Переходим на страницу редактирования
     history.push(PATHS.EDIT_TASK_PAGE.replace(':id', id));
   };
@@ -79,7 +90,12 @@ export const TasksPage: React.FC = () => {
 
   return (
     <>
-      <Typography gutterBottom variant="h4" component="h2">
+      <Typography
+        gutterBottom
+        variant="h4"
+        component="h2"
+        className={classes.heading}
+      >
         {topic}. {structure[topic].title}
       </Typography>
       <TasksTable

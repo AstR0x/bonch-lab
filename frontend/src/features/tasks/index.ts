@@ -4,7 +4,6 @@ export { sagas as tasksSagas } from './sagas';
 export { selectors as tasksSelectors } from './selectors';
 export {
   Task,
-  Structure,
   TaskParams,
   GetTaskListParams,
   CreateTaskPayload,

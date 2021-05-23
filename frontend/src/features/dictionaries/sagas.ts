@@ -1,5 +1,5 @@
-import { call, put } from 'redux-saga/effects';
 import { SagaIterator } from 'redux-saga';
+import { call, put } from 'redux-saga/effects';
 
 import { callApi } from '@common/utils/callApi';
 
@@ -33,34 +33,18 @@ function* getTopicsDict(): SagaIterator {
 }
 
 /**
- * Получение справочника со списком подтем
+ * Получение структуры тем/подтем/уровней
  *
  * @returns итератор
  */
-function* getSubtopicsDict(): SagaIterator {
-  // Получение подтем
-  const subtopicsDict = yield call(callApi, api.getSubtopicsDict);
+function* getStructure(): SagaIterator {
+  const structure = yield call(callApi, api.getStructure);
 
-  // Записываем подтемы в стор
-  yield put(actions.setSubtopicsDict(subtopicsDict));
-}
-
-/**
- * Получение справочника с уровнями сложности
- *
- * @returns итератор
- */
-function* getLevelsDict(): SagaIterator {
-  // Получение уровней сложности
-  const levelsDict = yield call(callApi, api.getLevelsDict);
-
-  // Записываем уровни сложности
-  yield put(actions.setLevelsDict(levelsDict));
+  yield put(actions.setStructure(structure));
 }
 
 export const sagas = {
   getGroupsDict,
   getTopicsDict,
-  getSubtopicsDict,
-  getLevelsDict,
+  getStructure,
 };

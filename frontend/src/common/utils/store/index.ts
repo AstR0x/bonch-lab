@@ -2,6 +2,7 @@ import { PayloadAction } from '@reduxjs/toolkit';
 
 /**
  * Установка поля стора
+ *
  * @returns новое состояние стора модуля
  * @param fieldName - имя поля стора
  */

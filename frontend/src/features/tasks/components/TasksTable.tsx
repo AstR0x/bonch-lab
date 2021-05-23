@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import * as R from 'ramda';
 import {
   Theme,
   makeStyles,
@@ -19,14 +18,11 @@ import {
   Tooltip,
 } from '@material-ui/core';
 import { Add, Edit, Delete } from '@material-ui/icons';
+import * as R from 'ramda';
 
 import { useForm } from '@common/hooks';
-import {
-  Task,
-  Structure,
-  TaskParams,
-  GetTaskListParams,
-} from '@features/tasks';
+import { Structure } from '@features/dictionaries';
+import { Task, TaskParams, GetTaskListParams } from '@features/tasks';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -44,6 +40,9 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     grow: {
       flexGrow: 1,
+    },
+    formulation: {
+      whiteSpace: 'pre-wrap',
     },
     buttonsTd: {
       whiteSpace: 'nowrap',
@@ -153,7 +152,9 @@ export const TasksTable: React.FC<TasksTableProps> = ({
                 <TableCell component="th" scope="row" align="left">
                   {index + 1}
                 </TableCell>
-                <TableCell align="left">{task.formulation}</TableCell>
+                <TableCell className={classes.formulation} align="left">
+                  {task.formulation}
+                </TableCell>
                 <TableCell align="right" className={classes.buttonsTd}>
                   <Tooltip title="Редактировать задачу">
                     <IconButton onClick={() => onMoveToEditTaskPage(task.id)}>

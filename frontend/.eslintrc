@@ -8,6 +8,7 @@
     "@typescript-eslint/no-var-requires": "off",
     "@typescript-eslint/ban-ts-comment": "off",
     "@typescript-eslint/indent": "off",
+    "import/no-cycle": "warn",
     "import/prefer-default-export": "off",
     "import/no-useless-path-segments": "off",
     "react/jsx-props-no-spreading": "off",

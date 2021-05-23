@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
-import { FormState, UseFormResult } from '@common/types';
 import { validators } from '@common/utils';
+import { FormState, UseFormResult } from '@common/types';
 
 /**
  * Хук управления данными форм
@@ -30,7 +30,7 @@ export const useForm = <T extends FormState>(
     }));
 
   /**
-   * Сбрасывает значение поля в объекте values
+   * Сброс значений поля в объекте values
    *
    * @param name - название поля
    */
@@ -49,7 +49,7 @@ export const useForm = <T extends FormState>(
   const resetFormState = () => setState(initialState);
 
   /**
-   * Обрабатывает и валидирует изменения в компоненте TextField
+   * Обработка и валидация изменений в компоненте TextField
    */
   const onTextFieldChange = ({
     target: { name, value, required },
@@ -84,7 +84,7 @@ export const useForm = <T extends FormState>(
   };
 
   /**
-   * Обрабатывает изменения в компоненте Select
+   * Обработка изменений в компоненте Select
    */
   const onSelectChange = ({
     target: { name, value },
@@ -99,7 +99,7 @@ export const useForm = <T extends FormState>(
   };
 
   /**
-   * Обрабатывает изменения в компоненте Checkbox
+   * Обработка изменений в компоненте Checkbox
    */
   const onCheckboxChange = ({
     target: { name, value, checked },
@@ -113,6 +113,21 @@ export const useForm = <T extends FormState>(
     }));
   };
 
+  /**
+   * Обработка изменений в файловом input
+   */
+  const onFileInputChange = ({
+    target: { name, files },
+  }: React.ChangeEvent<HTMLInputElement>) => {
+    setState((prevState) => ({
+      ...prevState,
+      values: {
+        ...prevState.values,
+        [name]: files[0],
+      },
+    }));
+  };
+
   return {
     formState: state,
     setFormState: setState,
@@ -122,5 +137,6 @@ export const useForm = <T extends FormState>(
     onTextFieldChange,
     onSelectChange,
     onCheckboxChange,
+    onFileInputChange,
   };
 };

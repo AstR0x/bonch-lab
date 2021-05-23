@@ -3,27 +3,27 @@ import { createSlice } from '@reduxjs/toolkit';
 import { config } from '@common/config';
 import { setStoreField } from '@common/utils';
 
-import { Group } from './types';
+import { Group, PopulatedGroup } from './types';
 
 export interface GroupsState {
   /** Список групп */
   groupList: Group[];
-  /** Открытая группа */
-  openedGroup: Group;
+  /** Группа */
+  group: PopulatedGroup;
 }
 
 const initialState: GroupsState = {
   groupList: null,
-  openedGroup: null,
+  group: null,
 };
 
 /**
- * Удаление открытой группы
+ * Удаление группы
  *
  * @param state - состояние стора модуля
  */
-const deleteOpenedGroup = (state: GroupsState) => {
-  state.openedGroup = null;
+const deleteGroup = (state: GroupsState) => {
+  state.group = null;
 };
 
 const groupsSlice = createSlice({
@@ -31,8 +31,8 @@ const groupsSlice = createSlice({
   initialState,
   reducers: {
     setGroupList: setStoreField('groupList'),
-    setOpenedGroup: setStoreField('openedGroup'),
-    deleteOpenedGroup,
+    setGroup: setStoreField('group'),
+    deleteGroup,
   },
 });
 

@@ -1,4 +1,4 @@
-import { head } from 'ramda';
+import * as R from 'ramda';
 
 interface GetShortNameParams {
   /* Имя */
@@ -22,5 +22,7 @@ export const getShortName = ({
   surname,
   patronymic,
 }: GetShortNameParams): string => {
-  return `${surname.trim()} ${head(name.trim())}. ${head(patronymic.trim())}.`;
+  return `${surname.trim()} ${R.head(name.trim())}. ${R.head(
+    patronymic.trim(),
+  )}.`;
 };

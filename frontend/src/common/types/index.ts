@@ -8,7 +8,7 @@ export interface ProcessHandlerPayload {
 
 export interface FormState {
   values: {
-    [key: string]: string | number;
+    [key: string]: string | number | File;
   };
   errors?: {
     [key: string]: boolean;
@@ -38,4 +38,6 @@ export interface UseFormResult<T> {
   onSelectChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   // Обработчик изменений компонента Checkbox
   onCheckboxChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  // Обработчик изменений в файловом input
+  onFileInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }

@@ -7,7 +7,7 @@ import { SignInPayload, SignUpPayload } from './types';
 /**
  * Регистрация пользователя
  *
- * @param data - тело запроса
+ * @param data - данные регистрации
  * @returns axios промис
  */
 const signUp = (data: SignUpPayload): AxiosPromise<boolean> =>
@@ -16,7 +16,7 @@ const signUp = (data: SignUpPayload): AxiosPromise<boolean> =>
 /**
  * Авторизация пользователя
  *
- * @param data - тело запроса
+ * @param data - данные авторизации
  * @returns axios промис
  */
 const signIn = (data: SignInPayload): AxiosPromise<string> =>

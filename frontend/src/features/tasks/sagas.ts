@@ -14,23 +14,13 @@ import {
 /**
  * Получение списка задач
  *
+ * @param getTaskListParams - параметры для получения списка задач
  * @returns итератор
  */
 function* getTaskList(getTaskListParams?: GetTaskListParams): SagaIterator {
   const taskList = yield call(callApi, api.getTaskList, [getTaskListParams]);
 
   yield put(actions.setTaskList(taskList));
-}
-
-/**
- * Получение структуры тем/подтем/уровней
- *
- * @returns итератор
- */
-function* getStructure(): SagaIterator {
-  const structure = yield call(callApi, api.getStructure);
-
-  yield put(actions.setStructure(structure));
 }
 
 /**
@@ -42,7 +32,7 @@ function* getStructure(): SagaIterator {
 function* getTask(id: string): SagaIterator {
   const task = yield call(callApi, api.getTask, [id]);
 
-  yield put(actions.setOpenedTask(task));
+  yield put(actions.setTask(task));
 }
 
 /**
@@ -80,7 +70,6 @@ function* deleteTask(id: string): SagaIterator {
 export const sagas = {
   getTaskList,
   getTask,
-  getStructure,
   createTask,
   updateTask,
   deleteTask,

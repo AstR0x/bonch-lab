@@ -22,12 +22,20 @@ export const useModal = (): UseModalResult => {
     content: null,
   });
 
+  /**
+   * Открытие модального окна
+   *
+   * @param content - контент модального окна
+   */
   const openModal = (content: any = null) =>
     setModalData({
       isOpened: true,
       content,
     });
 
+  /**
+   * Закрытие модального окна
+   */
   const closeModal = () =>
     setModalData({
       isOpened: false,
