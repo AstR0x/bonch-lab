@@ -1,3 +1,3 @@
-import { TASKS_STRUCTURE } from '../constants';
+import { TOPICS_STRUCTURE } from '../constants';
 
-export type TasksStructure = typeof TASKS_STRUCTURE;
+export type TopicsStructure = typeof TOPICS_STRUCTURE;

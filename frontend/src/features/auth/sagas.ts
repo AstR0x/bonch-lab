@@ -1,10 +1,9 @@
-import * as R from 'ramda';
-import { all, call, put } from 'redux-saga/effects';
 import { SagaIterator } from 'redux-saga';
+import { all, call, put } from 'redux-saga/effects';
 import jwtDecode from 'jwt-decode';
+import * as R from 'ramda';
 
 import { callApi } from '@common/utils';
-import { tasksSagas } from '@features/tasks';
 import { dictionariesSagas } from '@features/dictionaries';
 
 import { api } from './api';
@@ -91,7 +90,7 @@ function* signOut(): SagaIterator {
 function* getDataAfterSignIn(): SagaIterator {
   // Получаем структуру тем/подтем/уровней и список тем
   yield all([
-    call(tasksSagas.getStructure),
+    call(dictionariesSagas.getStructure),
     call(dictionariesSagas.getTopicsDict),
   ]);
 }

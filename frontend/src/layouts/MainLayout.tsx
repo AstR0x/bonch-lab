@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { createStyles, makeStyles, Container } from '@material-ui/core';
+import { createStyles, makeStyles } from '@material-ui/core/styles';
+import { Container } from '@material-ui/core';
 
 import { Header, Sidebar } from '@common/components';
 import { errorsSelectors, ErrorLayout } from '@features/errors';

@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
-import { AccountBoxOutlined } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
+import { AccountBoxOutlined } from '@material-ui/icons';
 import {
   Container,
   Avatar,

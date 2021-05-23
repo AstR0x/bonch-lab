@@ -1,4 +1,6 @@
 import React from 'react';
+import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
+import { MenuBook, Edit, Delete } from '@material-ui/icons';
 import {
   Table,
   TableBody,
@@ -11,13 +13,9 @@ import {
   Tooltip,
   IconButton,
   Paper,
-  Theme,
-  makeStyles,
-  createStyles,
 } from '@material-ui/core';
-import { Edit, Delete } from '@material-ui/icons';
 
-import { OpenedGroup } from '@features/groups';
+import { PopulatedGroup } from '../types';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -35,21 +33,24 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface StudentsTableProps {
-  openedGroup: OpenedGroup;
+  group: PopulatedGroup;
+  onMoveToJournalPage: () => void;
   onMoveToEditGroupPage: () => void;
-  onOpenDeleteGroupModal: (group: OpenedGroup) => void;
+  onOpenDeleteGroupModal: (group: PopulatedGroup) => void;
 }
 
 /**
  * Компонент "Таблица группы"
  *
- * @param openedGroup - открытая группа
+ * @param group - группа
+ * @param onMoveToJournalPage - выполняет переход на страницу журнала группы
  * @param onMoveToEditGroupPage - выполняет переход на страницу редактирования группы
  * @param onOpenDeleteGroupModal - открывает модальное окно удаления группы
  * @returns react-элемент
  */
 export const GroupTable: React.FC<StudentsTableProps> = ({
-  openedGroup,
+  group,
+  onMoveToJournalPage,
   onMoveToEditGroupPage,
   onOpenDeleteGroupModal,
 }) => {
@@ -59,20 +60,28 @@ export const GroupTable: React.FC<StudentsTableProps> = ({
     <TableContainer className={classes.tableContainer} component={Paper}>
       <Toolbar className={classes.toolbar}>
         <Typography className={classes.title} component="div" variant="h6">
-          {openedGroup.name}
+          {group.name}
         </Typography>
+        <Tooltip title="Открыть журнал">
+          <IconButton
+            onClick={onMoveToJournalPage}
+            disabled={!group.students.length}
+          >
+            <MenuBook />
+          </IconButton>
+        </Tooltip>
         <Tooltip title="Редактировать группу">
           <IconButton onClick={onMoveToEditGroupPage}>
             <Edit />
           </IconButton>
         </Tooltip>
         <Tooltip title="Удалить группу">
-          <IconButton onClick={() => onOpenDeleteGroupModal(openedGroup)}>
+          <IconButton onClick={() => onOpenDeleteGroupModal(group)}>
             <Delete />
           </IconButton>
         </Tooltip>
       </Toolbar>
-      {openedGroup.students.length ? (
+      {group.students.length ? (
         <Table aria-label="simple table" size="small">
           <TableHead>
             <TableRow>
@@ -85,13 +94,13 @@ export const GroupTable: React.FC<StudentsTableProps> = ({
             </TableRow>
           </TableHead>
           <TableBody>
-            {openedGroup.students.map((student, index) => (
+            {group.students.map((student, index) => (
               <TableRow hover key={student.email}>
                 <TableCell component="th" scope="row" align="left">
                   {index + 1}
                 </TableCell>
                 <TableCell align="left">
-                  {student.name} {student.surname} {student.patronymic}
+                  {student.name} {student.patronymic} {student.surname}
                 </TableCell>
                 <TableCell align="left">{student.status}</TableCell>
                 <TableCell align="left">{student.email}</TableCell>

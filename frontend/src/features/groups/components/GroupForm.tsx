@@ -1,7 +1,8 @@
 import React from 'react';
-import * as R from 'ramda';
 import { useHistory } from 'react-router';
-import { Typography, TextField, Button, makeStyles } from '@material-ui/core';
+import { makeStyles, Theme } from '@material-ui/core/styles';
+import { Typography, TextField, Button } from '@material-ui/core';
+import * as R from 'ramda';
 
 import { useForm } from '@common/hooks';
 import { uiMessages } from '@common/messages';
@@ -9,7 +10,7 @@ import { validateGroupName } from '@common/utils';
 
 import { CreateGroupPayload } from '../types';
 
-export const useStyles = makeStyles((theme) => ({
+export const useStyles = makeStyles((theme: Theme) => ({
   paper: {
     display: 'flex',
     flexDirection: 'column',

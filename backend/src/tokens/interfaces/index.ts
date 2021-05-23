@@ -1,1 +1,1 @@
-export { IUserToken } from './user-token.interface';
+export { IToken } from './token.interface';

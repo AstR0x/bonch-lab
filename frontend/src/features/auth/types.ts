@@ -1,3 +1,5 @@
+import { Lab } from '@features/labs';
+
 export enum RoleEnum {
   Student = 'Студент',
   Teacher = 'Преподаватель',
@@ -27,6 +29,8 @@ export interface Student extends User {
   group: string;
   /** Роль */
   role: RoleEnum.Student;
+  /** Лабораторные работы */
+  labs: Lab[];
 }
 
 export interface Teacher extends User {

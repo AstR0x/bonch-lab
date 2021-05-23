@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import { PATHS } from '@src/constants';
 import { useModal } from '@common/hooks';
 import { DeleteModal } from '@common/components';
-import { GroupTable, groupsSelectors } from '@features/groups';
+import { groupsSelectors, GroupTable } from '@features/groups';
 import { groupsProcessActions } from '@processes/groups';
 import { history } from '@store';
 
@@ -17,9 +17,7 @@ import { history } from '@store';
 export const GroupPage: React.FC = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const openedGroup = useSelector(
-    groupsSelectors.openedGroup4TableViewSelector,
-  );
+  const group = useSelector(groupsSelectors.group4TableViewSelector);
   const {
     isOpened: isDeleteGroupModalOpened,
     openModal: openDeleteGroupModal,
@@ -33,10 +31,16 @@ export const GroupPage: React.FC = () => {
   }, [id]);
 
   /**
+   * Обработчик кнопки перехода на страницу "Журнал группы"
+   */
+  const handleMoveToJournalPage = () =>
+    history.push(PATHS.JOURNAL_PAGE.replace(':id', group.id));
+
+  /**
    * Обработчик кнопки перехода на страницу "Редактирование группы"
    */
   const handleMoveToEditGroupPage = () =>
-    history.push(PATHS.EDIT_GROUP_PAGE.replace(':id', openedGroup.id));
+    history.push(PATHS.EDIT_GROUP_PAGE.replace(':id', group.id));
 
   /**
    * Обработчик кнопки удаления группы
@@ -50,9 +54,10 @@ export const GroupPage: React.FC = () => {
 
   return (
     <>
-      {openedGroup && (
+      {group && (
         <GroupTable
-          openedGroup={openedGroup}
+          group={group}
+          onMoveToJournalPage={handleMoveToJournalPage}
           onMoveToEditGroupPage={handleMoveToEditGroupPage}
           onOpenDeleteGroupModal={openDeleteGroupModal}
         />

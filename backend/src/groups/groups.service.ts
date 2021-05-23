@@ -2,8 +2,8 @@ import { Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 
-import { CreateGroupDto, UpdateGroupDto } from './dto';
 import { IGroup } from './interfaces';
+import { CreateGroupDto, UpdateGroupDto } from './dto';
 
 @Injectable()
 export class GroupsService {
@@ -15,19 +15,49 @@ export class GroupsService {
     return this.GroupsModel.find().sort('name');
   }
 
+  /**
+   * Получение группы по идентификатору
+   *
+   * @param id - идентификатор группы
+   * @returns промис с группой
+   */
   async getGroupById(id: string): Promise<IGroup> {
-    return this.GroupsModel.findById(id).populate('students', '-password');
+    return this.GroupsModel.findById(id).populate({
+      path: 'students',
+      select: '-password',
+      populate: { path: 'labs' },
+    });
   }
 
+  /**
+   * Создание группы
+   *
+   * @param createGroupDto - данные, создаваемой группы
+   * @returns промис с созданной группой
+   */
   async createGroup(createGroupDto: CreateGroupDto): Promise<IGroup> {
     const createdGroup = new this.GroupsModel(createGroupDto);
     return createdGroup.save();
   }
 
+  /**
+   * Удаление группы
+   *
+   * @param id - идентификатор группы
+   * @returns промис с удалённой группой
+   */
   async deleteGroup(id: string): Promise<IGroup> {
     return this.GroupsModel.findByIdAndRemove(id);
   }
 
+  /**
+   * Обновление группы
+   *
+   *
+   * @param id - идентификатор группы
+   * @param updateGroupDto - данные обновлённой группы
+   * @returns промис с обновлённой группой
+   */
   async updateGroup(
     id: string,
     updateGroupDto: UpdateGroupDto,

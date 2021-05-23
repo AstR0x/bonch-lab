@@ -1,5 +1,4 @@
 import { ApiOperation, ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { Request } from 'express';
 import {
   Get,
   Post,
@@ -9,6 +8,7 @@ import {
   ValidationPipe,
   UseGuards,
 } from '@nestjs/common';
+import { Request } from 'express';
 
 import { CreateUserDto } from 'src/users/dto';
 import { RoleEnum } from 'src/users/enums';

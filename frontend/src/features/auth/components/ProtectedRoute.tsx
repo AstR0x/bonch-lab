@@ -4,9 +4,9 @@ import { Redirect } from 'react-router';
 
 import { PATHS } from '@src/constants';
 
-import { RouteWrapper, RouteWrapperProps } from './';
-import { RoleEnum } from '../types';
+import { RouteWrapper, RouteWrapperProps } from './RouteWrapper';
 import { selectors } from '../selectors';
+import { RoleEnum } from '../types';
 
 interface ProtectedRouteProps extends RouteWrapperProps {
   roles: RoleEnum[];

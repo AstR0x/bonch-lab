@@ -1,5 +1,5 @@
 webpack/*
-dist/*
+build/*
 .prettierrc.js
 src/mockups/*
 src/**/*.test.js

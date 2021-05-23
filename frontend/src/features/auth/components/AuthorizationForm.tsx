@@ -1,8 +1,7 @@
 import React from 'react';
-import * as R from 'ramda';
 import { Link as RouterLink } from 'react-router-dom';
-import { LockOpenOutlined } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
+import { LockOpenOutlined } from '@material-ui/icons';
 import {
   Avatar,
   Typography,
@@ -11,6 +10,7 @@ import {
   Grid,
   Link,
 } from '@material-ui/core';
+import * as R from 'ramda';
 
 import { PATHS } from '@src/constants';
 import { useForm } from '@common/hooks';
@@ -39,7 +39,6 @@ export const useStyles = makeStyles((theme) => ({
 }));
 
 interface AuthorizationFormProps {
-  // Диспатчит экшен авторизации
   onSignIn: (signInPayload: SignInPayload) => void;
 }
 
@@ -120,15 +119,6 @@ export const AuthorizationForm: React.FC<AuthorizationFormProps> = ({
                 to={PATHS.REGISTRATION_PAGE}
               >
                 Зарегистрироваться
-              </Link>
-            </Grid>
-            <Grid item>
-              <Link
-                variant="body2"
-                component={RouterLink}
-                to={PATHS.PASSWORD_RECOVERY_PAGE}
-              >
-                Забыли пароль?
               </Link>
             </Grid>
           </Grid>

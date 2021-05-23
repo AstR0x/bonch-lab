@@ -19,10 +19,10 @@ import { groupsProcessActions } from '@processes/groups';
 export const EditGroupPage: React.FC = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const openedGroup = useSelector(groupsSelectors.openedGroupSelector);
+  const group = useSelector(groupsSelectors.groupSelector);
 
   useEffect(() => {
-    if (!openedGroup) {
+    if (!group) {
       dispatch(groupsProcessActions.getGroup(id));
     }
   }, []);
@@ -35,7 +35,7 @@ export const EditGroupPage: React.FC = () => {
   const handleEditGroup = (createGroupPayload: CreateGroupPayload) =>
     dispatch(groupsProcessActions.updateGroup({ id, ...createGroupPayload }));
 
-  if (!openedGroup) {
+  if (!group) {
     return null;
   }
 
@@ -45,7 +45,7 @@ export const EditGroupPage: React.FC = () => {
         formTitle="Редактирование группы"
         confirmButtonText="Сохранить"
         onConfirm={handleEditGroup}
-        initValues={R.pick(['name', 'codeword'], openedGroup)}
+        initValues={R.pick(['name', 'codeword'], group)}
       />
     </Container>
   );

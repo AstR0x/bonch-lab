@@ -12,10 +12,12 @@ import {
   EditGroupPage,
   CreateTaskPage,
   EditTaskPage,
+  JournalPage,
   GroupPage,
   HomePage,
   TasksPage,
   LabsPage,
+  LabPage,
 } from '@pages';
 import { MainLayout, SimpleLayout } from '@layouts';
 
@@ -99,6 +101,27 @@ export function AppRoutes<S = LocationState>({
           path={PATHS.LABS_PAGE}
           roles={[RoleEnum.Student]}
           component={LabsPage}
+          layout={MainLayout}
+        />
+        <ProtectedRoute
+          exact
+          path={PATHS.LAB_PAGE}
+          roles={[RoleEnum.Teacher, RoleEnum.Student]}
+          component={LabPage}
+          layout={MainLayout}
+        />
+        <ProtectedRoute
+          exact
+          path={PATHS.LAB_PAGE}
+          roles={[RoleEnum.Teacher, RoleEnum.Student]}
+          component={LabPage}
+          layout={MainLayout}
+        />
+        <ProtectedRoute
+          exact
+          path={PATHS.JOURNAL_PAGE}
+          roles={[RoleEnum.Teacher]}
+          component={JournalPage}
           layout={MainLayout}
         />
         <Route path="*" render={() => <Redirect to={PATHS.HOME_PAGE} />} />

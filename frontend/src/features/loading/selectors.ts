@@ -1,4 +1,4 @@
-import { pathOr } from 'ramda';
+import * as R from 'ramda';
 
 import { RootState } from '@store';
 
@@ -6,7 +6,7 @@ import { RootState } from '@store';
  * Селектор состояния лоадера
  */
 const isLoadingSelector = (state: RootState): boolean =>
-  pathOr(false, ['loading', 'isLoading'], state);
+  R.pathOr(false, ['loading', 'isLoading'], state);
 
 export const selectors = {
   isLoadingSelector,

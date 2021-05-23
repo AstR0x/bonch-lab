@@ -1,10 +1,16 @@
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import * as express from 'express';
+import { join } from 'path';
 
 import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  if (process.env.NODE_ENV !== 'development') {
+    app.use(express.static(join(process.cwd(), '../client')));
+  }
 
   const options = new DocumentBuilder()
     .addBearerAuth()

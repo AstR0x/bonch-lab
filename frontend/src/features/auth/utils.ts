@@ -5,7 +5,7 @@ import { RoleEnum } from '@features/auth/types';
 import { SALT } from './constants';
 
 /**
- * Устанавливает токен доступа в localStorage
+ * Установка токена доступа в localStorage
  *
  * @param token - токен доступа
  */
@@ -13,14 +13,14 @@ const setSessionToken = (token: string): void =>
   localStorage.setItem('token', token);
 
 /**
- * Получает токен доступа из localStorage
+ * Получение токена доступа из localStorage
  *
  * @returns сессионные токены или null
  */
 const getSessionToken = (): string | null => localStorage.getItem('token');
 
 /**
- * Удаляет сессионный токен из localStorage
+ * Удаление сессионного токена из localStorage
  */
 const deleteSessionToken = (): void => localStorage.removeItem('token');
 

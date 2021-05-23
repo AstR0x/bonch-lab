@@ -1,5 +1,5 @@
-import { call, put } from 'redux-saga/effects';
 import { SagaIterator } from 'redux-saga';
+import { call, put } from 'redux-saga/effects';
 
 import { callApi } from '@common/utils';
 import { dictionariesActions } from '@features/dictionaries';
@@ -28,7 +28,7 @@ function* getGroupList(): SagaIterator {
 function* getGroup(id: string): SagaIterator {
   const group = yield call(callApi, api.getGroup, [id]);
 
-  yield put(actions.setOpenedGroup(group));
+  yield put(actions.setGroup(group));
 }
 
 /**
@@ -85,7 +85,7 @@ function* deleteGroup(id: string): SagaIterator {
   const deletedGroup = yield call(callApi, api.deleteGroup, [id]);
 
   // Удаляем открытую группу
-  yield put(actions.deleteOpenedGroup());
+  yield put(actions.deleteGroup());
 
   // Удаляем группу из справочника списка групп
   yield put(dictionariesActions.deleteGroup(deletedGroup.id));

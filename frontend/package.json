@@ -2,18 +2,6 @@
   "name": "bonch-lab-frontend",
   "version": "0.1.0",
   "description": "Фронтенд часть Bonch Lab",
-  "author": "Vladislav Gumerov",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/AstR0x/virtual-lab"
-  },
-  "keywords": [
-    "react",
-    "redux",
-    "redux-saga",
-    "typescript"
-  ],
   "scripts": {
     "test": "npx jest",
     "start": "npm run develop",
@@ -31,10 +19,11 @@
     "@material-ui/styles": "^4.11.3",
     "@reduxjs/toolkit": "^1.5.1",
     "axios": "^0.21.1",
+    "clsx": "^1.1.1",
     "connected-react-router": "^6.8.0",
+    "file-saver": "^2.0.5",
     "history": "^4.10.1",
     "jwt-decode": "^3.1.2",
-    "mathjax-react": "^1.0.6",
     "merge": "^2.1.1",
     "moment": "^2.24.0",
     "qs": "^6.10.1",
@@ -58,6 +47,7 @@
     "@babel/preset-typescript": "^7.10.4",
     "@jest/transform": "^26.1.0",
     "@jest/types": "^26.1.0",
+    "@types/file-saver": "^2.0.2",
     "@types/jest": "^26.0.5",
     "@types/node": "^14.0.23",
     "@types/qs": "^6.9.6",
@@ -93,7 +83,6 @@
     "favicons-webpack-plugin": "^5.0.2",
     "file-loader": "^6.0.0",
     "html-webpack-plugin": "^4.3.0",
-    "husky": "^4.3.0",
     "imagemin-webpack-plugin": "^2.4.2",
     "img-loader": "^3.0.1",
     "jest": "^26.1.0",
@@ -107,7 +96,7 @@
     "ts-loader": "^8.0.1",
     "typescript": "^3.9.7",
     "url-loader": "^4.1.0",
-    "webpack": "^4.43.0",
+    "webpack": "^4.46.0",
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.10.3",
     "webpack-merge": "^4.2.2"

@@ -14,7 +14,6 @@ import { actions } from './actions';
 function* getGroupsDictProcess(): SagaIterator {
   yield call(processHandler, {
     process: dictionariesSagas.getGroupsDict,
-    loader: true,
   });
 }
 
@@ -26,7 +25,17 @@ function* getGroupsDictProcess(): SagaIterator {
 function* getTopicsDictProcess(): SagaIterator {
   yield call(processHandler, {
     process: dictionariesSagas.getTopicsDict,
-    loader: true,
+  });
+}
+
+/**
+ * Процесс получения структуры тем/подтем/уровней
+ *
+ * @returns итератор
+ */
+function* getStructureProcess(): SagaIterator {
+  yield call(processHandler, {
+    process: dictionariesSagas.getStructure,
   });
 }
 
@@ -37,5 +46,6 @@ export function* dictionariesProcessWatcher(): SagaIterator {
   yield all([
     takeEvery(actions.getGroupsDict, getGroupsDictProcess),
     takeEvery(actions.getTopicsDict, getTopicsDictProcess),
+    takeEvery(actions.getStructure, getStructureProcess),
   ]);
 }

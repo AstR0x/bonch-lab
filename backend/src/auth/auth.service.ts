@@ -9,17 +9,16 @@ import {
   MethodNotAllowedException,
 } from '@nestjs/common';
 
-import { RoleEnum } from 'src/users/enums/role.enum';
-import { StatusEnum } from 'src/users/enums/status.enum';
-import { IUser } from 'src/users/interfaces/user.interface';
-import { CreateUserDto } from 'src/users/dto/create-user.dto';
+import { RoleEnum, StatusEnum } from 'src/users/enums';
+import { IUser } from 'src/users/interfaces';
+import { CreateUserDto } from 'src/users/dto';
+import { IToken } from 'src/tokens/interfaces';
+import { CreateUserTokenDto } from 'src/tokens/dto';
 import { UsersService } from 'src/users/users.service';
 import { GroupsService } from 'src/groups/groups.service';
 import { TasksService } from 'src/tasks/tasks.service';
 import { LabsService } from 'src/labs/labs.service';
 import { TokensService } from 'src/tokens/tokens.service';
-import { IUserToken } from 'src/tokens/interfaces/user-token.interface';
-import { CreateUserTokenDto } from 'src/tokens/dto/create-user-token.dto';
 
 import { SignInDto } from './dto';
 import { ITokenPayload } from './interfaces';
@@ -40,18 +39,20 @@ export class AuthService {
     this.clientAppUrl = this.configService.get<string>('FE_APP_URL');
   }
 
+  /**
+   * Регистрация пользователя
+   *
+   * @param createUserDto - данные пользователя
+   */
   async signUp(createUserDto: CreateUserDto): Promise<boolean> {
     const candidate = await this.usersService.findByEmail(createUserDto.email);
 
     if (!candidate) {
-      // Если регистрируется студент
       if (createUserDto.role === RoleEnum.Student) {
-        // Находим группу, которую он указал
         const group = await this.groupsService.getGroupById(
           createUserDto.group,
         );
 
-        // Проверяем сходство кодовых слов
         if (createUserDto.codeword === group.codeword) {
           // Создаём студента
           const user = await this.usersService.create(createUserDto);
@@ -84,15 +85,19 @@ export class AuthService {
       return true;
     }
 
-    return false;
+    throw new BadRequestException('Электронная почта занята');
   }
 
-  async signIn({ email, password }: SignInDto): Promise<string> {
-    // Находим пользователя по email
-    const user = await this.usersService.findByEmail(email);
+  /**
+   * Авторизация пользователя
+   *
+   * @param signInDto - данные авторизации
+   * @returns токен
+   */
+  async signIn(signInDto: SignInDto): Promise<string> {
+    const user = await this.usersService.findByEmail(signInDto.email);
 
-    if (user && (await bcrypt.compare(password, user.password))) {
-      // Генерируем токен
+    if (user && (await bcrypt.compare(signInDto.password, user.password))) {
       const token = await this.generateToken(user);
 
       return token;
@@ -101,20 +106,31 @@ export class AuthService {
     throw new BadRequestException('Неверный логин или пароль');
   }
 
+  /**
+   * Выход из приложения
+   *
+   * @param req - запрос
+   */
   async signOut(req: Request): Promise<boolean> {
     const [, token] = req.headers.authorization.split(' ');
 
-    // Удаляем токен
     await this.tokensService.delete(token);
 
     return true;
   }
 
+  /**
+   * Генерация токена
+   *
+   * @param user - пользователь
+   * @param withStatusCheck - включить проверку статуса ?
+   * @returns токен
+   */
   async generateToken(user: IUser, withStatusCheck = true): Promise<string> {
-    // Если пользователь не подтверждён, то кидаем ошибку
     if (withStatusCheck && user.status !== StatusEnum.Confirmed) {
       throw new MethodNotAllowedException();
     }
+
     const tokenPayload: ITokenPayload = {
       id: user._id,
       name: user.name,
@@ -129,18 +145,18 @@ export class AuthService {
     const token = await this.jwtService.sign(tokenPayload);
     const expireAt = moment().add(24, 'h').toISOString();
 
-    await this.saveToken({
-      token,
-      expireAt,
-      uId: user._id,
-    });
+    await this.saveToken({ token, expireAt, uId: user._id });
 
     return token;
   }
 
-  private saveToken(
-    createUserTokenDto: CreateUserTokenDto,
-  ): Promise<IUserToken> {
+  /**
+   * Сохранение токена
+   *
+   * @param createUserTokenDto - данные токена
+   * @returns токен
+   */
+  private saveToken(createUserTokenDto: CreateUserTokenDto): Promise<IToken> {
     return this.tokensService.create(createUserTokenDto);
   }
 }

@@ -16,6 +16,8 @@ export const PATHS = {
   PASSWORD_RECOVERY_PAGE: '/recovery',
   // Страница "Группа"
   GROUP_PAGE: '/group/:id',
+  // Страница "Журнал группы"
+  JOURNAL_PAGE: '/journal/:id',
   // Страница "Создание группы"
   CREATE_GROUP_PAGE: '/group/create',
   // Страница "Редактирование группы"
@@ -26,8 +28,10 @@ export const PATHS = {
   CREATE_TASK_PAGE: '/task/create',
   // Страница "Редактирование задачи"
   EDIT_TASK_PAGE: '/task/edit/:id',
-  // Страница "Лабораторные по теме"
+  // Страница "Лабораторные работы по теме"
   LABS_PAGE: '/labs/topic/:id',
+  // Страница "Лабораторная работа"
+  LAB_PAGE: '/lab/:id',
   // Страница "О сайте"
   ABOUT_PAGE: '/about',
 };

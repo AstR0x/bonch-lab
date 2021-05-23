@@ -7,7 +7,7 @@ module.exports = {
     allowedHosts: [],
     open: true,
     overlay: true,
-    contentBase: [paths.appDist],
+    contentBase: [paths.appBuild],
     historyApiFallback: true,
     hot: true,
     proxy,

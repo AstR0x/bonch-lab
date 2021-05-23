@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import * as R from 'ramda';
+import { makeStyles } from '@material-ui/core/styles';
 import {
   Typography,
   TextField,
@@ -10,14 +11,12 @@ import {
   FormControl,
   Select,
   Button,
-  makeStyles,
 } from '@material-ui/core';
 
 import { useForm } from '@common/hooks';
 import { uiMessages } from '@common/messages';
 import { dictionariesSelectors } from '@features/dictionaries';
 
-import { selectors } from '../selectors';
 import { CreateTaskPayload } from '../types';
 
 export const useStyles = makeStyles((theme) => ({
@@ -69,7 +68,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({
 }) => {
   const classes = useStyles();
   const history = useHistory();
-  const structure = useSelector(selectors.structureSelector);
+  const structure = useSelector(dictionariesSelectors.structureSelector);
   const topics = useSelector(dictionariesSelectors.topicsDictSelector);
   const { formState, onTextFieldChange, onSelectChange } = useForm({
     values: initValues || { topic: 1, subtopic: 1, level: 1, formulation: '' },

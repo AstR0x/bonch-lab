@@ -1,6 +1,6 @@
 import { Document } from 'mongoose';
 
-export interface IUserToken extends Document {
+export interface IToken extends Document {
   readonly token: string;
   readonly uId: string;
   readonly expireAt: string;

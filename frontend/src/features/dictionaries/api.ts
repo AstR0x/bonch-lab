@@ -2,7 +2,7 @@ import { AxiosPromise } from 'axios';
 
 import { request } from '@src/constants';
 
-import { DictionaryItem } from './types';
+import { DictionaryItem, Structure } from './types';
 
 /**
  * Получение справочника групп
@@ -21,24 +21,15 @@ const getTopicsDict = (): AxiosPromise<DictionaryItem[]> =>
   request.get({ url: 'dictionaries/topics' });
 
 /**
- * Получение справочника подтем
+ * Получение структуры тем/подтем/уровней
  *
- * @returns промис
+ * @returns axios промис
  */
-const getSubtopicsDict = (): AxiosPromise<DictionaryItem[]> =>
-  request.get({ url: 'dictionaries/subtopics' });
-
-/**
- * Получение справочника уровней сложности
- *
- * @returns промис
- */
-const getLevelsDict = (): AxiosPromise<DictionaryItem[]> =>
-  request.get({ url: 'dictionaries/levels' });
+const getStructure = (): AxiosPromise<Structure> =>
+  request.get({ url: 'dictionaries/structure' });
 
 export const api = {
   getGroupsDict,
   getTopicsDict,
-  getSubtopicsDict,
-  getLevelsDict,
+  getStructure,
 };

@@ -15,10 +15,10 @@ import { tasksProcessActions } from '@processes/tasks';
 export const EditTaskPage: React.FC = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const openedTask = useSelector(tasksSelectors.openedTaskSelector);
+  const task = useSelector(tasksSelectors.taskSelector);
 
   useEffect(() => {
-    if (!openedTask) {
+    if (!task) {
       // Диспатчим экшен получения задачи
       dispatch(tasksProcessActions.getTask(id));
     }
@@ -32,7 +32,7 @@ export const EditTaskPage: React.FC = () => {
   const handleUpdateTask = (updateTaskPayload: UpdateTaskPayload) =>
     dispatch(tasksProcessActions.updateTask({ id, ...updateTaskPayload }));
 
-  if (!openedTask) {
+  if (!task) {
     return null;
   }
 
@@ -42,7 +42,7 @@ export const EditTaskPage: React.FC = () => {
         formTitle="Редактирование задачи"
         confirmButtonText="Сохранить"
         onConfirm={handleUpdateTask}
-        initValues={R.omit(['id'], openedTask)}
+        initValues={R.omit(['id'], task)}
       />
     </Container>
   );

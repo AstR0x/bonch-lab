@@ -1,1 +1,1 @@
-export { TASKS_STRUCTURE } from './tasks-structure';
+export { TOPICS_STRUCTURE } from './topics-structure';
