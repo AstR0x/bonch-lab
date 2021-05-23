@@ -88,6 +88,10 @@ export const TasksPage: React.FC = () => {
     closeDeleteTaskModal();
   };
 
+  if (!structure) {
+    return null;
+  }
+
   return (
     <>
       <Typography

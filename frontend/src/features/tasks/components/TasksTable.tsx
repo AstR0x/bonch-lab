@@ -95,6 +95,8 @@ export const TasksTable: React.FC<TasksTableProps> = ({
     onGetTaskList({ topic, ...values });
   }, [topic, values]);
 
+  console.log(taskList);
+
   return (
     <TableContainer className={classes.tableContainer} component={Paper}>
       <Toolbar className={classes.toolbar}>

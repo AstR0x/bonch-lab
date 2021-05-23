@@ -1,7 +1,6 @@
 import * as moment from 'moment';
 import * as bcrypt from 'bcrypt';
 import { Request } from 'express';
-import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import {
   Injectable,
@@ -34,10 +33,7 @@ export class AuthService {
     private readonly tasksService: TasksService,
     private readonly labsService: LabsService,
     private readonly tokensService: TokensService,
-    private readonly configService: ConfigService,
-  ) {
-    this.clientAppUrl = this.configService.get<string>('FE_APP_URL');
-  }
+  ) {}
 
   /**
    * Регистрация пользователя

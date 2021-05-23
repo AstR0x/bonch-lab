@@ -44,7 +44,7 @@ export const createHttpClient = (baseURL: string): HttpClient => {
     config,
     headers = {},
   }: HttpClientParams): AxiosPromise<T> => {
-    return axiosInstance.get<T>(url, {
+    return axiosInstance.get<T>(`api/${url}`, {
       ...config,
       headers,
     });
@@ -63,7 +63,7 @@ export const createHttpClient = (baseURL: string): HttpClient => {
     config,
     headers = {},
   }: HttpClientParams): AxiosPromise<T> => {
-    return axiosInstance.delete<T>(url, {
+    return axiosInstance.delete<T>(`api/${url}`, {
       ...config,
       headers,
     });
@@ -82,7 +82,7 @@ export const createHttpClient = (baseURL: string): HttpClient => {
     config,
     headers = {},
   }: HttpClientParams): AxiosPromise<T> => {
-    return axiosInstance.head<T>(url, {
+    return axiosInstance.head<T>(`api/${url}`, {
       ...config,
       headers,
     });
@@ -103,7 +103,7 @@ export const createHttpClient = (baseURL: string): HttpClient => {
     config,
     headers = {},
   }: HttpClientParamsWithData<D>): AxiosPromise<T> => {
-    return axiosInstance.post<T>(url, data, {
+    return axiosInstance.post<T>(`api/${url}`, data, {
       ...config,
       headers,
     });
@@ -124,7 +124,7 @@ export const createHttpClient = (baseURL: string): HttpClient => {
     config,
     headers = {},
   }: HttpClientParamsWithData<D>): AxiosPromise<T> => {
-    return axiosInstance.put<T>(url, data, {
+    return axiosInstance.put<T>(`api/${url}`, data, {
       ...config,
       headers,
     });
@@ -145,7 +145,7 @@ export const createHttpClient = (baseURL: string): HttpClient => {
     config,
     headers = {},
   }: HttpClientParamsWithData<D>): AxiosPromise<T> => {
-    return axiosInstance.patch<T>(url, data, {
+    return axiosInstance.patch<T>(`api/${url}`, data, {
       ...config,
       headers,
     });

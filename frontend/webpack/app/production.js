@@ -5,7 +5,6 @@ const { pathOr } = require('ramda');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
-const FaviconWebpackPlugin = require('favicons-webpack-plugin');
 const packageJSON = require('../../package.json');
 
 const getPackageConfig = (path, defaultValue = '') =>

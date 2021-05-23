@@ -1,13 +1,13 @@
 {
   "name": "bonch-lab-frontend",
   "version": "0.1.0",
-  "description": "Фронтенд часть Bonch Lab",
+  "description": "Клиентская часть веб-приложения Bonch Lab",
   "scripts": {
     "test": "npx jest",
-    "start": "npm run develop",
-    "build": "npm run lint && npm run production",
-    "develop": "webpack-dev-server --config ./webpack/app/develop",
-    "production": "webpack --config ./webpack/app/production",
+    "start:dev": "webpack-dev-server --config ./webpack/app/develop",
+    "start:prod": "pm2 start \"serve -s -p 80 build\" --name bonch-lab-frontend",
+    "stop:prod": "pm2 delete bonch-lab-frontend",
+    "build": "rimraf ./build && npm run lint && webpack --config ./webpack/app/production",
     "lint:ts": "npx tsc",
     "lint:js": "eslint src --color --ext .tsx,.ts --fix",
     "lint": "npm run lint:ts && npm run lint:js"
@@ -91,6 +91,8 @@
     "mini-css-extract-plugin": "^0.9.0",
     "moment-locales-webpack-plugin": "^1.2.0",
     "prettier": "^2.0.5",
+    "rimraf": "^3.0.2",
+    "serve": "^11.3.2",
     "style-loader": "^1.2.1",
     "terser-webpack-plugin": "^3.0.1",
     "ts-loader": "^8.0.1",

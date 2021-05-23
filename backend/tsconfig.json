@@ -11,5 +11,5 @@
     "baseUrl": "./",
     "incremental": true
   },
-  "exclude": ["node_modules", "client", "build"]
+  "exclude": ["node_modules", "build"]
 }

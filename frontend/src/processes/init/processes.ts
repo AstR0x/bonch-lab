@@ -15,14 +15,14 @@ import { actions as initProcessActions } from './actions';
  * @returns итератор
  */
 function* notHandledInitProcess(): SagaIterator {
-  // Загружаем список групп
-  yield call(dictionariesSagas.getGroupsDict);
-
   // Запускаем автоматическую авторизацию пользователя
   yield put(authProcessActions.autoSignIn());
 
   // Создаём перехватчик запросов
   yield call(createRequestsInterceptor, request.axiosInstance);
+
+  // Загружаем список групп
+  yield call(dictionariesSagas.getGroupsDict);
 }
 
 /**
