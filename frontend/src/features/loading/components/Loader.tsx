@@ -22,6 +22,9 @@ interface LoaderProps {
 
 /**
  * Компонент "Лоадер"
+ *
+ * @param isLoading - флаг загрузки
+ * @returns react-элемент
  */
 export const Loader: React.FC<LoaderProps> = ({ isLoading }) => {
   const classes = useStyles();

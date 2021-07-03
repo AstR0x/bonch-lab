@@ -2,8 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import { config } from '@common/config';
 import { setStoreField } from '@common/utils';
-
-import { Teacher, Student } from './types';
+import { Teacher, Student } from '@features/users';
 
 export interface AuthorizationState {
   /** Access токен */

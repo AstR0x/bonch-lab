@@ -11,16 +11,16 @@ export class TokensService {
     @InjectModel('Tokens') private readonly TokensModel: Model<IToken>,
   ) {}
 
-  async create(createUserTokenDto: CreateUserTokenDto): Promise<IToken> {
+  async createToken(createUserTokenDto: CreateUserTokenDto): Promise<IToken> {
     const userToken = new this.TokensModel(createUserTokenDto);
     return userToken.save();
   }
 
-  async delete(token: string): Promise<{ ok?: number; n?: number }> {
+  async deleteToken(token: string): Promise<{ ok?: number; n?: number }> {
     return this.TokensModel.deleteOne({ token });
   }
 
-  async deleteAll(uId: string): Promise<{ ok?: number; n?: number }> {
+  async deleteAllTokens(uId: string): Promise<{ ok?: number; n?: number }> {
     return this.TokensModel.deleteMany({ uId });
   }
 

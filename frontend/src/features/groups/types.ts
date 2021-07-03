@@ -1,4 +1,4 @@
-import { Student } from '@features/auth';
+import { Student } from '@features/users';
 
 export interface Group {
   /** Идентификатор группы */

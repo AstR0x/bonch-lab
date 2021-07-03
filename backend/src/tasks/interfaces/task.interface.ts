@@ -5,4 +5,5 @@ export interface ITask extends Document {
   readonly subtopic: number;
   readonly level: number;
   readonly formulation: string;
+  readonly isAttachmentLoaded: boolean;
 }

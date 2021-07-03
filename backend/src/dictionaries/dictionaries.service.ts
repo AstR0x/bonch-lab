@@ -17,7 +17,7 @@ export class DictionariesService {
    * @returns промис со справочником групп
    */
   async getGroupList(): Promise<IDictionaryItem[]> {
-    const groupList = await this.groupsService.getGroupList();
+    const groupList = await this.groupsService.findGroups();
 
     return groupList.map((group) => ({ id: group.id, title: group.name }));
   }

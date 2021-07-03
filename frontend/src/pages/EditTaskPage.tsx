@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { Container } from '@material-ui/core';
 import * as R from 'ramda';
 
-import { tasksSelectors, TaskForm, UpdateTaskPayload } from '@features/tasks';
+import { tasksSelectors, TaskForm, CreateTaskPayload } from '@features/tasks';
 import { tasksProcessActions } from '@processes/tasks';
 
 /**
@@ -19,7 +19,6 @@ export const EditTaskPage: React.FC = () => {
 
   useEffect(() => {
     if (!task) {
-      // Диспатчим экшен получения задачи
       dispatch(tasksProcessActions.getTask(id));
     }
   }, []);
@@ -27,14 +26,12 @@ export const EditTaskPage: React.FC = () => {
   /**
    * Обработчик кнопки редактирования задачи
    *
-   * @param updateTaskPayload - данные задачи
+   * @param createTaskPayload - данные задачи
    */
-  const handleUpdateTask = (updateTaskPayload: UpdateTaskPayload) =>
-    dispatch(tasksProcessActions.updateTask({ id, ...updateTaskPayload }));
+  const handleUpdateTask = (createTaskPayload: CreateTaskPayload) =>
+    dispatch(tasksProcessActions.updateTask({ id, ...createTaskPayload }));
 
-  if (!task) {
-    return null;
-  }
+  if (!task) return null;
 
   return (
     <Container maxWidth="xs">

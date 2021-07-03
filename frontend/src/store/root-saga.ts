@@ -3,6 +3,7 @@ import { call, all, fork } from 'redux-saga/effects';
 
 import { initProcessWatcher } from '@processes/init';
 import { authProcessWatcher } from '@processes/auth';
+import { usersProcessWatcher } from '@processes/users';
 import { groupsProcessWatcher } from '@processes/groups';
 import { tasksProcessWatcher } from '@processes/tasks';
 import { dictionariesProcessWatcher } from '@processes/dictionaries';
@@ -20,6 +21,7 @@ export function* rootSaga(): SagaIterator {
     [
       initProcessWatcher,
       authProcessWatcher,
+      usersProcessWatcher,
       groupsProcessWatcher,
       tasksProcessWatcher,
       labsProcessWatcher,

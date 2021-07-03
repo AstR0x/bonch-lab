@@ -11,7 +11,8 @@
     "import/prefer-default-export": "off",
     "class-methods-use-this": "off",
     "no-underscore-dangle": "off",
-    "no-param-reassign": "off"
+    "no-param-reassign": "off",
+    "func-names": "off"
   },
   "extends": [
     "plugin:@typescript-eslint/recommended",

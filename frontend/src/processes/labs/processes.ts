@@ -51,10 +51,8 @@ function* getLabProcess({ payload: id }: PayloadAction<string>): SagaIterator {
 function* notHandledUpdateLabStatusProcess(
   updateLabStatusPayload: UpdateLabStatusPayload,
 ): SagaIterator {
-  // Обновляем статус лабораторной работы
   yield call(labsSagas.updateLab, updateLabStatusPayload);
 
-  // Показываем уведомление о смене статуса
   yield call(
     notificationSagas.showWarningNotification,
     'Статус задачи изменён!',
@@ -85,10 +83,8 @@ function* updateLabStatusProcess({
 function* notHandledCreateCommentProcess(
   createCommentPayload: CreateCommentPayload,
 ): SagaIterator {
-  // Создаём комментарий
   yield call(labsSagas.createComment, createCommentPayload);
 
-  // Показываем уведомление об успешном создании комментария
   yield call(
     notificationSagas.showSuccessNotification,
     'Комментарий успешно добавлен!',
@@ -119,10 +115,8 @@ function* createCommentProcess({
 function* notHandledUploadReportProcess(
   uploadReportPayload: UploadReportPayload,
 ): SagaIterator {
-  // Загружаем отчёт по лабораторной работе
   yield call(labsSagas.uploadReport, uploadReportPayload);
 
-  // Показываем уведомление об успешной загрузке отчёта
   yield call(
     notificationSagas.showSuccessNotification,
     'Отчёт успешно загружен!',

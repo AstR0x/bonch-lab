@@ -1,5 +1,6 @@
 import { call, put } from 'redux-saga/effects';
 import { SagaIterator } from 'redux-saga';
+import { saveAs } from 'file-saver';
 
 import { callApi } from '@common/utils';
 
@@ -67,10 +68,23 @@ function* deleteTask(id: string): SagaIterator {
   yield put(actions.deleteTask(deletedTask.id));
 }
 
+/**
+ * Скачивание отчёта по задаче
+ *
+ * @param id - идентификатор задачи
+ * @returns итератор
+ */
+function* downloadTaskAttachment(id: string): SagaIterator {
+  const data = yield call(callApi, api.downloadTaskAttachment, [id]);
+
+  yield call(saveAs, new Blob([data]), 'Приложение.docx');
+}
+
 export const sagas = {
   getTaskList,
   getTask,
   createTask,
   updateTask,
   deleteTask,
+  downloadTaskAttachment,
 };

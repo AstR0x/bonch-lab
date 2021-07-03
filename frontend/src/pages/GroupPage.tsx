@@ -6,6 +6,7 @@ import { PATHS } from '@src/constants';
 import { useModal } from '@common/hooks';
 import { DeleteModal } from '@common/components';
 import { groupsSelectors, GroupTable } from '@features/groups';
+import { userProcessActions } from '@processes/users';
 import { groupsProcessActions } from '@processes/groups';
 import { history } from '@store';
 
@@ -23,6 +24,12 @@ export const GroupPage: React.FC = () => {
     openModal: openDeleteGroupModal,
     closeModal: closeDeleteGroupModal,
     content: deletableGroup,
+  } = useModal();
+  const {
+    isOpened: isDeleteStudentModalOpened,
+    openModal: openDeleteStudentModal,
+    closeModal: closeDeleteStudentModal,
+    content: deletableStudent,
   } = useModal();
 
   useEffect(() => {
@@ -43,12 +50,18 @@ export const GroupPage: React.FC = () => {
     history.push(PATHS.EDIT_GROUP_PAGE.replace(':id', group.id));
 
   /**
+   * Обработчик кнопки удаления студента
+   */
+  const handleDeleteStudent = () => {
+    dispatch(userProcessActions.deleteStudent(deletableStudent.id));
+    closeDeleteStudentModal();
+  };
+
+  /**
    * Обработчик кнопки удаления группы
    */
   const handleDeleteGroup = () => {
-    // Диспатчим экшен удаления группы
-    dispatch(groupsProcessActions.deleteGroup(id));
-    // Закрываем модальное окно
+    dispatch(groupsProcessActions.deleteGroup(deletableGroup.id));
     closeDeleteGroupModal();
   };
 
@@ -59,9 +72,17 @@ export const GroupPage: React.FC = () => {
           group={group}
           onMoveToJournalPage={handleMoveToJournalPage}
           onMoveToEditGroupPage={handleMoveToEditGroupPage}
+          onOpenDeleteStudentModal={openDeleteStudentModal}
           onOpenDeleteGroupModal={openDeleteGroupModal}
         />
       )}
+      <DeleteModal
+        isOpened={isDeleteStudentModalOpened}
+        modalTitle="Удаление студента"
+        modalContent="Вы действительно хотите удалить студента?"
+        onDeleteItem={handleDeleteStudent}
+        onClose={closeDeleteStudentModal}
+      />
       <DeleteModal
         isOpened={isDeleteGroupModalOpened}
         modalTitle="Удаление группы"

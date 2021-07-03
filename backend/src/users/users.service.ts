@@ -1,11 +1,16 @@
 import { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 import * as _ from 'lodash';
-import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import { Injectable, Inject, forwardRef } from '@nestjs/common';
+
+import { TokensService } from 'src/tokens/tokens.service';
+import { GroupsService } from 'src/groups/groups.service';
+import { LabsService } from 'src/labs/labs.service';
 
 import { CreateUserDto } from './dto';
 import { IUser } from './interfaces';
+import { RoleEnum } from './enums';
 
 @Injectable()
 export class UsersService {
@@ -13,6 +18,10 @@ export class UsersService {
 
   constructor(
     @InjectModel('Users') private readonly UsersModel: Model<IUser>,
+    @Inject(forwardRef(() => GroupsService))
+    private readonly groupsService: GroupsService,
+    private readonly labsService: LabsService,
+    private readonly tokensService: TokensService,
   ) {}
 
   async hashPassword(password: string): Promise<string> {
@@ -20,7 +29,7 @@ export class UsersService {
     return bcrypt.hash(password, salt);
   }
 
-  async create(createUserDto: CreateUserDto): Promise<IUser> {
+  async createUser(createUserDto: CreateUserDto): Promise<IUser> {
     const hash = await this.hashPassword(createUserDto.password);
     const createdUser = new this.UsersModel(
       _.assignIn(createUserDto, { password: hash }),
@@ -28,17 +37,41 @@ export class UsersService {
     return createdUser.save();
   }
 
-  async find(id: string): Promise<IUser> {
+  async findUserById(id: string): Promise<IUser> {
     return this.UsersModel.findById(id).exec();
   }
 
-  async findByEmail(email: string): Promise<IUser> {
+  async findUserByEmail(email: string): Promise<IUser> {
     return this.UsersModel.findOne({ email })
       .populate('group', '-codeword -students')
       .exec();
   }
 
-  async update(id: string, payload: Partial<IUser>) {
-    return this.UsersModel.updateOne({ _id: id }, payload);
+  async updateUser(id: string, payload: Partial<IUser>) {
+    return this.UsersModel.updateOne({ id }, payload);
+  }
+
+  async deleteUser(id: string) {
+    const user = await this.UsersModel.findById(id);
+
+    if (user.role === RoleEnum.Student) {
+      const group = await this.groupsService.findGroupById(user.group);
+
+      group.students = group.students.filter(
+        (student) => !user._id.equals(student),
+      );
+
+      await group.save();
+    }
+
+    await this.tokensService.deleteAllTokens(user._id);
+
+    await this.labsService.deleteManyLabs(user.labs);
+
+    return user.remove();
+  }
+
+  async deleteManyUsers(ids: string[]) {
+    await Promise.all(ids.map((id) => this.deleteUser(id)));
   }
 }

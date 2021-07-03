@@ -12,10 +12,8 @@ import { actions } from './ducks';
  * @returns итератор
  */
 function* getGroupsDict(): SagaIterator {
-  // Получение групп
   const groupsDict = yield call(callApi, api.getGroupsDict);
 
-  // Записываем группы в стор
   yield put(actions.setGroupsDict(groupsDict));
 }
 
@@ -25,10 +23,8 @@ function* getGroupsDict(): SagaIterator {
  * @returns итератор
  */
 function* getTopicsDict(): SagaIterator {
-  // Получение тем
   const topicsDict = yield call(callApi, api.getTopicsDict);
 
-  // Записываем темы в стор
   yield put(actions.setTopicsDict(topicsDict));
 }
 

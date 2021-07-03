@@ -9,8 +9,13 @@ import {
   Body,
   UseGuards,
   ValidationPipe,
+  UseInterceptors,
+  UploadedFile,
+  Res,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { Express, Response } from 'express';
 
 import { Roles } from 'src/auth/decorators';
 import { RoleGuard } from 'src/auth/guards';
@@ -48,10 +53,12 @@ export class TasksController {
   @Roles([RoleEnum.Teacher])
   @UseGuards(RoleGuard)
   @Post('/create')
+  @UseInterceptors(FileInterceptor('attachment'))
   async createGroup(
-    @Body(new ValidationPipe()) createTaskDto: CreateTaskDto,
-  ): Promise<ITask> {
-    return this.tasksService.createTask(createTaskDto);
+    @UploadedFile() attachment: Express.Multer.File,
+    @Body() createTaskDto: CreateTaskDto,
+  ) {
+    return this.tasksService.createTask(createTaskDto, attachment);
   }
 
   @ApiOperation({ summary: 'Обновление задачи.' })
@@ -59,11 +66,13 @@ export class TasksController {
   @Roles([RoleEnum.Teacher])
   @UseGuards(RoleGuard)
   @Patch('/update/:id')
+  @UseInterceptors(FileInterceptor('attachment'))
   async updateGroup(
     @Param('id') id: string,
-    @Body(new ValidationPipe()) updateTaskDto: UpdateTaskDto,
+    @UploadedFile() attachment: Express.Multer.File,
+    @Body() updateTaskDto: UpdateTaskDto,
   ): Promise<ITask> {
-    return this.tasksService.updateTask(id, updateTaskDto);
+    return this.tasksService.updateTask(id, updateTaskDto, attachment);
   }
 
   @ApiOperation({ summary: 'Удаление задачи.' })
@@ -73,5 +82,14 @@ export class TasksController {
   @Delete('/delete/:id')
   async deleteTask(@Param('id') id: string): Promise<ITask> {
     return this.tasksService.deleteTask(id);
+  }
+
+  @ApiOperation({ summary: 'Скачивание приложения к задаче.' })
+  @ApiBearerAuth()
+  @Roles([RoleEnum.Teacher, RoleEnum.Student])
+  @UseGuards(RoleGuard)
+  @Get('/:id/attachment/download')
+  async downloadAttachment(@Param('id') id: string, @Res() res: Response) {
+    return res.download(`./uploads/attachments/${id}`);
   }
 }

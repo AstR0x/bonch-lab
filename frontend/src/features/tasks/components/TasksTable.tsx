@@ -17,7 +17,7 @@ import {
   Toolbar,
   Tooltip,
 } from '@material-ui/core';
-import { Add, Edit, Delete } from '@material-ui/icons';
+import { Add, Edit, Delete, GetApp } from '@material-ui/icons';
 import * as R from 'ramda';
 
 import { useForm } from '@common/hooks';
@@ -55,6 +55,7 @@ interface TasksTableProps {
   taskList: Task[];
   structure: Structure;
   onGetTaskList: (params: GetTaskListParams) => void;
+  onDownloadTaskAttachment: (id: string) => void;
   onMoveToCreateTaskPage: (params: TaskParams) => void;
   onMoveToEditTaskPage: (id: string) => void;
   onOpenDeleteTaskModal: (id: string) => void;
@@ -67,6 +68,7 @@ interface TasksTableProps {
  * @param taskList - список задач
  * @param structure - структура тем/подтем/уровней
  * @param onGetTaskList - выполняет получение списка задач
+ * @param onDownloadTaskAttachment - выполняет скачивание приложения к задаче
  * @param onMoveToCreateTaskPage - выполняет переход на страницу создания задачи
  * @param onMoveToEditTaskPage - выполняет переход на страницу редактирования задачи
  * @param onOpenDeleteTaskModal - открывает модальное окно удаления задачи
@@ -77,6 +79,7 @@ export const TasksTable: React.FC<TasksTableProps> = ({
   taskList,
   structure,
   onGetTaskList,
+  onDownloadTaskAttachment,
   onMoveToCreateTaskPage,
   onMoveToEditTaskPage,
   onOpenDeleteTaskModal,
@@ -94,8 +97,6 @@ export const TasksTable: React.FC<TasksTableProps> = ({
   useEffect(() => {
     onGetTaskList({ topic, ...values });
   }, [topic, values]);
-
-  console.log(taskList);
 
   return (
     <TableContainer className={classes.tableContainer} component={Paper}>
@@ -158,6 +159,15 @@ export const TasksTable: React.FC<TasksTableProps> = ({
                   {task.formulation}
                 </TableCell>
                 <TableCell align="right" className={classes.buttonsTd}>
+                  {task.isAttachmentLoaded && (
+                    <Tooltip title="Скачать приложение">
+                      <IconButton
+                        onClick={() => onDownloadTaskAttachment(task.id)}
+                      >
+                        <GetApp fontSize="small" />
+                      </IconButton>
+                    </Tooltip>
+                  )}
                   <Tooltip title="Редактировать задачу">
                     <IconButton onClick={() => onMoveToEditTaskPage(task.id)}>
                       <Edit fontSize="small" />

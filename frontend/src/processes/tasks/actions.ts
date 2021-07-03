@@ -31,10 +31,16 @@ const updateTask = createAction<UpdateTaskPayload>('updateTask');
  */
 const deleteTask = createAction<string>('deleteTask');
 
+/**
+ * Экшен скачивания приложения к задаче
+ */
+const downloadTaskAttachment = createAction<string>('downloadTaskAttachment');
+
 export const actions = {
   getTaskList,
   getTask,
   createTask,
   updateTask,
   deleteTask,
+  downloadTaskAttachment,
 };

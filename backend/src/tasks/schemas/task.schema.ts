@@ -22,6 +22,10 @@ export const TaskSchema = new mongoose.Schema({
     required: true,
     default: null,
   },
+  isAttachmentLoaded: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 TaskSchema.set('toJSON', {

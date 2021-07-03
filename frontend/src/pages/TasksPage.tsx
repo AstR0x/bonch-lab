@@ -54,14 +54,21 @@ export const TasksPage: React.FC = () => {
     dispatch(tasksProcessActions.getTaskList(params));
 
   /**
+   * Скачивание приложения к задаче
+   *
+   * @param id - идентификатор задачи
+   */
+  const handleDownloadTaskAttachment = (id: string) =>
+    dispatch(tasksProcessActions.downloadTaskAttachment(id));
+
+  /**
    * Обработчик кнопки перехода на страницу "Создание задачи"
    *
    * @param params - параметры задачи (тема/подтема/уровень)
    */
   const handleMoveToCreateTaskPage = (params: TaskParams) => {
-    // Записываем в стор параметры задачи
     dispatch(tasksActions.setTaskParams(params));
-    // Переходим на страницу создания
+
     history.push(PATHS.CREATE_TASK_PAGE);
   };
 
@@ -72,9 +79,9 @@ export const TasksPage: React.FC = () => {
    */
   const handleMoveToEditTaskPage = (id: string) => {
     const foundTask = taskList.find((task) => task.id === id);
-    // Записываем в стор задачу
+
     dispatch(tasksActions.setTask(foundTask));
-    // Переходим на страницу редактирования
+
     history.push(PATHS.EDIT_TASK_PAGE.replace(':id', id));
   };
 
@@ -82,15 +89,10 @@ export const TasksPage: React.FC = () => {
    * Обработчик кнопки удаления задачи
    */
   const handleDeleteTask = () => {
-    // Диспатчим экшен удаления задачи
     dispatch(tasksProcessActions.deleteTask(deletableTaskId));
-    // Закрываем модальное окно
+
     closeDeleteTaskModal();
   };
-
-  if (!structure) {
-    return null;
-  }
 
   return (
     <>
@@ -107,6 +109,7 @@ export const TasksPage: React.FC = () => {
         taskList={taskList}
         structure={structure}
         onGetTaskList={handleGetTaskList}
+        onDownloadTaskAttachment={handleDownloadTaskAttachment}
         onMoveToCreateTaskPage={handleMoveToCreateTaskPage}
         onMoveToEditTaskPage={handleMoveToEditTaskPage}
         onOpenDeleteTaskModal={openDeleteTaskModal}

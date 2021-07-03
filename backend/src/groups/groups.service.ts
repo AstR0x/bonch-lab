@@ -2,16 +2,19 @@ import { Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 
-import { IGroup } from './interfaces';
+import { UsersService } from 'src/users/users.service';
+
+import { IGroup, IPopulatedGroup } from './interfaces';
 import { CreateGroupDto, UpdateGroupDto } from './dto';
 
 @Injectable()
 export class GroupsService {
   constructor(
     @InjectModel('Groups') private readonly GroupsModel: Model<IGroup>,
+    private readonly usersService: UsersService,
   ) {}
 
-  async getGroupList(): Promise<IGroup[]> {
+  async findGroups(): Promise<IGroup[]> {
     return this.GroupsModel.find().sort('name');
   }
 
@@ -19,14 +22,21 @@ export class GroupsService {
    * Получение группы по идентификатору
    *
    * @param id - идентификатор группы
+   * @param isPopulated - выдать группу с подробными полями ?
    * @returns промис с группой
    */
-  async getGroupById(id: string): Promise<IGroup> {
-    return this.GroupsModel.findById(id).populate({
-      path: 'students',
-      select: '-password',
-      populate: { path: 'labs' },
-    });
+  async findGroupById(id: string, isPopulated?: boolean): Promise<IGroup> {
+    const group = this.GroupsModel.findById(id);
+
+    if (isPopulated) {
+      return group.populate({
+        path: 'students',
+        select: '-password',
+        populate: { path: 'labs' },
+      });
+    }
+
+    return group;
   }
 
   /**
@@ -46,13 +56,16 @@ export class GroupsService {
    * @param id - идентификатор группы
    * @returns промис с удалённой группой
    */
-  async deleteGroup(id: string): Promise<IGroup> {
-    return this.GroupsModel.findByIdAndRemove(id);
+  async deleteGroup(id: string) {
+    const group = await this.GroupsModel.findById(id);
+
+    await this.usersService.deleteManyUsers(group.students);
+
+    return group.remove();
   }
 
   /**
    * Обновление группы
-   *
    *
    * @param id - идентификатор группы
    * @param updateGroupDto - данные обновлённой группы

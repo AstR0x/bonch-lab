@@ -1,7 +1,8 @@
 import React from 'react';
 import { useHistory } from 'react-router';
 import { makeStyles, Theme } from '@material-ui/core/styles';
-import { Typography, TextField, Button } from '@material-ui/core';
+import { Typography, TextField, Button, Avatar } from '@material-ui/core';
+import { Edit, PlusOne } from '@material-ui/icons';
 import * as R from 'ramda';
 
 import { useForm } from '@common/hooks';
@@ -67,6 +68,9 @@ export const GroupForm: React.FC<GroupFormProps> = ({
 
   return (
     <div className={classes.paper}>
+      <Avatar className={classes.avatar}>
+        {initValues ? <Edit /> : <PlusOne />}
+      </Avatar>
       <Typography component="h1" variant="h5">
         {formTitle}
       </Typography>

@@ -35,9 +35,7 @@ export const EditGroupPage: React.FC = () => {
   const handleEditGroup = (createGroupPayload: CreateGroupPayload) =>
     dispatch(groupsProcessActions.updateGroup({ id, ...createGroupPayload }));
 
-  if (!group) {
-    return null;
-  }
+  if (!group) return null;
 
   return (
     <Container maxWidth="xs">

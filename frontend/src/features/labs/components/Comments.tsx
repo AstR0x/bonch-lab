@@ -33,6 +33,9 @@ const useStyles = makeStyles((theme) => ({
   formBox: {
     margin: theme.spacing(2, 0),
   },
+  textField: {
+    width: '40%',
+  },
 }));
 
 interface CommentsProps {
@@ -90,6 +93,7 @@ export const Comments: React.FC<CommentsProps> = ({
           name="message"
           label="Сообщение"
           autoComplete="off"
+          className={classes.textField}
           value={formState.values.message}
           onChange={onTextFieldChange}
           multiline

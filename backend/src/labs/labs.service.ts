@@ -76,18 +76,18 @@ export class LabsService {
     }).populate(['comments.author', 'executor', 'task']);
   }
 
-  /**
-   * Создание комментария к лабораторной работе
-   *
-   * @param req - запрос
-   * @param id - идентификатор лабораторной работы
-   * @param createCommentDto - данные комментария
-   * @returns промис с обновлённой лабораторной работой
-   */
+  async deleteLab(id: string): Promise<ILab> {
+    return this.LabsModel.findByIdAndDelete(id);
+  }
+
+  async deleteManyLabs(ids: string[]) {
+    await this.LabsModel.deleteMany({ _id: { $in: ids } });
+  }
+
   async createComment(
-    req: Request,
     id: string,
     createCommentDto: CreateCommentDto,
+    req: Request,
   ): Promise<ILab> {
     const [, token] = req.headers.authorization.split(' ');
     const decodedToken = this.jwtService.decode(token) as ITokenPayload;
@@ -103,16 +103,10 @@ export class LabsService {
     ).populate(['comments.author', 'executor', 'task']);
   }
 
-  /**
-   * Загрузка отчёта по лабораторной работе
-   *
-   * @param id - идентификатор лабораторной работы
-   * @param report - отчёт по лабораторной работе
-   * @returns промис с обновленной лабораторной работой
-   */
   async uploadReport(id: string, report: Express.Multer.File): Promise<ILab> {
-    // Сохраняем файл в системе
-    fs.writeFile(`./uploads/${id}`, report.buffer, () => {});
+    fs.writeFile(`./uploads/reports/${id}`, report.buffer, (error) => {
+      if (error) console.log(error);
+    });
 
     return this.LabsModel.findByIdAndUpdate(
       id,

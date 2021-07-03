@@ -1,5 +1,6 @@
 import * as moment from 'moment';
 import * as bcrypt from 'bcrypt';
+import * as _ from 'lodash';
 import { Request } from 'express';
 import { JwtService } from '@nestjs/jwt';
 import {
@@ -35,23 +36,20 @@ export class AuthService {
     private readonly tokensService: TokensService,
   ) {}
 
-  /**
-   * Регистрация пользователя
-   *
-   * @param createUserDto - данные пользователя
-   */
   async signUp(createUserDto: CreateUserDto): Promise<boolean> {
-    const candidate = await this.usersService.findByEmail(createUserDto.email);
+    const candidate = await this.usersService.findUserByEmail(
+      createUserDto.email,
+    );
 
     if (!candidate) {
       if (createUserDto.role === RoleEnum.Student) {
-        const group = await this.groupsService.getGroupById(
+        const group = await this.groupsService.findGroupById(
           createUserDto.group,
         );
 
         if (createUserDto.codeword === group.codeword) {
           // Создаём студента
-          const user = await this.usersService.create(createUserDto);
+          const user = await this.usersService.createUser(createUserDto);
           // В группу добавляем id студента
           group.students.push(user._id);
           // Сохраняем группу
@@ -72,7 +70,7 @@ export class AuthService {
       } else if (createUserDto.role === RoleEnum.Teacher) {
         if (createUserDto.codeword === process.env.TEACHER_CODEWORD) {
           // Создаём пользователя
-          await this.usersService.create(createUserDto);
+          await this.usersService.createUser(createUserDto);
         } else {
           throw new BadRequestException('Неверное кодовое слово');
         }
@@ -84,14 +82,8 @@ export class AuthService {
     throw new BadRequestException('Электронная почта занята');
   }
 
-  /**
-   * Авторизация пользователя
-   *
-   * @param signInDto - данные авторизации
-   * @returns токен
-   */
   async signIn(signInDto: SignInDto): Promise<string> {
-    const user = await this.usersService.findByEmail(signInDto.email);
+    const user = await this.usersService.findUserByEmail(signInDto.email);
 
     if (user && (await bcrypt.compare(signInDto.password, user.password))) {
       const token = await this.generateToken(user);
@@ -102,26 +94,14 @@ export class AuthService {
     throw new BadRequestException('Неверный логин или пароль');
   }
 
-  /**
-   * Выход из приложения
-   *
-   * @param req - запрос
-   */
   async signOut(req: Request): Promise<boolean> {
     const [, token] = req.headers.authorization.split(' ');
 
-    await this.tokensService.delete(token);
+    await this.tokensService.deleteToken(token);
 
     return true;
   }
 
-  /**
-   * Генерация токена
-   *
-   * @param user - пользователь
-   * @param withStatusCheck - включить проверку статуса ?
-   * @returns токен
-   */
   async generateToken(user: IUser, withStatusCheck = true): Promise<string> {
     if (withStatusCheck && user.status !== StatusEnum.Confirmed) {
       throw new MethodNotAllowedException();
@@ -137,7 +117,9 @@ export class AuthService {
       role: user.role,
       group: user.group,
       labs: user.labs,
+      regDate: user.regDate,
     };
+
     const token = await this.jwtService.sign(tokenPayload);
     const expireAt = moment().add(24, 'h').toISOString();
 
@@ -146,13 +128,7 @@ export class AuthService {
     return token;
   }
 
-  /**
-   * Сохранение токена
-   *
-   * @param createUserTokenDto - данные токена
-   * @returns токен
-   */
   private saveToken(createUserTokenDto: CreateUserTokenDto): Promise<IToken> {
-    return this.tokensService.create(createUserTokenDto);
+    return this.tokensService.createToken(createUserTokenDto);
   }
 }

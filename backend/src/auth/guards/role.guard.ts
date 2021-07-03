@@ -48,7 +48,7 @@ export class RoleGuard implements CanActivate {
     };
 
     if (isExpiredToken(exp * 1000)) {
-      await this.tokensService.delete(token);
+      await this.tokensService.deleteToken(token);
 
       throw new UnauthorizedException('Истёк срок действия токена');
     }

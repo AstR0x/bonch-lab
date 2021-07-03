@@ -48,13 +48,11 @@ function* getGroupProcess({
 function* notHandledCreateGroupProcess(
   createGroupPayload: CreateGroupPayload,
 ): SagaIterator {
-  // Создаём группу и получаем её идентификатор
   const { id } = yield call(groupsSagas.createGroup, createGroupPayload);
 
   // Переходим на страницу созданной группы
   yield call(history.push, PATHS.GROUP_PAGE.replace(':id', id));
 
-  // Показываем уведомление об успешном создании группы
   yield call(
     notificationSagas.showSuccessNotification,
     'Группа успешно создана!',
@@ -83,13 +81,11 @@ function* createGroupProcess({
 function* notHandledUpdateGroupProcess(
   updateGroupPayload: UpdateGroupPayload,
 ): SagaIterator {
-  // Обновляем группу и получаем её идентификатор
   const { id } = yield call(groupsSagas.updateGroup, updateGroupPayload);
 
   // Переходим на страницу обновленный группы
   yield call(history.push, PATHS.GROUP_PAGE.replace(':id', id));
 
-  // Показываем уведомление об успешном редактировании группы
   yield call(
     notificationSagas.showSuccessNotification,
     'Группа успешно отредактирована!',
@@ -116,13 +112,10 @@ function* updateGroupProcess({
  * @returns итератор
  */
 function* notHandledDeleteGroupProcess(id: string): SagaIterator {
-  // Удаляем группу
   yield call(groupsSagas.deleteGroup, id);
 
-  // Переходим на главную страницу
   yield call(history.push, PATHS.HOME_PAGE);
 
-  // Показываем уведомление об успешном удалении группы
   yield call(
     notificationSagas.showSuccessNotification,
     'Группа успешно удалена!',

@@ -5,8 +5,8 @@ import { AuthModule } from 'src/auth/auth.module';
 import { TokensModule } from 'src/tokens/tokens.module';
 
 import { LabSchema, CommentSchema } from './schemas';
-import { LabsService } from './labs.service';
 import { LabsController } from './labs.controller';
+import { LabsService } from './labs.service';
 
 @Module({
   imports: [

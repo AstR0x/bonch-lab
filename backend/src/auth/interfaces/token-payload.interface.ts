@@ -8,4 +8,5 @@ export interface ITokenPayload {
   email: string;
   group: string;
   labs: string[];
+  regDate: string;
 }

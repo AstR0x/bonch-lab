@@ -49,13 +49,10 @@ function* getTaskProcess({ payload: id }: PayloadAction<string>): SagaIterator {
 function* notHandledCreateTaskProcess(
   creteTaskPayload: CreateTaskPayload,
 ): SagaIterator {
-  // Создаём задачу
   yield call(tasksSagas.createTask, creteTaskPayload);
 
-  // Переходим на предыдущую страницу
   yield call(history.goBack);
 
-  // Показываем уведомление об успешном создании задачи
   yield call(
     notificationSagas.showSuccessNotification,
     'Задача успешно создана!',
@@ -84,13 +81,10 @@ function* createTaskProcess({
 function* notHandledUpdateTaskProcess(
   updateTaskPayload: UpdateTaskPayload,
 ): SagaIterator {
-  // Обновляем задачу
   yield call(tasksSagas.updateTask, updateTaskPayload);
 
-  // Переходим на предыдущую страницу
   yield call(history.goBack);
 
-  // Показываем уведомление об успешном редактировании задачи
   yield call(
     notificationSagas.showSuccessNotification,
     'Задача успешно отредактирована!',
@@ -117,10 +111,8 @@ function* updateTaskProcess({
  * @returns итератор
  */
 function* notHandledDeleteTaskProcess(id: string): SagaIterator {
-  // Удаляем задачу
   yield call(tasksSagas.deleteTask, id);
 
-  // Показываем уведомление об успешном удалении задачи
   yield call(
     notificationSagas.showSuccessNotification,
     'Задача успешно удалена!',
@@ -143,6 +135,21 @@ function* deleteTaskProcess({
 }
 
 /**
+ * Процесс скачивания приложения к задаче
+ *
+ * @param id - идентификатор задачи
+ * @returns итератор
+ */
+function* downloadTaskAttachmentProcess({
+  payload: id,
+}: PayloadAction<string>): SagaIterator {
+  yield call(processHandler, {
+    process: tasksSagas.downloadTaskAttachment,
+    payload: id,
+  });
+}
+
+/**
  * Вотчер задач
  */
 export function* tasksProcessWatcher(): SagaIterator {
@@ -152,5 +159,6 @@ export function* tasksProcessWatcher(): SagaIterator {
     takeEvery(actions.createTask, createTaskProcess),
     takeEvery(actions.updateTask, updateTaskProcess),
     takeEvery(actions.deleteTask, deleteTaskProcess),
+    takeEvery(actions.downloadTaskAttachment, downloadTaskAttachmentProcess),
   ]);
 }

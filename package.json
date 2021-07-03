@@ -6,6 +6,7 @@
   "license": "MIT",
   "scripts": {
     "depends": "npm run i --prefix ./frontend && npm run i --prefix ./backend",
+    "build": "npm run build --prefix ./frontend",
     "start": "npm run start:prod --prefix ./frontend && npm run start:prod --prefix ./backend",
     "stop": "npm run stop:prod --prefix ./frontend && npm run stop:prod --prefix ./backend"
   },

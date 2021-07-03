@@ -25,8 +25,6 @@ const appPaths = {
   appIndex: path.resolve(__dirname, '../../src/index.tsx'),
   // HTML шаблон приложения
   appHTMLTemplate: path.resolve(__dirname, '../../public/index.html'),
-  // Favicon приложения
-  appFavicon: path.resolve(__dirname, '../../build/logo.png'),
   // путь к папке package.json
   appPackageJson: path.resolve(__dirname, '../../package.json'),
 };

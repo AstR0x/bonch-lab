@@ -22,8 +22,8 @@ import { LAB_STATUS_DESIGNATIONS, LAB_STATUS_TITLES } from '@features/labs';
 import { groupsSelectors } from '@features/groups';
 import { dictionariesSelectors } from '@features/dictionaries';
 import { groupsProcessActions } from '@processes/groups';
+import { history } from '@store';
 
-import { history } from '../store';
 import { PATHS } from '../constants';
 
 const useStyles = makeStyles((theme) =>
@@ -69,12 +69,10 @@ export const JournalPage: React.FC = () => {
   const handleMoveToLabPage = (labId: string) =>
     history.push(PATHS.LAB_PAGE.replace(':id', labId));
 
-  if (!group) {
-    return null;
-  }
+  if (!group) return null
 
   return (
-    <Container maxWidth="md">
+    <Container maxWidth="xl">
       <Typography
         gutterBottom
         variant="h4"

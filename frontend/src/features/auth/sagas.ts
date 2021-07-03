@@ -17,16 +17,12 @@ import { SignInPayload, SignUpPayload } from './types';
  * @param token - токен доступа
  */
 function* setTokenInStore(token: string): SagaIterator {
-  // Декодируем JWT токен доступа
   const decodedToken = yield call(jwtDecode, token);
 
-  // Формируем данные пользователя, отбросив лишние поля
   const userData = R.omit(['iat', 'exp'], decodedToken);
 
-  // Записываем данные, полученные из токена доступа в стор
   yield put(actions.setUserData(userData));
 
-  // Записываем токен в стор
   yield put(actions.setToken(token));
 }
 
@@ -38,18 +34,14 @@ function* setTokenInStore(token: string): SagaIterator {
 function* signIn(signInPayload: SignInPayload): SagaIterator {
   const { password } = signInPayload;
 
-  // Шифруем пароль
   const encodedPassword = yield call(utils.encodePassword, password);
 
-  // Выполняем запрос на авторизацию
   const token = yield call(callApi, api.signIn, [
     R.merge(signInPayload, { password: encodedPassword }),
   ]);
 
-  // Записываем данные пользователя и токен в стор
   yield call(setTokenInStore, token);
 
-  // Записываем данные пользователя и токен в localStorage
   yield call(utils.setSessionToken, token);
 }
 
@@ -61,10 +53,8 @@ function* signIn(signInPayload: SignInPayload): SagaIterator {
 function* signUp(signUpPayload: SignUpPayload): SagaIterator {
   const { password } = signUpPayload;
 
-  // Шифруем пароль
   const encodedPassword = yield call(utils.encodePassword, password);
 
-  // Выполняем запрос на регистрацию
   yield call(callApi, api.signUp, [
     R.merge(signUpPayload, { password: encodedPassword }),
   ]);
@@ -74,13 +64,10 @@ function* signUp(signUpPayload: SignUpPayload): SagaIterator {
  * Выход из приложения
  */
 function* signOut(): SagaIterator {
-  // Выполняем запрос на выход из приложения
   yield call(callApi, api.signOut);
 
-  // Удаляем токен из localStorage
   yield call(utils.deleteSessionToken);
 
-  // Удаляем токен и данные пользователя из стора
   yield put(actions.resetAuthData());
 }
 
@@ -88,7 +75,6 @@ function* signOut(): SagaIterator {
  * Получение данных после авторизации
  */
 function* getDataAfterSignIn(): SagaIterator {
-  // Получаем структуру тем/подтем/уровней и список тем
   yield all([
     call(dictionariesSagas.getStructure),
     call(dictionariesSagas.getTopicsDict),

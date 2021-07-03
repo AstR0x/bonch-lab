@@ -11,11 +11,4 @@ export {
   NotAuthRoute,
   ProtectedRoute,
 } from './components';
-export {
-  RoleEnum,
-  User,
-  Teacher,
-  Student,
-  SignInPayload,
-  SignUpPayload,
-} from './types';
+export { RoleEnum, SignInPayload, SignUpPayload } from './types';

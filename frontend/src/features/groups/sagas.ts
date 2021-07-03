@@ -42,7 +42,6 @@ function* createGroup(createGroupPayload: CreateGroupPayload): SagaIterator {
     createGroupPayload,
   ]);
 
-  // Обновляем справочник списка групп
   yield put(
     dictionariesActions.addGroup({
       id: createdGroup.id,
@@ -64,7 +63,6 @@ function* updateGroup(updateGroupPayload: UpdateGroupPayload): SagaIterator {
     updateGroupPayload,
   ]);
 
-  // Обновляем справочник списка групп
   yield put(
     dictionariesActions.updateGroup({
       id: updatedGroup.id,
@@ -84,10 +82,8 @@ function* updateGroup(updateGroupPayload: UpdateGroupPayload): SagaIterator {
 function* deleteGroup(id: string): SagaIterator {
   const deletedGroup = yield call(callApi, api.deleteGroup, [id]);
 
-  // Удаляем открытую группу
   yield put(actions.deleteGroup());
 
-  // Удаляем группу из справочника списка групп
   yield put(dictionariesActions.deleteGroup(deletedGroup.id));
 }
 

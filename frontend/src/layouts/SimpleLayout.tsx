@@ -4,7 +4,6 @@ import { createStyles, makeStyles, Container } from '@material-ui/core';
 
 import { Header } from '@common/components';
 import { Notification } from '@features/notification';
-import { ErrorLayout, errorsSelectors } from '@features/errors';
 import { Loader, loadingSelectors } from '@features/loading';
 
 const useStyles = makeStyles(() =>
@@ -26,7 +25,6 @@ const useStyles = makeStyles(() =>
  */
 export const SimpleLayout: React.FC = ({ children }) => {
   const classes = useStyles();
-  const errorExist = useSelector(errorsSelectors.isErrorExist);
   const isLoading = useSelector(loadingSelectors.isLoadingSelector);
 
   return (
@@ -34,7 +32,7 @@ export const SimpleLayout: React.FC = ({ children }) => {
       <Loader isLoading={isLoading} />
       <Header />
       <Container className={classes.content} component="main">
-        {errorExist ? <ErrorLayout /> : children}
+        {children}
       </Container>
       <Notification />
     </Container>

@@ -21,13 +21,10 @@ import { actions as authActions } from './actions';
  * @param signInPayload - данные авторизации
  */
 function* notHandledSignInProcess(signInPayload: SignInPayload): SagaIterator {
-  // Авторизуемся
   yield call(authSagas.signIn, signInPayload);
 
-  // Получаем дополнительные данные
   yield call(authSagas.getDataAfterSignIn);
 
-  // Показываем уведомление об успешной авторизации
   yield call(
     notificationSagas.showSuccessNotification,
     'Авторизация успешно пройдена!',
@@ -54,13 +51,10 @@ function* signInProcess({
  * @param signUpPayload - данные регистрации
  */
 function* notHandledSignUpProcess(signUpPayload: SignUpPayload): SagaIterator {
-  // Регистрируемся
   yield call(authSagas.signUp, signUpPayload);
 
-  // Переходим на страницу авторизации
   yield call(history.push, PATHS.AUTHORIZATION_PAGE);
 
-  // Показываем уведомление об успешной регистрации
   yield call(
     notificationSagas.showSuccessNotification,
     'Регистрация успешно пройдена!',
@@ -84,10 +78,8 @@ function* signUpProcess({
  * Процесс выхода из приложения (без обработки)
  */
 function* notHandledSignOutProcess(): SagaIterator {
-  // Выходим из приложения
   yield call(authSagas.signOut);
 
-  // Показываем уведомление об успешном выходе
   yield call(
     notificationSagas.showSuccessNotification,
     'Выход успешно выполнен!',

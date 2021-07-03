@@ -33,8 +33,19 @@ const getTask = (id: string): AxiosPromise<Task> =>
  * @param createTaskPayload - данные задачи
  * @returns axios промис
  */
-const createTask = (createTaskPayload: CreateTaskPayload): AxiosPromise<Task> =>
-  request.post({ url: 'tasks/create', data: createTaskPayload });
+const createTask = (
+  createTaskPayload: CreateTaskPayload,
+): AxiosPromise<Task> => {
+  const formData = new FormData();
+
+  formData.append('topic', createTaskPayload.topic.toString());
+  formData.append('subtopic', createTaskPayload.subtopic.toString());
+  formData.append('level', createTaskPayload.level.toString());
+  formData.append('formulation', createTaskPayload.formulation);
+  formData.append('attachment', createTaskPayload.attachment);
+
+  return request.post({ url: 'tasks/create', data: formData });
+};
 
 /**
  * Обновление задачи
@@ -46,8 +57,17 @@ const createTask = (createTaskPayload: CreateTaskPayload): AxiosPromise<Task> =>
 const updateTask = ({
   id,
   ...taskPayload
-}: UpdateTaskPayload): AxiosPromise<Task> =>
-  request.patch({ url: `tasks/update/${id}`, data: taskPayload });
+}: UpdateTaskPayload): AxiosPromise<Task> => {
+  const formData = new FormData();
+
+  formData.append('topic', taskPayload.topic.toString());
+  formData.append('subtopic', taskPayload.subtopic.toString());
+  formData.append('level', taskPayload.level.toString());
+  formData.append('formulation', taskPayload.formulation);
+  formData.append('attachment', taskPayload.attachment);
+
+  return request.patch({ url: `tasks/update/${id}`, data: formData });
+};
 
 /**
  * Удаление задачи
@@ -58,10 +78,24 @@ const updateTask = ({
 const deleteTask = (id: string): AxiosPromise<Task> =>
   request.delete({ url: `tasks/delete/${id}` });
 
+/**
+ * Скачивание приложения к задаче
+ *
+ * @param id - идентификатор задачи
+ * @returns axios промис
+ */
+const downloadTaskAttachment = (id: string): AxiosPromise<BlobPart> => {
+  return request.get({
+    url: `tasks/${id}/attachment/download`,
+    config: { responseType: 'arraybuffer' },
+  });
+};
+
 export const api = {
   getTaskList,
   getTask,
   createTask,
   updateTask,
   deleteTask,
+  downloadTaskAttachment,
 };

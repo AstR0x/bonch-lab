@@ -12,8 +12,6 @@ export const PATHS = {
   AUTHORIZATION_PAGE: '/authorization',
   // Страница "Регистрация"
   REGISTRATION_PAGE: '/registration',
-  // Страница "Восстановление пароля"
-  PASSWORD_RECOVERY_PAGE: '/recovery',
   // Страница "Группа"
   GROUP_PAGE: '/group/:id',
   // Страница "Журнал группы"
@@ -32,8 +30,6 @@ export const PATHS = {
   LABS_PAGE: '/labs/topic/:id',
   // Страница "Лабораторная работа"
   LAB_PAGE: '/lab/:id',
-  // Страница "О сайте"
-  ABOUT_PAGE: '/about',
 };
 
 /**

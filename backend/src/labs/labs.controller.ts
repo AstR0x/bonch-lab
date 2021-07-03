@@ -66,11 +66,11 @@ export class LabsController {
   @UseGuards(RoleGuard)
   @Post('/:id/comments/create')
   async createComment(
-    @Req() req: Request,
     @Param('id') id: string,
     @Body(new ValidationPipe()) createCommentDto: CreateCommentDto,
+    @Req() req: Request,
   ): Promise<ILab> {
-    return this.labsService.createComment(req, id, createCommentDto);
+    return this.labsService.createComment(id, createCommentDto, req);
   }
 
   @ApiOperation({ summary: 'Загрузка отчёта по лабораторной работе.' })
@@ -91,8 +91,7 @@ export class LabsController {
   @Roles([RoleEnum.Teacher, RoleEnum.Student])
   @UseGuards(RoleGuard)
   @Get('/:id/report/download')
-  @UseInterceptors(FileInterceptor('report'))
-  async downloadFile(@Param('id') id: string, @Res() res: Response) {
-    return res.download(`./uploads/${id}`);
+  async downloadReport(@Param('id') id: string, @Res() res: Response) {
+    return res.download(`./uploads/reports/${id}`);
   }
 }

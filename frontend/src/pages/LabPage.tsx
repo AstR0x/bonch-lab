@@ -2,8 +2,15 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
-import { Box, Button, Paper, Typography, Tooltip } from '@material-ui/core';
-import { Rating } from '@material-ui/lab';
+import {
+  Box,
+  Button,
+  Paper,
+  Typography,
+  Tooltip,
+  IconButton,
+} from '@material-ui/core';
+import { GetApp } from '@material-ui/icons';
 
 import { useForm } from '@common/hooks';
 import { authSelectors } from '@features/auth';
@@ -17,6 +24,7 @@ import {
   LabStatusEnum,
 } from '@features/labs';
 import { labsProcessActions } from '@processes/labs';
+import { tasksProcessActions } from '@processes/tasks';
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -78,31 +86,39 @@ export const LabPage: React.FC = () => {
 
   /**
    * Обработчик кнопок смены статусов
+   *
+   * @param status - статус лабораторной работы
    */
-  const handleChangeStatus = (status: LabStatusEnum) => {
+  const handleChangeStatus = (status: LabStatusEnum) =>
     dispatch(labsProcessActions.updateLabStatus({ id, status }));
-  };
 
   /**
    * Обработчик кнопки создания комментария
    *
    * @param message - сообщение комментария
    */
-  const handleCreateComment = (message: string) => {
+  const handleCreateComment = (message: string) =>
     dispatch(labsProcessActions.createComment({ id, message }));
-  };
 
   /**
    * Обработчик кнопки скачивания отчёта
+   *
+   * @param labId - идентификатор лабораторной работы
    */
-  const handleDownloadReport = () =>
-    dispatch(labsProcessActions.downloadReport(id));
+  const handleDownloadReport = (labId: string) =>
+    dispatch(labsProcessActions.downloadReport(labId));
 
-  if (!lab) {
-    return null;
-  }
+  /**
+   * Скачивание приложения к задаче
+   *
+   * @param taskId - идентификатор задачи
+   */
+  const handleDownloadTaskAttachment = (taskId: string) =>
+    dispatch(tasksProcessActions.downloadTaskAttachment(taskId));
 
-  const { topic, subtopic, level } = lab.task;
+  if (!lab) return null;
+
+  const { topic, subtopic } = lab.task;
 
   return (
     <Box className={classes.root}>
@@ -135,9 +151,19 @@ export const LabPage: React.FC = () => {
         className={classes.ratingBox}
       >
         <Typography gutterBottom variant="body1" component="h5">
-          Составить схему алгоритма и программу решения задачи
+          Написать программу решения задачи и загрузить отчёт
         </Typography>
-        <Rating defaultValue={level} max={3} readOnly />
+        {lab.task.isAttachmentLoaded ? (
+          <Tooltip title="Скачать приложение">
+            <IconButton
+              onClick={() => handleDownloadTaskAttachment(lab.task.id)}
+            >
+              <GetApp />
+            </IconButton>
+          </Tooltip>
+        ) : (
+          <div />
+        )}
       </Box>
       <Paper className={classes.paper}>
         <Typography
@@ -185,7 +211,7 @@ export const LabPage: React.FC = () => {
               type="button"
               color="primary"
               variant="contained"
-              onClick={() => handleDownloadReport()}
+              onClick={() => handleDownloadReport(lab.id)}
             >
               Скачать отчёт
             </Button>
@@ -204,7 +230,7 @@ export const LabPage: React.FC = () => {
               type="button"
               color="primary"
               variant="contained"
-              onClick={() => handleDownloadReport()}
+              onClick={() => handleDownloadReport(lab.id)}
             >
               Скачать отчёт
             </Button>

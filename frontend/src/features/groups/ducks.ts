@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { config } from '@common/config';
 import { setStoreField } from '@common/utils';
@@ -26,6 +26,21 @@ const deleteGroup = (state: GroupsState) => {
   state.group = null;
 };
 
+/**
+ * Удаление студента из группы
+ *
+ * @param state - состояние стора модуля
+ * @param id - идентификатор студента
+ */
+const deleteGroupStudent = (
+  state: GroupsState,
+  { payload: id }: PayloadAction<string>,
+) => {
+  state.group.students = state.group.students.filter(
+    (student) => student.id !== id,
+  );
+};
+
 const groupsSlice = createSlice({
   name: config.modules.groups,
   initialState,
@@ -33,6 +48,7 @@ const groupsSlice = createSlice({
     setGroupList: setStoreField('groupList'),
     setGroup: setStoreField('group'),
     deleteGroup,
+    deleteGroupStudent,
   },
 });
 

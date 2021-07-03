@@ -15,6 +15,8 @@ import {
   Paper,
 } from '@material-ui/core';
 
+import { Student } from '@features/users';
+
 import { PopulatedGroup } from '../types';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -36,6 +38,7 @@ interface StudentsTableProps {
   group: PopulatedGroup;
   onMoveToJournalPage: () => void;
   onMoveToEditGroupPage: () => void;
+  onOpenDeleteStudentModal: (student: Student) => void;
   onOpenDeleteGroupModal: (group: PopulatedGroup) => void;
 }
 
@@ -45,6 +48,7 @@ interface StudentsTableProps {
  * @param group - группа
  * @param onMoveToJournalPage - выполняет переход на страницу журнала группы
  * @param onMoveToEditGroupPage - выполняет переход на страницу редактирования группы
+ * @param onOpenDeleteStudentModal - открывает модальное окно удаления студента
  * @param onOpenDeleteGroupModal - открывает модальное окно удаления группы
  * @returns react-элемент
  */
@@ -52,6 +56,7 @@ export const GroupTable: React.FC<StudentsTableProps> = ({
   group,
   onMoveToJournalPage,
   onMoveToEditGroupPage,
+  onOpenDeleteStudentModal,
   onOpenDeleteGroupModal,
 }) => {
   const classes = useStyles();
@@ -107,7 +112,9 @@ export const GroupTable: React.FC<StudentsTableProps> = ({
                 <TableCell align="left">{student.regDate}</TableCell>
                 <TableCell align="right">
                   <Tooltip title="Удалить студента">
-                    <IconButton onClick={() => ({})}>
+                    <IconButton
+                      onClick={() => onOpenDeleteStudentModal(student)}
+                    >
                       <Delete fontSize="small" />
                     </IconButton>
                   </Tooltip>

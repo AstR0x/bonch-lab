@@ -1,4 +1,4 @@
-import { User, Student } from '@features/auth';
+import { User, Student } from '@features/users';
 import { Task } from '@features/tasks';
 
 export enum LabStatusEnum {

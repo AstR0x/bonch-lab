@@ -9,12 +9,24 @@ export interface Task {
   level: number;
   /** Формулировка задачи */
   formulation: string;
+  /** К задаче загружено приложение? */
+  isAttachmentLoaded: boolean;
 }
 
-export type TaskParams = Omit<Task, 'id' | 'formulation'>;
+export type TaskParams = Omit<
+  Task,
+  'id' | 'formulation' | 'isAttachmentLoaded'
+>;
 
 export type GetTaskListParams = Partial<TaskParams>;
 
-export type CreateTaskPayload = Omit<Task, 'id'>;
+export interface CreateTaskPayload
+  extends Omit<Task, 'id' | 'isAttachmentLoaded'> {
+  /** Приложение к задаче */
+  attachment?: File;
+}
 
-export type UpdateTaskPayload = Partial<Task>;
+export interface UpdateTaskPayload extends Partial<CreateTaskPayload> {
+  /** Идентификатор задачи */
+  id: string;
+}

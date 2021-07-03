@@ -5,7 +5,7 @@
  * @returns соответствует ли строка имени, фамилии, отчеству ?
  */
 export const validateName = (value: string): boolean =>
-  /^[а-яА-ЯеЁ]{0,24}$/.test(value);
+  /^[а-яА-ЯёЁ]{0,24}$/.test(value);
 
 /**
  * Валидация строки на соответствие электронной почте
@@ -25,7 +25,7 @@ export const validateEmail = (value: string): boolean =>
 export const validatePassword = (value: string): boolean => {
   if (value.length < 8) return false;
   if (!/\d/.test(value)) return false;
-  if (!/[A-я]/.test(value)) return false;
+  if (!/[A-яёЁ]/.test(value)) return false;
   return true;
 };
 

@@ -20,8 +20,8 @@ import { useForm } from '@common/hooks';
 import { Structure } from '@features/dictionaries';
 import { GetTaskListParams } from '@features/tasks';
 
-import { Lab } from '../types';
 import { LAB_STATUS_TITLES } from '../constants';
+import { Lab } from '../types';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

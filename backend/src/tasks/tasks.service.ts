@@ -1,7 +1,9 @@
 import { Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import { Express } from 'express';
 import * as _ from 'lodash';
+import * as fs from 'fs';
 
 import { ITask } from './interfaces';
 import { TOPICS_STRUCTURE } from './constants';
@@ -68,12 +70,61 @@ export class TasksService {
   /**
    * Создание задачи
    *
-   * @param createTaskDto - данные, создаваемой группы
+   * @param createTaskDto - данные, создаваемой задачи
+   * @param attachment - приложение к задаче
    * @returns промис с созданной задачей
    */
-  async createTask(createTaskDto: CreateTaskDto): Promise<ITask> {
-    const createdTask = new this.TasksModel(createTaskDto);
+  async createTask(
+    createTaskDto: CreateTaskDto,
+    attachment: Express.Multer.File,
+  ): Promise<ITask> {
+    const createdTask = new this.TasksModel(
+      !attachment
+        ? createTaskDto
+        : { ...createTaskDto, isAttachmentLoaded: true },
+    );
+
+    if (attachment) {
+      fs.writeFile(
+        `./uploads/attachments/${createdTask._id}`,
+        attachment.buffer,
+        (error) => {
+          if (error) console.log(error);
+        },
+      );
+    }
+
     return createdTask.save();
+  }
+
+  /**
+   * Обновление задачи
+   *
+   * @param id - идентификатор задачи
+   * @param updateTaskDto - данные, обновляемой задачи
+   * @param attachment - приложение к задаче
+   * @returns промис с обновлённой задачей
+   */
+  async updateTask(
+    id: string,
+    updateTaskDto: UpdateTaskDto,
+    attachment: Express.Multer.File,
+  ): Promise<ITask> {
+    if (attachment) {
+      fs.writeFile(
+        `./uploads/attachments/${id}`,
+        attachment.buffer,
+        (error) => {
+          if (error) console.log(error);
+        },
+      );
+    }
+
+    return this.TasksModel.findByIdAndUpdate(
+      id,
+      !attachment ? updateTaskDto : { updateTaskDto, isAttachmentLoaded: true },
+      { new: true },
+    );
   }
 
   /**
@@ -83,17 +134,10 @@ export class TasksService {
    * @returns промис с удалённой задачей
    */
   async deleteTask(id: string): Promise<ITask> {
-    return this.TasksModel.findByIdAndRemove(id);
-  }
+    fs.unlink(`./uploads/attachments/${id}`, (error) => {
+      if (error) console.log(error);
+    });
 
-  /**
-   * Обновление задачи
-   *
-   * @param id - идентификатор задачи
-   * @param updateTaskDto - данные, обновляемой задачи
-   * @returns промис с обновлённой задачей
-   */
-  async updateTask(id: string, updateTaskDto: UpdateTaskDto): Promise<ITask> {
-    return this.TasksModel.findByIdAndUpdate(id, updateTaskDto, { new: true });
+    return this.TasksModel.findByIdAndRemove(id);
   }
 }

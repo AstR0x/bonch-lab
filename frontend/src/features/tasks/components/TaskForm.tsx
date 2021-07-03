@@ -1,8 +1,9 @@
+// @ts-nocheck
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
-import * as R from 'ramda';
 import { makeStyles } from '@material-ui/core/styles';
+import { Edit, PlusOne } from '@material-ui/icons';
 import {
   Typography,
   TextField,
@@ -11,7 +12,9 @@ import {
   FormControl,
   Select,
   Button,
+  Avatar,
 } from '@material-ui/core';
+import * as R from 'ramda';
 
 import { useForm } from '@common/hooks';
 import { uiMessages } from '@common/messages';
@@ -21,10 +24,14 @@ import { CreateTaskPayload } from '../types';
 
 export const useStyles = makeStyles((theme) => ({
   paper: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
     marginTop: theme.spacing(8),
+  },
+  avatar: {
+    margin: theme.spacing(1, 'auto'),
+    backgroundColor: theme.palette.secondary.main,
+  },
+  heading: {
+    textAlign: 'center',
   },
   form: {
     width: '100%',
@@ -34,8 +41,16 @@ export const useStyles = makeStyles((theme) => ({
     width: '100%',
     marginTop: theme.spacing(2),
   },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
+  attachButton: {
+    marginTop: theme.spacing(2),
+  },
+  buttonsContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    marginTop: theme.spacing(2),
+  },
+  button: {
+    width: '45%',
   },
 }));
 
@@ -70,8 +85,22 @@ export const TaskForm: React.FC<TaskFormProps> = ({
   const history = useHistory();
   const structure = useSelector(dictionariesSelectors.structureSelector);
   const topics = useSelector(dictionariesSelectors.topicsDictSelector);
-  const { formState, onTextFieldChange, onSelectChange } = useForm({
-    values: initValues || { topic: 1, subtopic: 1, level: 1, formulation: '' },
+  const {
+    formState,
+    onTextFieldChange,
+    onSelectChange,
+    onFileInputChange,
+    resetValue,
+  } = useForm({
+    values: initValues
+      ? R.merge(initValues, { attachment: null as File })
+      : {
+          topic: 1,
+          subtopic: 1,
+          level: 1,
+          formulation: '',
+          attachment: null as File,
+        },
     errors: {} as Record<keyof Partial<CreateTaskPayload>, boolean>,
   });
   const { values, errors } = formState;
@@ -79,7 +108,10 @@ export const TaskForm: React.FC<TaskFormProps> = ({
 
   return (
     <div className={classes.paper}>
-      <Typography component="h1" variant="h5">
+      <Avatar className={classes.avatar}>
+        {initValues?.formulation ? <Edit /> : <PlusOne />}
+      </Avatar>
+      <Typography className={classes.heading} component="h1" variant="h5">
         {formTitle}
       </Typography>
       <form className={classes.form}>
@@ -150,24 +182,52 @@ export const TaskForm: React.FC<TaskFormProps> = ({
           </Select>
         </FormControl>
       </form>
-      <Button
-        fullWidth
-        variant="contained"
-        color="primary"
-        className={classes.submit}
-        disabled={!isValid}
-        onClick={() => onConfirm(formState.values)}
-      >
-        {confirmButtonText}
-      </Button>
-      <Button
-        fullWidth
-        variant="contained"
-        color="secondary"
-        onClick={() => history.goBack()}
-      >
-        Отмена
-      </Button>
+      {values.attachment ? (
+        <Button
+          fullWidth
+          color="secondary"
+          className={classes.attachButton}
+          onClick={() => resetValue('attachment')}
+        >
+          Удалить вложение
+        </Button>
+      ) : (
+        <Button
+          fullWidth
+          color="primary"
+          component="label"
+          className={classes.attachButton}
+        >
+          {formState.values.isAttachmentLoaded ? 'Обновить' : 'Загрузить'}{' '}
+          вложение
+          <input
+            hidden
+            type="file"
+            accept=".docx"
+            name="attachment"
+            onChange={onFileInputChange}
+          />
+        </Button>
+      )}
+      <div className={classes.buttonsContainer}>
+        <Button
+          className={classes.button}
+          variant="contained"
+          color="primary"
+          disabled={!isValid}
+          onClick={() => onConfirm(formState.values)}
+        >
+          {confirmButtonText}
+        </Button>
+        <Button
+          className={classes.button}
+          variant="contained"
+          color="secondary"
+          onClick={() => history.goBack()}
+        >
+          Отмена
+        </Button>
+      </div>
     </div>
   );
 };

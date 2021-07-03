@@ -29,7 +29,7 @@ export class GroupsController {
   @UseGuards(RoleGuard)
   @Get()
   async getGroupList(): Promise<IGroup[]> {
-    return this.groupsService.getGroupList();
+    return this.groupsService.findGroups();
   }
 
   @ApiOperation({ summary: 'Получение одной группы.' })
@@ -38,7 +38,7 @@ export class GroupsController {
   @UseGuards(RoleGuard)
   @Get('/:id')
   async getGroup(@Param('id') id: string): Promise<IGroup> {
-    return this.groupsService.getGroupById(id);
+    return this.groupsService.findGroupById(id, true);
   }
 
   @ApiOperation({ summary: 'Создание группы.' })
@@ -67,7 +67,7 @@ export class GroupsController {
   @Roles([RoleEnum.Teacher])
   @UseGuards(RoleGuard)
   @Delete('/delete/:id')
-  async deleteGroup(@Param('id') id: string): Promise<IGroup> {
+  async deleteGroup(@Param('id') id: string) {
     return this.groupsService.deleteGroup(id);
   }
 }
