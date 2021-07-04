@@ -1,3 +1,5 @@
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/AstR0x/bonch-lab/blob/master/LICENSE)
+
 # bonch-lab
 
 Репозиторий проекта: [GitHub](https://github.com/AstR0x/bonch-lab)

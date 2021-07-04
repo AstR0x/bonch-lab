@@ -5,10 +5,10 @@
   "author": "Vladislav Gumerov",
   "license": "MIT",
   "scripts": {
-    "depends": "npm run i --prefix ./frontend && npm run i --prefix ./backend",
-    "build": "npm run build --prefix ./frontend",
-    "start": "npm run start:prod --prefix ./frontend && npm run start:prod --prefix ./backend",
-    "stop": "npm run stop:prod --prefix ./frontend && npm run stop:prod --prefix ./backend"
+    "depends": "npm run i --prefix ./client && npm run i --prefix ./server",
+    "build": "npm run build --prefix ./client",
+    "start": "npm run start:prod --prefix ./client && npm run start:prod --prefix ./server",
+    "stop": "npm run stop:prod --prefix ./client && npm run stop:prod --prefix ./server"
   },
   "repository": {
     "type": "git",

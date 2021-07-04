@@ -1,0 +1,12 @@
+export { AuthorizationPage } from './AuthorizationPage';
+export { RegistrationPage } from './RegistrationPage';
+export { CreateGroupPage } from './CreateGroupPage';
+export { EditGroupPage } from './EditGroupPage';
+export { CreateTaskPage } from './CreateTaskPage';
+export { EditTaskPage } from './EditTaskPage';
+export { GradeBookPage } from './GradeBookPage';
+export { GroupPage } from './GroupPage';
+export { TasksPage } from './TasksPage';
+export { LabsPage } from './LabsPage';
+export { LabPage } from './LabPage';
+export { HomePage } from './HomePage';
