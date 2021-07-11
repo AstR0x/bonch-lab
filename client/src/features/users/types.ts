@@ -20,7 +20,7 @@ export interface User {
   regDate: string;
 }
 
-export interface Student extends User {
+export interface Student extends Omit<User, 'role'> {
   /** Академическая группа */
   group: string;
   /** Роль */
@@ -29,7 +29,7 @@ export interface Student extends User {
   labs: Lab[];
 }
 
-export interface Teacher extends User {
+export interface Teacher extends Omit<User, 'role'> {
   /** Роль */
   role: RoleEnum.Teacher;
 }

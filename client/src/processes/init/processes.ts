@@ -1,7 +1,7 @@
 import { SagaIterator } from 'redux-saga';
 import { put, all, takeEvery, call } from 'redux-saga/effects';
 
-import { request } from '@src/constants';
+import { request } from '@common/utils';
 import { processHandler } from '@common/sagas';
 import { createRequestsInterceptor } from '@features/auth';
 import { dictionariesSagas } from '@features/dictionaries';

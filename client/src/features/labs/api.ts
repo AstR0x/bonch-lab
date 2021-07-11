@@ -1,6 +1,6 @@
 import { AxiosPromise } from 'axios';
 
-import { request } from '@src/constants';
+import { request, createFormData } from '@common/utils';
 import { GetTaskListParams } from '@features/tasks';
 
 import { Lab, UpdateLabPayload, CreateCommentPayload } from './types';
@@ -57,8 +57,7 @@ const createComment = ({
  * @returns axios промис
  */
 const uploadReport = (id: string, report: File): AxiosPromise<Lab> => {
-  const formData = new FormData();
-  formData.append('report', report);
+  const formData = createFormData({ report });
 
   return request.post({ url: `labs/${id}/report/upload`, data: formData });
 };

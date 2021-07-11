@@ -1,8 +1,7 @@
 import shajs from 'sha.js';
 
-import { RoleEnum } from '@features/auth/types';
-
 import { SALT } from './constants';
+import { RoleEnum } from './types';
 
 /**
  * Установка токена доступа в localStorage

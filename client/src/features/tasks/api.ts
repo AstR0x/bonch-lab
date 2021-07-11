@@ -1,6 +1,6 @@
 import { AxiosPromise } from 'axios';
 
-import { request } from '@src/constants';
+import { request, createFormData } from '@common/utils';
 
 import {
   Task,
@@ -36,13 +36,7 @@ const getTask = (id: string): AxiosPromise<Task> =>
 const createTask = (
   createTaskPayload: CreateTaskPayload,
 ): AxiosPromise<Task> => {
-  const formData = new FormData();
-
-  formData.append('topic', createTaskPayload.topic.toString());
-  formData.append('subtopic', createTaskPayload.subtopic.toString());
-  formData.append('level', createTaskPayload.level.toString());
-  formData.append('formulation', createTaskPayload.formulation);
-  formData.append('attachment', createTaskPayload.attachment);
+  const formData = createFormData(createTaskPayload);
 
   return request.post({ url: 'tasks/create', data: formData });
 };
@@ -51,20 +45,14 @@ const createTask = (
  * Обновление задачи
  *
  * @param id - идентификатор задачи
- * @param taskPayload - новые данные задачи
+ * @param updateTaskPayload - новые данные задачи
  * @returns axios промис
  */
 const updateTask = ({
   id,
-  ...taskPayload
+  ...updateTaskPayload
 }: UpdateTaskPayload): AxiosPromise<Task> => {
-  const formData = new FormData();
-
-  formData.append('topic', taskPayload.topic.toString());
-  formData.append('subtopic', taskPayload.subtopic.toString());
-  formData.append('level', taskPayload.level.toString());
-  formData.append('formulation', taskPayload.formulation);
-  formData.append('attachment', taskPayload.attachment);
+  const formData = createFormData(updateTaskPayload);
 
   return request.patch({ url: `tasks/update/${id}`, data: formData });
 };

@@ -4,5 +4,5 @@ module.exports = {
       tsConfig: 'tsconfig.spec.json',
     },
   },
-  testEnvironment: 'node',
+  testEnvironment: 'jsdom',
 };

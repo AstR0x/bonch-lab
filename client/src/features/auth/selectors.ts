@@ -63,14 +63,14 @@ const isTeacherAuthorizedSelector = createSelector(
 /**
  * Селектор информации пользователя
  */
-const userInfoSelector = createSelector(
-  userDataSelector,
-  userRoleSelector,
-  (userData, role) => ({
+const userInfoSelector = createSelector(userDataSelector, (userData) => {
+  if (!userData) return null;
+
+  return {
     shortName: getShortName(userData),
-    role,
-  }),
-);
+    role: userData.role,
+  };
+});
 
 export const selectors = {
   tokenSelector,

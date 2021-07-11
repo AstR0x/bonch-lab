@@ -1,7 +1,3 @@
-import { createHttpClient } from '@common/utils';
-
-export const request = createHttpClient('http://localhost:5000');
-
 /**
  * Объект с адресами страниц
  */

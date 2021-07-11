@@ -1,6 +1,6 @@
 import { AxiosPromise } from 'axios';
 
-import { request } from '@src/constants';
+import { request } from '@common/utils';
 
 import { DictionaryItem, Structure } from './types';
 
